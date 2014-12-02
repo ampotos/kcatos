@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Dec  2 14:22:54 2014 
+## Last update Tue Dec  2 14:49:10 2014 eax
 ##
 
 CC      =	gcc
@@ -26,9 +26,9 @@ OBJ	=	$(OBJC) $(OBJA)
 
 NAME	=	KCat.Os
 
-$(NAME): all
+all: $(NAME)
 
-all: $(OBJ)
+$(NAME): $(OBJ)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.s
