@@ -5,14 +5,16 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Wed Nov 26 09:41:51 2014 eax
+## Last update Tue Dec  2 14:22:54 2014 
 ##
 
-CC	=	i686-elf-gcc
-ASM	=	i686-elf-as
+CC      =	gcc
+ASM	=	nasm
+LD	=	ld
 
-CFLAGS	=	-std=gnu99 -ffreestanding -O2 -Wall -Wextra
-LDFLAGS	=	-T linker.ld -nostdlib
+CFLAGS	=	-m32 -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+LDFLAGS	=	-melf_i386 -T linker.ld -nostdlib
+ASMFLAGS=	-f elf32
 
 SRCC	=	kernel.c
 OBJC	= 	$(SRCC:.c=.o)
@@ -27,10 +29,10 @@ NAME	=	KCat.Os
 $(NAME): all
 
 all: $(OBJ)
-	$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
+	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.s
-	$(ASM) $< -o $@
+	$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
 	$(RM) $(OBJ)
