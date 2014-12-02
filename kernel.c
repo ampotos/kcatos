@@ -3,50 +3,10 @@
 #endif
 #include <stddef.h>
 #include <stdint.h>
-
-/* Check if the compiler thinks if we are targeting the wrong operating system. */
-/* #if defined(__linux__) */
-/* #error "You are not using a cross-compiler, you will most certainly run into trouble" */
-/* #endif */
-
-/* This tutorial will only work for the 32-bit ix86 targets. */
-/* #if !defined(__i386__) */
-/* #error "This tutorial needs to be compiled with a ix86-elf compiler" */
-/* #endif */
+#include "gdt.h"
 
 //l14
 //c35
-
-static const char *g_logo[] =
-  {
-    "",
-    "                                         ,",
-    "                                         @''@",
-    "                                         +''''",
-    "                                       ;''''''#",
-    "                                     #''''''''+",
-    "                                    ''''''''''''@",
-    "                            `#+';'''''';#@@#@@@#+''#+",
-    "                          `'''''''''''''''''''''''''''':",
-    "                          @'''''''''''''''''''''''''''''#",
-    "                          #''''++''''''''''''''''''''''''+",
-    "                      ,@''';'''''''''';'@#''''''''''''''+@@`",
-    "                   ;'''''''''''''''''''''''''''''''''''''''''.",
-    "                  +'''''''''''''''''''''''''''''''''''''''''''@",
-    "                  '''''''''''''''''''''''''''''''''''''''''''''",
-    "                   '''''##+###+''''''''''''''''''''''''''''''''",
-    "                 `#''''''''''''''''''@#''''''''''''''''''''''@'@",
-    "               @''''''''''''''''''''''''''@+'''''''';'#''''''''''@",
-    "             .'''''''''''''''''''''''''''''''''''''';''''''''''''''#",
-    "             +'''''''''''''''''''''''''''''''''''''''''''''''''''''';",
-    "            `'''''''''''''''''''''''''''''''''''''''''''''''''''''''",
-    "             +''''''''''''''''''''''''''''''''''''''''''''''''''''#",
-    "              +#''''''''''''''''''''''''''''''''''''''''''''''+@+`",
-    "                  `.,,'#@@@###+''''''''''''''''''+++##@@@:`",
-    ""
-  };
-
-
 
 
 /* Hardware text mode color constants. */
@@ -72,13 +32,7 @@ enum vga_color
 
 uint8_t make_color(enum vga_color fg, enum vga_color bg)
 {
-  static unsigned	i = 0;
-
-  return fg | ((bg == 0) ? ((++i << 5) | ((i*i) >> ((i&1)*2))) % 15 : bg)<< 4;
-  /*
-  ** "kernel.c:77:30: warning: operation on 'i' may be undefined" said gcc
-  ** Perfect, I want this to be the more undefined possible ! :p
-  */
+  return fg | bg << 4;
 }
 
 uint16_t make_vgaentry(char c, uint8_t color)
@@ -106,21 +60,17 @@ uint16_t* terminal_buffer;
 
 void terminal_initialize()
 {
-  int	i;
   terminal_row = 0;
   terminal_column = 0;
   terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
   terminal_buffer = (uint16_t*) 0xB8000;
-  i = 0;
   for ( size_t y = 0; y < VGA_HEIGHT; y++ )
     {
       for ( size_t x = 0; x < VGA_WIDTH; x++ )
-	{
-	  const size_t index = y * VGA_WIDTH + x;
-	  i++;
-	  terminal_color = make_color(((i << 10) | ((i*i*i*i) >> 2)) % 15, ((i << 5) | ((i*i) >> ((i&1)*2))) % 15);
-	  terminal_buffer[index] = make_vgaentry(' ', terminal_color);
-	}
+  	{
+  	  const size_t index = y * VGA_WIDTH + x;
+    	  terminal_buffer[index] = make_vgaentry(' ', terminal_color);
+  	}
     }
 }
 
@@ -161,72 +111,15 @@ void terminal_writestring(const char* data)
     terminal_putchar(data[i]);
 }
 
-void print_logo(unsigned short of)
-{
-  unsigned	i;
-  unsigned	j;
-  unsigned	k;
-  unsigned	len;
-
-  for (i = 0 ; i < sizeof(g_logo) / sizeof(*g_logo) ; i++)
-    {
-      len = strlen(g_logo[i]);
-      for (j = 0 ; j <= len ; j++)
-	{
-	  if (j == len)
-	    {
-	      while (j++ < VGA_WIDTH - 1)
-		{
-		  terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
-		  terminal_putchar(' ');
-		}
-	      terminal_putchar('\n');
-	      break;
-	    }
-	  k = 0;
-	  while (g_logo[i][k] == ' ')
-	    k++;
-	  int ofj = j + of;
-	  if (j < k)
-	    ofj = j;
-	  else
-	    ofj = (j - k + of) % (len - k) + k;
-	  if (g_logo[i][ofj] == ' ')
-	      terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
-	  else
-	    terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BROWN);
-	  if (i == 14 && j >= 38 && j < 45)
-	    {
-	      terminal_color = make_color(COLOR_RED, COLOR_WHITE);
-	      terminal_putchar("KCat.OS"[j-38]);
-	    }
-	  else	    
-	  terminal_putchar(g_logo[i][ofj]);
-	}
-    }
-}
-
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
 #endif
 void kernel_main()
 {
   terminal_initialize();
-  terminal_row = 0;
-  terminal_column = 0;
-
-  /* terminal_putchar(p); */
-
-  /* Since there is no support for newlines in terminal_putchar yet, \n will
-     produce some VGA specific character instead. This is normal. */
-  /* terminal_writestring("Hello, KCat.OS world!\n"); */
-  /* terminal_writestring("Lorem ipsum dolor sit amet\n"); */
-  unsigned short of = 0;
+  init_descriptor_tables();
+  /* asm volatile ("int $0x3"); */
   while (1)
     {
-      terminal_row = 0;
-      terminal_column = 0;
-      /* terminal_initialize(); */
-      print_logo(of++);
     }
 } 
