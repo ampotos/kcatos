@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Nov 27 22:57:10 2014 eax
-** Last update Tue Dec  2 14:35:54 2014 eax
+** Last update Tue Dec  2 14:53:05 2014 eax
 */
 
 
@@ -129,6 +129,6 @@ void isr_handler(registers_t regs)
 {
   (void) regs;
   terminal_writestring("recieved interrupt: ");
-  monitor_write_dec(regs.int_no); ;
+  /* monitor_write_dec(regs.int_no); ; */
   terminal_putchar('\n');
 } 

@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Dec  2 14:50:11 2014 eax
+## Last update Tue Dec  2 14:50:40 2014 eax
 ##
 
 CC      =	gcc
@@ -19,7 +19,7 @@ ASMFLAGS=	-f elf32
 SRCC	=	kernel.c gdt.c
 OBJC	= 	$(SRCC:.c=.o)
 
-SRCA	=	boot.s
+SRCA	=	boot.s gdts.s
 OBJA	=	$(SRCA:.s=.o)
 
 OBJ	=	$(OBJC) $(OBJA)
