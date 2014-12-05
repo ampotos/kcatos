@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 21:13:49 2014 eax
-** Last update Wed Dec  3 19:34:06 2014 eax
+** Last update Fri Dec  5 21:06:46 2014 eax
 */
 
 #ifndef GDT_H_
@@ -54,5 +54,8 @@ typedef struct s_gdt_ptr
   uint16_t	limit;
   uint32_t	base;
 } __attribute__((packed)) t_gdt_ptr;
+
+void gdt_flush(uint32_t gdt_addr);
+void init_gdt();
 
 #endif

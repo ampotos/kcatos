@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Dec  2 14:49:10 2014 eax
+## Last update Fri Dec  5 21:33:45 2014 eax
 ##
 
 CC      =	gcc
@@ -16,10 +16,13 @@ CFLAGS	=	-m32 -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LDFLAGS	=	-melf_i386 -T linker.ld -nostdlib
 ASMFLAGS=	-f elf32
 
-SRCC	=	kernel.c
+SRCC	=	kernel.c \
+		descriptor_tables/gdt.c \
+		descriptor_tables/descriptor_tables.c
 OBJC	= 	$(SRCC:.c=.o)
 
-SRCA	=	boot.s
+SRCA	=	boot.s \
+		descriptor_tables/gdt_flush.s
 OBJA	=	$(SRCA:.s=.o)
 
 OBJ	=	$(OBJC) $(OBJA)
