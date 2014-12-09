@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Fri Dec  5 21:33:45 2014 eax
+## Last update Tue Dec  9 15:05:58 2014 
 ##
 
 CC      =	gcc
@@ -18,11 +18,17 @@ ASMFLAGS=	-f elf32
 
 SRCC	=	kernel.c \
 		descriptor_tables/gdt.c \
-		descriptor_tables/descriptor_tables.c
+		descriptor_tables/descriptor_tables.c \
+		descriptor_tables/idt_setup.c \
+		descriptor_tables/idt_handler.c
+
 OBJC	= 	$(SRCC:.c=.o)
 
 SRCA	=	boot.s \
-		descriptor_tables/gdt_flush.s
+		descriptor_tables/gdt_flush.s \
+		descriptor_tables/idt_load.s \
+		descriptor_tables/idt_gen.s
+
 OBJA	=	$(SRCA:.s=.o)
 
 OBJ	=	$(OBJC) $(OBJA)

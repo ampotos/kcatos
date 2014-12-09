@@ -12,5 +12,5 @@ gdt_flush:
 	mov gs, eax
 	mov ss, eax
 	jmp 0x08:.gdt_flush_cs
-	.gdt_flush_cs:
+.gdt_flush_cs:
 	ret

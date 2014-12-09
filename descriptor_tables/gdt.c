@@ -5,13 +5,13 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 22:55:52 2014 eax
-** Last update Fri Dec  5 21:35:26 2014 eax
+** Last update Mon Dec  8 18:29:35 2014 
 */
 
 #include "gdt.h"
 
-t_gdt_entry	gdt_entries[5];
-t_gdt_ptr	gdt_ptr;
+static t_gdt_entry	gdt_entries[5];
+static t_gdt_ptr	gdt_ptr;
 
 static void set_gdt_entrie(uint8_t idx,  uint32_t base, uint32_t limit, uint16_t flags)
 {
