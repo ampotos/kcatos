@@ -122,6 +122,7 @@ void kernel_main()
 
   terminal_writestring("I'm alive");
   init_descriptor_tables();
+  asm volatile("int $0x03");
   while (1)
     {      
     }

@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Mon Dec  8 19:19:58 2014 
+** Last update Tue Dec  9 16:39:55 2014 
 */
 
 #include "idt.h"
@@ -21,7 +21,7 @@ static	t_idt_ptr	idt_ptr;
 void	idt_set_entry(uint8_t num, uint32_t base)
 {
   idt[num].base_lo = base & 0xFFFF;
-  idt[num].base_lo = (base >> 16) & 0xFFFF;
+  idt[num].base_hi = (base >> 16) & 0xFFFF;
   idt[num].sel = 0x08;
   idt[num].always0 = 0;
   idt[num].magic = 14;
@@ -69,6 +69,6 @@ void	setup_idt()
   idt_set_entry(29, (uint32_t)interrupt29);
   idt_set_entry(30, (uint32_t)interrupt30);
   idt_set_entry(31, (uint32_t)interrupt31);
-  
+
   idt_load((uint32_t)&idt_ptr);
 }
