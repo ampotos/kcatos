@@ -20,7 +20,8 @@ SRCC	=	kernel.c \
 		descriptor_tables/gdt.c \
 		descriptor_tables/descriptor_tables.c \
 		descriptor_tables/idt_setup.c \
-		descriptor_tables/idt_handler.c
+		descriptor_tables/idt_handler.c \
+		Print.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
