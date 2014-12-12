@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 19:08:59 2014 
-** Last update Fri Dec 12 19:53:41 2014 eax
+** Last update Fri Dec 12 20:13:56 2014 eax
 */
 
 #include "idt.h"
@@ -15,7 +15,6 @@ void		panic_print(regs_t reg);
 
 void	interrupt_handler(regs_t regs)
 {
-  puts("Interrupt\n");
   panic_print(regs);
   while (1);
 }
