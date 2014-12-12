@@ -5,13 +5,17 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 19:08:59 2014 
-** Last update Tue Dec  9 16:40:40 2014 
+** Last update Fri Dec 12 19:53:41 2014 eax
 */
 
 #include "idt.h"
+#include "../utils/Print.h"
+
+void		panic_print(regs_t reg);
 
 void	interrupt_handler(regs_t regs)
 {
-  terminal_writestring("\nin interrupt handler\n");
+  puts("Interrupt\n");
+  panic_print(regs);
   while (1);
 }

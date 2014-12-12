@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Dec  9 15:05:58 2014 
+## Last update Fri Dec 12 18:50:56 2014 eax
 ##
 
 CC      =	gcc
@@ -21,7 +21,8 @@ SRCC	=	kernel.c \
 		descriptor_tables/descriptor_tables.c \
 		descriptor_tables/idt_setup.c \
 		descriptor_tables/idt_handler.c \
-		Print.c
+		utils/Print.c \
+		utils/panic_print.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
