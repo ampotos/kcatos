@@ -65,4 +65,7 @@ void puth8(uint8_t i);
 // Prinf tags : 32d, 16d, 8d, 32u, 16u, 8u, 32h, 16h, 8h, c, s
 void printf(char *, ...);
 
+// Clean
+void clean();
+
 #endif /* PRINT_H_ */

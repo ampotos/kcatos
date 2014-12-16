@@ -9,8 +9,8 @@ static uint8_t screen_color = 0;
 static uint16_t *screen_buff = (uint16_t*) 0xB8000;
 
 
-/* ----------------------------------- */
-/* Format Functions                    */
+  /* ----------------------------------- */
+ /* Format Functions                    */
 /* ----------------------------------- */
 
 uint8_t make_color(enum vga_color fg, enum vga_color bg)
@@ -27,8 +27,8 @@ uint16_t make_vgaentry(char c, uint8_t color)
 }
 
 
-/* ----------------------------------- */
-/* Setters Functions                   */
+  /* ----------------------------------- */
+ /* Setters Functions                   */
 /* ----------------------------------- */
 
 void terminal_setcolor(uint8_t color)
@@ -47,26 +47,19 @@ int terminal_setpos(size_t x, size_t y)
   return 0;
 }
 
-/* ----------------------------------- */
-/* Init  Functions                     */
+  /* ----------------------------------- */
+ /* Init  Functions                     */
 /* ----------------------------------- */
 
 void terminal_initialize()
 {
   screen_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
-  for ( size_t y = 0; y < VGA_HEIGHT; y++ )
-    {
-      for ( size_t x = 0; x < VGA_WIDTH; x++ )
-	{
-	  const size_t index = y * VGA_WIDTH + x;
-	  screen_buff[index] = make_vgaentry(' ', screen_color);
-	}
-    }
+  clean();
 }
 
 
-/* ----------------------------------- */
-/* Print Functions Low                 */
+  /* ----------------------------------- */
+ /* Print Functions Low                 */
 /* ----------------------------------- */
 
 void jump_line()
@@ -122,8 +115,8 @@ void terminal_putchar(const char c)
 }
 
 
-/* ----------------------------------- */
-/* Recurcive Functions For Print Nb    */
+  /* ----------------------------------- */
+ /* Recurcive Functions For Print Nb    */
 /* ----------------------------------- */
 
 void recurcive_print_int(const uint32_t i)
@@ -143,8 +136,8 @@ void recurcive_hex(uint32_t i)
 }
 
 
-/* ----------------------------------- */
-/* Print Functions                     */
+  /* ----------------------------------- */
+ /* Print Functions                     */
 /* ----------------------------------- */
 
 // Print Char
@@ -244,8 +237,8 @@ void puth8(uint8_t i)
   recurcive_hex((uint32_t)i);
 }
 
-/* ----------------------------------- */
-/* Print Functions Hight               */
+  /* ----------------------------------- */
+ /* Print Functions Hight               */
 /* ----------------------------------- */
 
 int strncmp_p(char *s1, char *s2, size_t n)
@@ -353,4 +346,21 @@ void printf(char *format, ...)
     }
 
   va_end(params);
+}
+
+
+  /* ----------------------------------- */
+ /* Print Functions Hight               */
+/* ----------------------------------- */
+
+void clean()
+{
+  for ( size_t y = 0; y < VGA_HEIGHT; y++ )
+    {
+      for ( size_t x = 0; x < VGA_WIDTH; x++ )
+	{
+	  const size_t index = y * VGA_WIDTH + x;
+	  screen_buff[index] = make_vgaentry(' ',  0);
+	}
+    }
 }
