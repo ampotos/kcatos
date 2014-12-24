@@ -241,22 +241,6 @@ void puth8(uint8_t i)
  /* Print Functions Hight               */
 /* ----------------------------------- */
 
-int strncmp_p(char *s1, char *s2, size_t n)
-{
-  if (s1 == NULL || s2 == NULL || *s1 == '\0' || *s2 == '\0' || n == 0)
-    return 0;
-
-  n += 1;
-  while (--n)
-    {
-      if (*s1 == '\0' || *s2 == '\0' || *s1 != *s2)
-	return 0;
-      s1++;
-      s2++;
-    }
-  return 1;
-}
-  
 
 void printf(char *format, ...)
 {

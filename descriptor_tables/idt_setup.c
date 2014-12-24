@@ -5,11 +5,11 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Tue Dec  9 16:39:55 2014 
+** Last update Wed Dec 24 15:44:01 2014 eax
 */
 
 #include "idt.h"
-#include <string.h>
+#include <utils/string.h>
 
 static	t_idt_entry	idt[256];
 static	t_idt_ptr	idt_ptr;
@@ -34,8 +34,7 @@ void	setup_idt()
   idt_ptr.limit = sizeof(t_idt_entry) * 256 - 1;
   idt_ptr.base = (uint32_t)(&idt);
 
-  for (unsigned int i = 0; i < sizeof(t_idt_entry) * 256; i++)
-    ((uint8_t*)idt)[i] = 0;
+  bzero((uint32_t)idt, sizeof(t_idt_entry) * 255);
 
   idt_set_entry(0, (uint32_t)interrupt0);
   idt_set_entry(1, (uint32_t)interrupt1);
