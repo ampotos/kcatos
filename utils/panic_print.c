@@ -28,7 +28,7 @@ const char	*tab_exception[20] =
 
 void		panic_print(regs_t reg)
 {
-  printf("KCat Panic !\n");
+  printf("KCat Panic Attack !\n");
     /* Print du numéro de l'exception et le message qui en est lié */
   if (reg.int_no <= 19)
     printf("Exception happened: %32u, %s\n", reg.int_no, tab_exception[reg.int_no]);
