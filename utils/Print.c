@@ -121,7 +121,7 @@ void terminal_putchar(const char c)
 
 void recurcive_print_int(const uint32_t i)
 {
-  if (i > 10)
+  if (i >= 10)
     recurcive_print_int(i / 10);
   terminal_putchar('0' + (i % 10));
 }
@@ -130,7 +130,7 @@ void recurcive_hex(uint32_t i)
 {
   char base[] = "0123456789ABCDEF";
 
-  if (i > 16)
+  if (i >= 16)
     recurcive_hex(i / 16);
   terminal_putchar(base[i % 16]);  
 }

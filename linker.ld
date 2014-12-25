@@ -21,4 +21,5 @@ SECTIONS {
 		*(.bss)
 		*(.bootstrap_stack)
 	}
+	end_bss = .;
 }
