@@ -5,14 +5,14 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Fri Dec 12 18:50:56 2014 eax
+## Last update Tue Dec 16 12:29:41 2014 
 ##
 
 CC      =	gcc
 ASM	=	nasm
 LD	=	ld
 
-CFLAGS	=	-m32 -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+CFLAGS	=	-m32 -std=gnu99 -ffreestanding -Wall -Wextra
 LDFLAGS	=	-melf_i386 -T linker.ld -nostdlib
 ASMFLAGS=	-f elf32
 
