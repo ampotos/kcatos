@@ -319,6 +319,12 @@ void printf(char *format, ...)
 	      puts(va_arg(params, char *));
 	      i += 1;
 	    }
+	  else if (strncmp_p(format + i, "d", 1))
+	    {
+	      putd32(va_arg(params, int32_t));
+	      i += 1;
+	    }
+
 	  else
 	    puts("???");
 	}

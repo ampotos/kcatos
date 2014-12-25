@@ -69,6 +69,6 @@ void	panic_print_assert(char *filename, int linenum, char *expr)
 {
   printf("KCat Panic Attack !\n");
   printf("An assertion failed.\n");
-  printf("%s:%32d -> (%s)\n", filename, linenum, expr);
+  printf("%s:%d -> (%s)\n", filename, linenum, expr);
   wait_until_the_end_of_your_life();  
 }
