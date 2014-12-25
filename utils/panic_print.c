@@ -1,6 +1,7 @@
-#include "../utils/Print.h"
-#include "../descriptor_tables/idt.h"
+#include <utils/Print.h>
+#include <descriptor_tables/idt.h>
 #include <stdint.h>
+#include "usefull_routine.h"
 
 const char	*tab_exception[20] =
   {
@@ -62,4 +63,12 @@ void		panic_print(regs_t reg)
       printf("\n");
   }
   printf("\n");
+}
+
+void	panic_print_assert(char *filename, int linenum, char *expr)
+{
+  printf("KCat Panic Attack !\n");
+  printf("An assertion failed.\n");
+  printf("%s:%32d -> (%s)\n", filename, linenum, expr);
+  wait_until_the_end_of_your_life();  
 }
