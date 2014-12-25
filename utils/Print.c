@@ -121,7 +121,7 @@ void terminal_putchar(const char c)
 
 void recurcive_print_int(const uint32_t i)
 {
-  if (i > 10)
+  if (i >= 10)
     recurcive_print_int(i / 10);
   terminal_putchar('0' + (i % 10));
 }
@@ -130,7 +130,7 @@ void recurcive_hex(uint32_t i)
 {
   char base[] = "0123456789ABCDEF";
 
-  if (i > 16)
+  if (i >= 16)
     recurcive_hex(i / 16);
   terminal_putchar(base[i % 16]);  
 }
@@ -241,22 +241,6 @@ void puth8(uint8_t i)
  /* Print Functions Hight               */
 /* ----------------------------------- */
 
-int strncmp_p(char *s1, char *s2, size_t n)
-{
-  if (s1 == NULL || s2 == NULL || *s1 == '\0' || *s2 == '\0' || n == 0)
-    return 0;
-
-  n += 1;
-  while (--n)
-    {
-      if (*s1 == '\0' || *s2 == '\0' || *s1 != *s2)
-	return 0;
-      s1++;
-      s2++;
-    }
-  return 1;
-}
-  
 
 void printf(char *format, ...)
 {

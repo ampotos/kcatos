@@ -5,16 +5,17 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 19:08:59 2014 
-** Last update Tue Dec 16 12:25:13 2014 
+** Last update Thu Dec 25 16:55:01 2014 
 */
 
 #include "idt.h"
-#include "../utils/Print.h"
+#include <utils/Print.h>
+#include <utils/usefull_routine.h>
 
 void		panic_print(regs_t reg);
 
 void	interrupt_handler(regs_t regs)
 {
   panic_print(regs);
-  while (1);
+  wait_until_the_end_of_your_life();
 }
