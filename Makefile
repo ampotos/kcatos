@@ -5,14 +5,14 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Thu Dec 25 16:55:23 2014 
+## Last update Sun Dec 28 19:32:09 2014 
 ##
 
 CC      =	gcc
 ASM	=	nasm
 LD	=	ld
 
-CFLAGS	=	-m32 -std=gnu99 -ffreestanding -Wall -Wextra -I.
+CFLAGS	=	-m32 -std=gnu99 -g -ffreestanding -Wall -Wextra -I.
 LDFLAGS	=	-melf_i386 -T linker.ld -nostdlib
 ASMFLAGS=	-f elf32
 
@@ -23,7 +23,9 @@ SRCC	=	kernel.c \
 		descriptor_tables/idt_handler.c \
 		utils/Print.c \
 		utils/panic_print.c \
-		utils/string.c
+		utils/string.c \
+		memory/page.c \
+		memory/kmalloc.c
 
 OBJC	= 	$(SRCC:.c=.o)
 

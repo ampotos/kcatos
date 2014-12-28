@@ -1,10 +1,14 @@
-#include <stddef.h>
 #include <stdint.h>
 #include <descriptor_tables/descriptor_tables.h>
 #include <utils/usefull_routine.h>
 #include <utils/Print.h>
+#include <utils/assert.h>
+#include <utils/types.h>
+#include <memory/page.h>
 
 extern char end_bss;
+
+u32     mbootstrap_kmalloc(u32 size, u32 *phys, u32 aligned);
 
 void kernel_main()
 {
@@ -14,7 +18,15 @@ void kernel_main()
   init_descriptor_tables();
   /* asm volatile("int $0x3"); */
 
-  printf("end_bss: %32h\n", &end_bss);
+  
+  init_paging();
 
+  puts("Hi. Paging is now enabled.\n");
+  puts("Let's read some junk address now...\n\n");
+
+  u32	*p;
+  p = (u32*)0xFFFFFFFF;
+  printf("%d\n", *p);
+  
   wait_until_the_end_of_your_life();
 } 

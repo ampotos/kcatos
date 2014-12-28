@@ -1,9 +1,9 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <utils/types.h>
 #include <stdarg.h>
+#include <descriptor_tables/idt.h>
 
 #include <utils/string.h>
 
@@ -65,5 +65,9 @@ void printf(char *, ...);
 
 // Clean
 void clean();
+
+
+void	panic_print(regs_t reg);
+void	panic_print_assert(char *filename, int linenum, char *expr);
 
 #endif /* PRINT_H_ */
