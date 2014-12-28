@@ -2,7 +2,8 @@
 	global interrupt%1
 interrupt%1:
 	cli			; Disable interrupts firstly.
-	push byte 0		; Push a dummy error code.
+	push byte 0		; Push a fake error code.
+	push byte 0		; errcode desactivate
 	push byte %1	; Push the interrupt number.
 	jmp interrupt_gen
 %endmacro
@@ -13,6 +14,7 @@ interrupt%1:
 	global interrupt%1
 interrupt%1:
 	cli			; Disable interrupts.
+	push byte 1		;errcode activer
 	push byte %1	; Push the interrupt number
 	jmp interrupt_gen
 %endmacro

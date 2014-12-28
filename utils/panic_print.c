@@ -37,7 +37,7 @@ void		panic_print(regs_t reg)
     printf("This error doesn't exit\n");
 
   /* Print du err_code */
-  if (reg.err_code != 0)
+  if (reg.have_errcode != 0)
     printf("err_code: %32h\n", reg.err_code);
 
   
