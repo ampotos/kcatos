@@ -1,8 +1,7 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <utils/types.h>
 #include <stdarg.h>
 #include <descriptor_tables/idt.h>
 

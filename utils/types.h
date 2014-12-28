@@ -5,13 +5,15 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Dec 27 11:13:44 2014 eax
-** Last update Sat Dec 27 11:16:54 2014 eax
+** Last update Sat Dec 27 16:28:20 2014 eax
 */
 
 #ifndef TYPES_H_
 #define TYPES_H_
 
-#define NULL (((void)*)0)
+#include <stdint.h>
+
+#define NULL ((void*)0)
 
 typedef uint32_t	u32;
 typedef int32_t		s32;
