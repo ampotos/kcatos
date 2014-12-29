@@ -23,9 +23,9 @@ void kernel_main()
 
   puts("Hi. Paging is now enabled.\n");
   puts("Let's read some junk address now...\n\n");
-  u32	*p;
-  p = (u32*)0xFFFFFFFF;
-  printf("%d\n", *p);
+  /* u32	*p; */
+  /* p = (u32*)0xFFFFFF; */
+  /* *p = 42; */
   
   wait_until_the_end_of_your_life();
 } 

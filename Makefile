@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Sun Dec 28 19:32:09 2014 
+## Last update Mon Dec 29 01:18:08 2014 eax
 ##
 
 CC      =	gcc
@@ -25,7 +25,8 @@ SRCC	=	kernel.c \
 		utils/panic_print.c \
 		utils/string.c \
 		memory/page.c \
-		memory/kmalloc.c
+		memory/kmalloc.c \
+		memory/frame.c
 
 OBJC	= 	$(SRCC:.c=.o)
 

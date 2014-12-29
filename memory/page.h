@@ -5,13 +5,16 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Dec 27 11:12:49 2014 eax
-** Last update Sun Dec 28 15:04:56 2014 eax
+** Last update Mon Dec 29 01:33:15 2014 eax
 */
 
 #ifndef PAGE_H_
 #define PAGE_H_
 
 #include <utils/types.h>
+
+#define PAGE_SIZE (0x1000)
+#define PAGE_TABLE_NB (1024)
 
 typedef struct s_page
 {
@@ -30,13 +33,13 @@ typedef struct s_page
 
 typedef struct s_page_table
 {
-  t_page pages[1024];
+  t_page pages[PAGE_TABLE_NB];
 } t_page_table;
 
 typedef struct s_page_directory
 {
-  t_page_table	*tables[1024];
-  u32		tables_phys[1024];
+  t_page_table	*tables[PAGE_TABLE_NB];
+  u32		tables_phys[PAGE_TABLE_NB];
   u32		phys;
 } t_page_directory;
 
