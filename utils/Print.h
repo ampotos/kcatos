@@ -44,6 +44,7 @@ void putc(const char c);
 
 // Print String
 void puts(const char *data);
+void puts_nolf(const char *data);
 
 // Print Signed Int 32, 16 and 8 bits
 void putd32(int32_t i);

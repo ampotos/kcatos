@@ -27,6 +27,28 @@ const char	*tab_exception[20] =
     "SIMD Floating-Point Exception"
   };
 
+void	handle_err_code(u32 num, u32 err)
+{
+  printf("err_code: %32h", err);
+  if (num == IDT_PAGE_FAULT)
+    {
+      u32 fault_addr;
+
+      asm volatile("mov %%cr2, %0" : "=r" (fault_addr));
+      printf(" ( | ");
+      if (err & 0x1)
+	puts_nolf("page not present | ");
+      if (err & 0x2)
+	puts_nolf("read-only | ");
+      if (err & 0x4)
+	puts_nolf("user-mode | ");
+      if (err & 0x8)
+	puts_nolf("reserved | ");
+      printf(") at %x", fault_addr);
+    }
+  puts("");
+}
+
 void		panic_print(regs_t reg)
 {
   printf("KCat Panic Attack !\n");
@@ -38,7 +60,7 @@ void		panic_print(regs_t reg)
 
   /* Print du err_code */
   if (reg.have_errcode != 0)
-    printf("err_code: %32h\n", reg.err_code);
+    handle_err_code(reg.int_no, reg.err_code);
 
   
   /* Print eip */
