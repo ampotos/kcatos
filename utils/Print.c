@@ -155,6 +155,7 @@ void puts(const char *data)
     return ;
   while (data[i] != '\0')
     terminal_putchar(data[i++]);
+  terminal_putchar('\n');
 }
 
 // Print Signed Int 32, 16 and 8 bits
@@ -319,11 +320,18 @@ void printf(char *format, ...)
 	      puts(va_arg(params, char *));
 	      i += 1;
 	    }
+	  // I like it small !
 	  else if (strncmp_p(format + i, "d", 1))
 	    {
 	      putd32(va_arg(params, int32_t));
 	      i += 1;
 	    }
+	  else if (strncmp_p(format + i, "x", 1))
+	    {
+	      puth32(va_arg(params, int32_t));
+	      i += 1;
+	    }
+
 
 	  else
 	    puts("???");
