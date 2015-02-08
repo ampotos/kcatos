@@ -147,7 +147,7 @@ void putc(const char c)
 }
 
 // Print String
-void puts(const char *data)
+void puts_nolf(const char *data)
 {
   size_t i = 0;
 
@@ -155,6 +155,11 @@ void puts(const char *data)
     return ;
   while (data[i] != '\0')
     terminal_putchar(data[i++]);
+}
+
+void puts(const char *data)
+{
+  puts_nolf(data);
   terminal_putchar('\n');
 }
 
@@ -200,7 +205,7 @@ void puth32(uint32_t i)
 {
   uint32_t tmp = 268435455;
 
-  puts("0x");
+  puts_nolf("0x");
   while (i < tmp)
     {
       tmp /= 16;
@@ -214,7 +219,7 @@ void puth16(uint16_t i)
 {
   uint16_t tmp = 4095;
 
-  puts("0x");
+  puts_nolf("0x");
   while (i < tmp)
     {
       tmp /= 16;
@@ -228,7 +233,7 @@ void puth8(uint8_t i)
 {
   uint8_t tmp = 16;
 
-  puts("0x");
+  puts_nolf("0x");
   while (i < tmp)
     {
       tmp /= 16;
@@ -317,7 +322,7 @@ void printf(char *format, ...)
 	  // Print String
 	  else if (format[i] == 's')
 	    {
-	      puts(va_arg(params, char *));
+	      puts_nolf(va_arg(params, char *));
 	      i += 1;
 	    }
 	  // I like it small !
@@ -334,7 +339,7 @@ void printf(char *format, ...)
 
 
 	  else
-	    puts("???");
+	    puts_nolf("???");
 	}
       else
 	{
