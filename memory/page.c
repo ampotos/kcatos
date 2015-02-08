@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Dec 27 15:20:28 2014 eax
-** Last update Mon Dec 29 01:41:35 2014 eax
+** Last update Sun Feb  8 20:32:22 2015 eax
 */
 
 #include <memory/page.h>
@@ -16,6 +16,7 @@
 
 t_page_directory *kernel_directory;
 extern u32 fake_heap_ptr;
+extern t_heap *kheap;
 
 t_page	*get_page(u32 addr, int create, t_page_directory *dir)
 {
@@ -46,7 +47,7 @@ void	enable_paging(t_page_directory *dir)
   asm volatile("mov %%cr0, %0": "=r"(cr0));
   cr0 |= 0x80000000;
   asm volatile("mov %0, %%cr0":: "r"(cr0));
-
+  
 }
 
 void	init_paging()
@@ -57,11 +58,15 @@ void	init_paging()
   kernel_directory = (void *)bootstrap_kmalloc(sizeof(t_page_directory), NULL, 1);
   memset((u32)kernel_directory, 0, sizeof(t_page_directory));
 
-  i = 0;
-   while (i < fake_heap_ptr)
-    {
-      alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
-      i += PAGE_SIZE;
-    }
+  for (i = KHEAP_START ; i < KHEAP_START + KHEAP_INITIAL_SIZE ; i += PAGE_SIZE)
+    get_page(i, 1, kernel_directory);
+  
+  for (i = 0 ; i < fake_heap_ptr + PAGE_SIZE ; i += PAGE_SIZE)
+    alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+
+  for (i = KHEAP_START ; i < KHEAP_START + KHEAP_INITIAL_SIZE ; i += PAGE_SIZE)
+    alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+
    enable_paging(kernel_directory);
+   kheap = new_heap(KHEAP_START, KHEAP_START + KHEAP_INITIAL_SIZE, 0, 0);
 }

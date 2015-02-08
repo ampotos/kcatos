@@ -5,10 +5,44 @@
 #include <utils/assert.h>
 #include <utils/types.h>
 #include <memory/page.h>
+#include <memory/kmalloc.h>
 
 extern char end_bss;
 
 u32     mbootstrap_kmalloc(u32 size, u32 *phys, u32 aligned);
+
+void	*test_fill_km(int sz)
+{
+  int	i;
+  char *p;
+
+  p = kmalloc(sz);
+  printf("km(%d) => %x\n", sz, p);
+  
+  for (i = 0 ; i < sz ; i++)
+    p[i] = 0x41;
+  return (p);
+}
+
+void	fuzzing_kmalloc_kfree()
+{
+  void	*tblptr[1000];
+  u32	super_rand;
+  u32	i;
+  u32	sum;
+
+  sum = 0;
+  for (i = 0 ; i < 1000 ; i++)
+    {
+      super_rand = ((42 << i)^(i<<(i*3))) / 3 % 300;
+      tblptr[i] = kmalloc(super_rand);
+      sum += super_rand;
+      printf("%d: Currently allocated: %d Bytes\n", i, sum);
+    }
+  puts("Time to free");
+  for (i = 0 ; i < 1000 ; i++)
+    kfree(tblptr[i]);
+}
 
 void kernel_main()
 {
@@ -21,11 +55,12 @@ void kernel_main()
   
   init_paging();
 
-  puts("Hi. Paging is now enabled.\n");
-  puts("Let's read some junk address now...\n\n");
-  /* u32	*p; */
-  /* p = (u32*)0xFFFFFF; */
-  /* *p = 42; */
+  puts("Coucou");
+
+  fuzzing_kmalloc_kfree();  
+  dump_kmalloc();
+
+  puts("End");
   
   wait_until_the_end_of_your_life();
 } 

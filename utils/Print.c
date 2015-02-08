@@ -331,6 +331,12 @@ void printf(char *format, ...)
 	      putd32(va_arg(params, int32_t));
 	      i += 1;
 	    }
+	  else if (strncmp_p(format + i, "u", 1))
+	    {
+	      putu32(va_arg(params, uint32_t));
+	      i += 1;
+	    }
+
 	  else if (strncmp_p(format + i, "x", 1))
 	    {
 	      puth32(va_arg(params, int32_t));
