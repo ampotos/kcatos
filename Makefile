@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Mon Dec 29 01:18:08 2014 eax
+## Last update Mon Feb  9 00:49:19 2015 eax
 ##
 
 CC      =	gcc
@@ -41,6 +41,7 @@ OBJA	=	$(SRCA:.s=.o)
 OBJ	=	$(OBJC) $(OBJA)
 
 NAME	=	KCat.Os
+ISONAME	=	$(NAME).iso
 
 all: $(NAME)
 
@@ -50,12 +51,18 @@ $(NAME): $(OBJ)
 %.o: %.s
 	$(ASM) $(ASMFLAGS) $< -o $@
 
+iso: $(NAME)
+	cp $(NAME) iso/boot/
+	grub-mkrescue  -d /usr/lib/grub/i386-pc  -o $(ISONAME) iso/
+
 clean:
 	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) iso/boot/$(NAME)
+	$(RM) $(ISONAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re iso
