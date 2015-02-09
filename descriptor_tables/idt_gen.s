@@ -42,6 +42,8 @@ INTERRUPT_NOERRCODE 9
 %assign i i + 1
 %endrep
 
+INTERRUPT_NOERRCODE 128
+	
 extern interrupt_handler
 
 interrupt_gen:	

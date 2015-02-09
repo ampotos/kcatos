@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 22:55:52 2014 eax
-** Last update Mon Feb  9 06:28:43 2015 eax
+** Last update Mon Feb  9 23:25:56 2015 eax
 */
 
 #include "gdt.h"
@@ -71,7 +71,10 @@ void init_gdt()
   set_gdt_entrie(4, 0, 0xFFFFFFFF, RING(3) | CODE_DATA | DATA | WRITE | OP_SIZE_32B | GRANUL_1K);
 
 
-  write_tss(5, 0x10, 0);
+  u32 esp;
+  asm volatile("mov %%esp, %0": "=r"(esp));
+  
+  write_tss(5, 0x10, esp);
   gdt_flush((uint32_t)&gdt_ptr);
   tss_flush();
 }

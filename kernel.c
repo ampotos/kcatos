@@ -49,8 +49,9 @@ void usermode_task()
   int	i;
 
   i = 0;
-  while (i < 2)
+  while (i < 1)
     i++;
+  asm volatile("int $0x80");
 }
 
 void kernel_main()

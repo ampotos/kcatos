@@ -1,17 +1,20 @@
-//
-// idt.h for kcatos in /home/ampotos/kcatos/interrupt_table
-// 
-// Made by 
-// Login   <ampotos@epitech.net>
-// 
-// Started on  Mon Dec  8 12:02:10 2014 
-// Last update Sun Dec 28 19:54:26 2014 
-//
+/*
+** idt.h for kcatos in /home/ampotos/kcatos/interrupt_table
+** 
+** Made by 
+** Login   <ampotos@epitech.net>
+** 
+** Started on  Mon Dec  8 12:02:10 2014 
+** Last update Mon Feb  9 23:58:36 2015 eax
+*/
 
 #ifndef IDT_H_
 #define IDT_H_
 
 #include <stdint.h>
+
+#define KERNELMODE (0)
+#define USERMODE (3)
 
 #define IDT_DIVIDE_BY_0		0	// division by 0
 #define IDT_SINGLE_STEP		1	// single stepexecution for debugger
@@ -98,5 +101,6 @@ extern void interrupt28();
 extern void interrupt29();
 extern void interrupt30();
 extern void interrupt31();
+extern void interrupt128();
 
 #endif

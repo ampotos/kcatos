@@ -63,7 +63,7 @@ void	handle_err_code(u32 num, u32 err)
 
 void		panic_print(regs_t reg)
 {
-  printf("KCat Panic Attack !\n");
+  printf("KCat Panic Attack!\n");
     /* Print du numéro de l'exception et le message qui en est lié */
   if (reg.int_no <= 19)
     printf("Exception happened: %32u, %s\n", reg.int_no, tab_exception[reg.int_no]);
@@ -76,6 +76,7 @@ void		panic_print(regs_t reg)
 
   
   /* Print eip */
+  puts("");
   printf("======= REGISTERS =======\n");
   printf("eip: %32h\n", reg.eip);
 
@@ -87,8 +88,9 @@ void		panic_print(regs_t reg)
   printf("ds:  %32h\t cs:  %32h\t ss:  %32h\n", reg.ds, reg.cs, reg.ss);
   
   printf("eflags: %32h\n", reg.eflags);
-  
+
   /* Print stack */
+  puts("");
   printf("======= STACK =======\n");
   for (int i = 0; i < 30; ++i)
   {
