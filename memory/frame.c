@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Dec 29 00:47:35 2014 eax
-** Last update Mon Dec 29 01:26:05 2014 eax
+** Last update Mon Feb  9 21:50:10 2015 eax
 */
 
 #include <utils/types.h>
@@ -19,7 +19,7 @@ static t_frames g_frames;
 void	init_frame()
 {
   g_frames.nb_frames = PHYSICAL_MEMORY_SIZE / PAGE_SIZE;
-  g_frames.used_frames = (void*)bootstrap_kmalloc(sizeof(*g_frames.used_frames) * g_frames.nb_frames, NULL, 0);
+  g_frames.used_frames = (void*)kmalloc(sizeof(*g_frames.used_frames) * g_frames.nb_frames);
   memset((u32)g_frames.used_frames, 0, sizeof(*g_frames.used_frames) * g_frames.nb_frames);
 }
 

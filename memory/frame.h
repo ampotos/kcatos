@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Dec 29 00:49:48 2014 eax
-** Last update Mon Dec 29 01:19:43 2014 eax
+** Last update Mon Feb  9 20:57:10 2015 eax
 */
 
 #ifndef FRAME_H_

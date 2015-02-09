@@ -32,7 +32,7 @@ void	fuzzing_kmalloc_kfree()
   u32	sum;
 
   sum = 0;
-  for (i = 0 ; i < 1000 ; i++)
+  for (i = 0 ; i < 100 ; i++)
     {
       super_rand = ((42 << i)^(i<<(i*3))) / 3 % 300;
       tblptr[i] = kmalloc(super_rand);
@@ -40,8 +40,17 @@ void	fuzzing_kmalloc_kfree()
       printf("%d: Currently allocated: %d Bytes\n", i, sum);
     }
   puts("Time to free");
-  for (i = 0 ; i < 1000 ; i++)
+  for (i = 0 ; i < 100 ; i++)
     kfree(tblptr[i]);
+}
+
+void usermode_task()
+{
+  int	i;
+
+  i = 0;
+  while (i < 2)
+    i++;
 }
 
 void kernel_main()
@@ -50,19 +59,15 @@ void kernel_main()
   terminal_setpos(0, 0);
 
   init_descriptor_tables();
-  /* asm volatile("int $0x3"); */
 
   init_paging();
 
   puts("Coucou");
+  create_process(&usermode_task);
+  assert(0);
 
-  /* fuzzing_kmalloc_kfree(); */
-  /* dump_kmalloc(); */
-
-  /* assert(0); */
-  /* switch_to_user_mode(); */
   
-  /* puts("End"); */
+  puts("End");
   
   wait_until_the_end_of_your_life();
 } 

@@ -5,14 +5,14 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Mon Feb  9 03:09:41 2015 eax
+## Last update Mon Feb  9 22:05:10 2015 eax
 ##
 
 CC      =	gcc
 ASM	=	nasm
 LD	=	ld
 
-CFLAGS	=	-m32 -std=gnu99 -g -ffreestanding -Wall -Wextra -I.
+CFLAGS	+=	-m32 -std=gnu99 -g -ffreestanding -Wall -Wextra -I.
 LDFLAGS	=	-melf_i386 -T linker.ld -nostdlib
 ASMFLAGS=	-f elf32
 
@@ -26,7 +26,8 @@ SRCC	=	kernel.c \
 		utils/string.c \
 		memory/page.c \
 		memory/kmalloc.c \
-		memory/frame.c
+		memory/frame.c \
+		process/process.c
 
 OBJC	= 	$(SRCC:.c=.o)
 

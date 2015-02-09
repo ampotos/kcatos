@@ -11,6 +11,8 @@
 switch_to_user_mode:
 	
 	cli
+	mov ecx, [esp + 8]	; new esp
+	mov edx, [esp + 4]	; new eip
 	
 	mov	eax, 0x20	; 0x20 -> user ds
 	or	eax, 0x3	; 0x3 for privilege level 3 (usermode)
@@ -19,17 +21,15 @@ switch_to_user_mode:
 	mov	fs, eax
 	mov	gs, eax
 
-	mov	ebx, 0x18	; 0x18 -> user cs
-	or	ebx, 0x3	; priv lvl 3
-	
 	push eax		; (5)
-	push esp		; (4)
+	push ecx		; (4)
 	pushf			; (3)
-	push ebx		; (2)
-	push next_eip		; (1) TODO: should probably get the next eip from args
+	
+	mov	eax, 0x18	; 0x18 -> user cs
+	or	eax, 0x3	; priv lvl 3
+
+	push eax		; (2)
+	push edx		; (1)
+	
 	sti
 	iret
-
-next_eip:	
-	;; Will execute the code after that
-	

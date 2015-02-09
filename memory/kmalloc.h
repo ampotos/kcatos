@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sun Dec 28 13:38:10 2014 eax
-** Last update Mon Feb  9 00:06:56 2015 eax
+** Last update Mon Feb  9 21:51:08 2015 eax
 */
 
 #ifndef KMALLOC_H_
@@ -20,7 +20,8 @@
 
 #define ALIGN_ON(x,n) (size_t)((~(n-1))&(((u64)x)+(n-1)))
 #define ALIGN_PTR(x) (u32)(ALIGN_ON((x), sizeof(u64)))
-#define ALIGN_PTR_OFFS(x) ((u64)(ALIGN_PTR(x)) - (u64)(x))
+#define ALIGN_PTR_OFFS_ON(x,n) ((u64)(ALIGN_ON((x),(n))) - (u64)(x))
+#define ALIGN_PTR_OFFS(x) (ALIGN_PTR_OFFS_ON(x, sizeof(u64)))
 
 typedef struct s_kmalloc_header
 {
@@ -42,9 +43,11 @@ typedef struct
   u8	ro;
 } t_heap;
 
-u32	bootstrap_kmalloc(u32 size, u32 *phys, u32 aligned);
 t_heap	*new_heap(u32 start, u32 end, u8 su_lvl, u8 ro);
 void	*kmalloc(u32 size);
+void	*kmalloc_a(u32 size);
+void	*kmalloc_ap(u32 size, u32 *phys);
+void	*kmalloc_p(u32 size, u32 *phys);
 void	kfree(void *addr);
 void	dump_kmalloc();
 #endif
