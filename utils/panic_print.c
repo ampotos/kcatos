@@ -35,16 +35,28 @@ void	handle_err_code(u32 num, u32 err)
       u32 fault_addr;
 
       asm volatile("mov %%cr2, %0" : "=r" (fault_addr));
-      printf(" ( | ");
+      printf(" (");
+      
       if (err & 0x1)
+	puts_nolf("page protected violation | ");
+      else
 	puts_nolf("page not present | ");
-      if (err & 0x2)
-	puts_nolf("read-only | ");
-      if (err & 0x4)
-	puts_nolf("user-mode | ");
+
       if (err & 0x8)
-	puts_nolf("reserved | ");
-      printf(") at %x", fault_addr);
+	puts_nolf("reserved field not empty | ");
+
+      
+      if (err & 0x2)
+	puts_nolf("by write ");
+      else
+	puts_nolf("by read ");
+
+      if (err & 0x4)
+	puts_nolf("in user-mode ");
+      else
+	puts_nolf("in kernel-mode ");
+      
+      printf("at %x)", fault_addr);
     }
   puts("");
 }
