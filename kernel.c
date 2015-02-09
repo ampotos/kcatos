@@ -52,15 +52,17 @@ void kernel_main()
   init_descriptor_tables();
   /* asm volatile("int $0x3"); */
 
-  
   init_paging();
 
   puts("Coucou");
 
-  fuzzing_kmalloc_kfree();  
-  dump_kmalloc();
+  /* fuzzing_kmalloc_kfree(); */
+  /* dump_kmalloc(); */
 
-  puts("End");
+  /* assert(0); */
+  /* switch_to_user_mode(); */
+  
+  /* puts("End"); */
   
   wait_until_the_end_of_your_life();
 } 

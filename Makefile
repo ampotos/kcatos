@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Mon Feb  9 00:49:19 2015 eax
+## Last update Mon Feb  9 03:09:41 2015 eax
 ##
 
 CC      =	gcc
@@ -34,7 +34,9 @@ SRCA	=	boot.s \
 		descriptor_tables/gdt_flush.s \
 		descriptor_tables/idt_load.s \
 		descriptor_tables/idt_gen.s \
-		utils/usefull_routine.s
+		utils/usefull_routine.s \
+		usermode.s \
+		descriptor_tables/tss_flush.s
 
 OBJA	=	$(SRCA:.s=.o)
 
