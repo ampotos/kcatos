@@ -43,8 +43,8 @@ int terminal_setpos(size_t x, size_t y);
 void putc(const char c);
 
 // Print String
-void puts(const char *data);
-void puts_nolf(const char *data);
+u32 puts(const char *data);
+u32 puts_nolf(const char *data);
 
 // Print Signed Int 32, 16 and 8 bits
 void putd32(int32_t i);
@@ -70,5 +70,5 @@ void clean();
 
 void	panic_print(regs_t reg);
 void	panic_print_assert(char *filename, int linenum, char *expr);
-
+size_t		write_screen(u8 *data, size_t sz);
 #endif /* PRINT_H_ */

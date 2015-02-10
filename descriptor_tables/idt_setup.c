@@ -5,11 +5,13 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Mon Feb  9 23:58:19 2015 eax
+** Last update Tue Feb 10 01:56:39 2015 eax
 */
 
 #include "idt.h"
 #include <utils/string.h>
+#include <utils/assert.h>
+#include <syscall/syscall_handler.h>
 
 static	t_idt_entry	idt[256];
 static	t_idt_ptr	idt_ptr;

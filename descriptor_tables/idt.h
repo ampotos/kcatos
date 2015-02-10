@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 12:02:10 2014 
-** Last update Mon Feb  9 23:58:36 2015 eax
+** Last update Tue Feb 10 02:08:38 2015 eax
 */
 
 #ifndef IDT_H_
@@ -45,7 +45,8 @@ typedef struct regs
 {
   uint32_t ds;				                // Data segment selector
   uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;	// Pushed by pusha.
-  uint32_t int_no, have_errcode, err_code;				// Interrupt number and error code (if applicable)
+  uint8_t int_no, have_errcode;				// Interrupt number and flag if errcode
+  uint32_t err_code;					// error code (if applicable)
   uint32_t eip, cs, eflags, useresp, ss;		// Pushed by the processor automatically.
 } regs_t;
 

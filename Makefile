@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Mon Feb  9 22:05:10 2015 eax
+## Last update Tue Feb 10 01:14:09 2015 eax
 ##
 
 CC      =	gcc
@@ -27,7 +27,9 @@ SRCC	=	kernel.c \
 		memory/page.c \
 		memory/kmalloc.c \
 		memory/frame.c \
-		process/process.c
+		process/process.c \
+		syscall/syscall_handler.c \
+		syscall/syscall.c
 
 OBJC	= 	$(SRCC:.c=.o)
 

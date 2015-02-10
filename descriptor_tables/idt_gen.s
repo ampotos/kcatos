@@ -67,7 +67,7 @@ interrupt_gen:
 	mov gs, bx
 
 	popa		; Pops edi,esi,ebp...
-	add esp, 8	; Cleans up the pushed error code and pushed interrupt number
+	add esp, 12	; Cleans up pushed error code ; int number ; has_err
 	sti
 	iret           	; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 

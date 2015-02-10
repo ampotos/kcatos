@@ -6,6 +6,7 @@
 #include <utils/types.h>
 #include <memory/page.h>
 #include <memory/kmalloc.h>
+#include <syscall/syscall.h>
 
 extern char end_bss;
 
@@ -46,12 +47,9 @@ void	fuzzing_kmalloc_kfree()
 
 void usermode_task()
 {
-  int	i;
-
-  i = 0;
-  while (i < 1)
-    i++;
-  asm volatile("int $0x80");
+  syscall_write_screen("Cool, mon premier syscall \\o/\n", 30);
+  syscall_puts_screen("Mouahaha");
+  syscall_wait_until_the_end_of_your_life();
 }
 
 void kernel_main()

@@ -147,20 +147,24 @@ void putc(const char c)
 }
 
 // Print String
-void puts_nolf(const char *data)
+u32 puts_nolf(const char *data)
 {
   size_t i = 0;
 
   if (data == NULL)
-    return ;
+    return (0);
   while (data[i] != '\0')
     terminal_putchar(data[i++]);
+  return (i);
 }
 
-void puts(const char *data)
+u32 puts(const char *data)
 {
-  puts_nolf(data);
+  u32	ret;
+  
+  ret = puts_nolf(data);
   terminal_putchar('\n');
+  return (ret + 1);
 }
 
 // Print Signed Int 32, 16 and 8 bits
@@ -372,4 +376,14 @@ void clean()
 	  screen_buff[index] = make_vgaentry(' ',  0);
 	}
     }
+}
+
+size_t		write_screen(u8 *data, size_t sz)
+{
+  size_t	i;
+
+  i = 0;
+  while (i < sz)
+    terminal_putchar(data[i++]);
+  return (i);
 }
