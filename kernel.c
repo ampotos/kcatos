@@ -7,6 +7,7 @@
 #include <memory/page.h>
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
+#include <process/process.h>
 
 extern char end_bss;
 
@@ -64,7 +65,6 @@ void kernel_main()
   puts("Coucou");
   create_process(&usermode_task);
   assert(0);
-
   
   puts("End");
   
