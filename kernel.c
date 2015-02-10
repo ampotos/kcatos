@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include <descriptor_tables/descriptor_tables.h>
 #include <utils/usefull_routine.h>
 #include <utils/print.h>
@@ -9,47 +8,18 @@
 #include <syscall/syscall.h>
 #include <process/process.h>
 
-extern char end_bss;
-
-u32     mbootstrap_kmalloc(u32 size, u32 *phys, u32 aligned);
-
-void	*test_fill_km(int sz)
-{
-  int	i;
-  char *p;
-
-  p = kmalloc(sz);
-  printf("km(%d) => %x\n", sz, p);
-  
-  for (i = 0 ; i < sz ; i++)
-    p[i] = 0x41;
-  return (p);
-}
-
-void	fuzzing_kmalloc_kfree()
-{
-  void	*tblptr[1000];
-  u32	super_rand;
-  u32	i;
-  u32	sum;
-
-  sum = 0;
-  for (i = 0 ; i < 100 ; i++)
-    {
-      super_rand = ((42 << i)^(i<<(i*3))) / 3 % 300;
-      tblptr[i] = kmalloc(super_rand);
-      sum += super_rand;
-      printf("%d: Currently allocated: %d Bytes\n", i, sum);
-    }
-  puts("Time to free");
-  for (i = 0 ; i < 100 ; i++)
-    kfree(tblptr[i]);
-}
-
 void usermode_task()
 {
-  syscall_write_screen("Cool, mon premier syscall \\o/\n", 30);
-  syscall_puts_screen("Mouahaha");
+  if (!syscall_is_computer_on())
+    if (syscall_is_computer_on_fire())
+      {
+        syscall_puts_screen("Oh sheat! Fire! Fire! Fire!");
+	syscall_puts_screen("Lets get out of there!");
+	*((u32*)usermode_task) /= ((u32)usermode_task)&0;
+      }
+  
+  syscall_write_screen("This is a syscall\n", 18);
+  syscall_puts_screen("This is an other syscall");
   syscall_wait_until_the_end_of_your_life();
 }
 
@@ -59,14 +29,14 @@ void kernel_main()
   terminal_setpos(0, 0);
 
   init_descriptor_tables();
-
   init_paging();
 
-  puts("Coucou");
+  puts("Hi.");
+  
   create_process(&usermode_task);
   assert(0);
   
-  puts("End");
+  puts("End.");
   
   wait_until_the_end_of_your_life();
 } 

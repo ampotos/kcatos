@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Feb 10 17:56:56 2015 eax
+## Last update Wed Feb 11 00:35:05 2015 eax
 ##
 
 CC      =	gcc
@@ -29,7 +29,8 @@ SRCC	=	kernel.c \
 		memory/frame.c \
 		process/process.c \
 		syscall/syscall_handler.c \
-		syscall/syscall.c
+		syscall/syscall.c \
+		test/test_kmalloc.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
@@ -40,7 +41,8 @@ SRCA	=	boot.s \
 		utils/usefull_routine.s \
 		usermode.s \
 		descriptor_tables/tss_flush.s \
-		memory/enable_paging.s
+		memory/enable_paging.s \
+		syscall/syscall_do_call.s
 
 OBJA	=	$(SRCA:.s=.o)
 

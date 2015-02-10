@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb  9 20:34:08 2015 eax
-** Last update Tue Feb 10 18:04:59 2015 eax
+** Last update Wed Feb 11 00:52:56 2015 eax
 */
 
 #include <memory/page.h>
@@ -39,7 +39,6 @@ void switch_to_user_mode(u32 addr, u32 new_esp);
 
 void	create_process(void *new_eip)
 {
-  puts("Test 1");
   /* new_stack(PROCESS_STACK_START, PROCESS_STACK_SIZE); */
 
 

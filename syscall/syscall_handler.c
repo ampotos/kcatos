@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Tue Feb 10 02:33:46 2015 eax
+** Last update Wed Feb 11 00:52:35 2015 eax
 */
 
 #include <utils/print.h>
@@ -18,31 +18,16 @@ static void *syscalls[] =
   {
     wait_until_the_end_of_your_life,
     write_screen,
-    puts_screen
+    puts_screen,
+    is_computer_on,
+    is_computer_on_fire
   };
 
 void	syscall_handler(regs_t *regs)
 {
-  printf("regs->eax: %d\n", regs->eax);
-  
   if (regs->eax > sizeof(syscalls) / sizeof(*syscalls))
     return;
 
   void	*scall = syscalls[regs->eax];
-  
-  int ret;
-  asm volatile (" \
-     push %1; \
-     push %2; \
-     push %3; \
-     push %4; \
-     push %5; \
-     call *%6; \
-     pop %%ebx; \
-     pop %%ebx; \
-     pop %%ebx; \
-     pop %%ebx; \
-     pop %%ebx; \
-   " : "=a" (ret) : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx), "r" (scall));
-  regs->eax = ret;
+  regs->eax = syscall_do_call((u32)scall, regs->edi, regs->esi, regs->edx, regs->ecx, regs->ebx);
 }
