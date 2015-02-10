@@ -8,7 +8,7 @@
 ** Last update Mon Feb  9 21:56:41 2015 eax
 */
 
-#include <utils/Print.h>
+#include <utils/print.h>
 #include <utils/types.h>
 #include <utils/assert.h>
 #include <memory/kmalloc.h>

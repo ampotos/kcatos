@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Feb 10 01:14:09 2015 eax
+## Last update Tue Feb 10 14:04:29 2015 eax
 ##
 
 CC      =	gcc
@@ -21,7 +21,7 @@ SRCC	=	kernel.c \
 		descriptor_tables/descriptor_tables.c \
 		descriptor_tables/idt_setup.c \
 		descriptor_tables/idt_handler.c \
-		utils/Print.c \
+		utils/print.c \
 		utils/panic_print.c \
 		utils/string.c \
 		memory/page.c \

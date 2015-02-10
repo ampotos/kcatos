@@ -5,13 +5,13 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb  9 20:34:08 2015 eax
-** Last update Mon Feb  9 23:11:37 2015 eax
+** Last update Tue Feb 10 13:44:10 2015 eax
 */
 
-#include "../memory/page.h"
-#include "../memory/frame.h"
-#include "../utils/assert.h"
-#include "../utils/Print.h"
+#include <memory/page.h>
+#include <memory/frame.h>
+#include <utils/assert.h>
+#include <utils/print.h>
 
 #define PROCESS_STACK_START (0xE0000000)
 #define PROCESS_STACK_SIZE (0x2000)

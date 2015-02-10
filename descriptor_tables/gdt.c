@@ -5,12 +5,12 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 22:55:52 2014 eax
-** Last update Mon Feb  9 23:25:56 2015 eax
+** Last update Tue Feb 10 13:43:24 2015 eax
 */
 
-#include "gdt.h"
-#include "../utils/string.h"
-#include "../utils/assert.h"
+#include <descriptor_tables/gdt.h>
+#include <utils/string.h>
+#include <utils/assert.h>
 
 static t_tss_entry	tss_entry;
 static t_gdt_entry	gdt_entries[6];

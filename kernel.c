@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <descriptor_tables/descriptor_tables.h>
 #include <utils/usefull_routine.h>
-#include <utils/Print.h>
+#include <utils/print.h>
 #include <utils/assert.h>
 #include <utils/types.h>
 #include <memory/page.h>

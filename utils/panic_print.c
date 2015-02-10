@@ -1,7 +1,7 @@
-#include <utils/Print.h>
+#include <utils/print.h>
 #include <descriptor_tables/idt.h>
 #include <stdint.h>
-#include "usefull_routine.h"
+#include <utils/usefull_routine.h>
 
 const char	*tab_exception[20] =
   {

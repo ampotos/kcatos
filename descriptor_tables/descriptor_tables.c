@@ -5,12 +5,12 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Dec  5 21:31:02 2014 eax
-** Last update Mon Dec  8 19:11:10 2014 
+** Last update Tue Feb 10 13:42:56 2015 eax
 */
 
-#include "gdt.h"
-#include "idt.h"
-#include "descriptor_tables.h"
+#include <descriptor_tables/gdt.h>
+#include <descriptor_tables/idt.h>
+#include <descriptor_tables/descriptor_tables.h>
 
 void	init_descriptor_tables()
 {
