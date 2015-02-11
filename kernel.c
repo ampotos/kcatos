@@ -17,9 +17,9 @@ void usermode_task()
 	syscall_puts_screen("Lets get out of there!");
 	*((u32*)usermode_task) /= ((u32)usermode_task)&0;
       }
-  
-  syscall_write_screen("This is a syscall\n", 18);
-  syscall_puts_screen("This is an other syscall");
+
+  syscall_puts_screen("Hi. This is KCatOs. Deal with it.");
+  syscall_oh_crap();
   syscall_wait_until_the_end_of_your_life();
 }
 
@@ -30,13 +30,9 @@ void kernel_main()
 
   init_descriptor_tables();
   init_paging();
-
-  puts("Hi.");
   
   create_process(&usermode_task);
-  assert(0);
-  
-  puts("End.");
+  assertm(0, "After create process. Should not happen.");
   
   wait_until_the_end_of_your_life();
 } 

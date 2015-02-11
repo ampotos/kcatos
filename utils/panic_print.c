@@ -52,9 +52,9 @@ void	handle_err_code(u32 num, u32 err)
 	puts_nolf("by read ");
 
       if (err & 0x4)
-	puts_nolf("in user-mode ");
+	puts_nolf("from user-mode ");
       else
-	puts_nolf("in kernel-mode ");
+	puts_nolf("from kernel-mode ");
       
       printf("at %x)", fault_addr);
     }

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:34:36 2015 eax
-** Last update Wed Feb 11 00:16:58 2015 eax
+** Last update Wed Feb 11 02:35:41 2015 eax
 */
 
 #ifndef SYSCALL_H_
@@ -63,5 +63,5 @@ DECL_SYSCALL2(write_screen, const char*, u32);
 DECL_SYSCALL1(puts_screen, const char*);
 DECL_SYSCALL0(is_computer_on);
 DECL_SYSCALL0(is_computer_on_fire);
-
+DECL_SYSCALL0(oh_crap);
 #endif

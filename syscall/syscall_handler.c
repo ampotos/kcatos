@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Wed Feb 11 00:52:35 2015 eax
+** Last update Wed Feb 11 02:36:11 2015 eax
 */
 
 #include <utils/print.h>
@@ -20,7 +20,8 @@ static void *syscalls[] =
     write_screen,
     puts_screen,
     is_computer_on,
-    is_computer_on_fire
+    is_computer_on_fire,
+    print_logo
   };
 
 void	syscall_handler(regs_t *regs)
