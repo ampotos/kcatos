@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 12:02:10 2014 
-** Last update Wed Feb 11 00:24:38 2015 eax
+** Last update Wed Feb 11 16:53:12 2015 eax
 */
 
 #ifndef IDT_H_
@@ -20,7 +20,7 @@
 #define IDT_SINGLE_STEP		1	// single stepexecution for debugger
 #define IDT_NMI			2	// non maskable interrupt
 #define IDT_BREAKPOINT		3	// breakpoint for debugger
-#define IDT_OVERFLOW		4	// overlfow in cpu operation
+#define IDT_OVERFLOW		4	// overflow in cpu operation
 #define IDT_BOUNDS_CHECK	5	// bounds check
 #define IDT_UNDEF_OPCODE	6	// undefined opcode
 #define IDT_NO_COPROCESSOR	7	// no coporecessor (like module but for cpu)
