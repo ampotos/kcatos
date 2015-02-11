@@ -101,10 +101,10 @@ void		panic_print(regs_t reg)
   printf("\n");
 }
 
-void	panic_print_assert(char *filename, int linenum, char *expr)
+void	panic_print_assert(char *filename, int linenum, char *expr, char *msg)
 {
   printf("KCat Panic Attack !\n");
   printf("An assertion failed.\n");
-  printf("%s:%d -> (%s)\n", filename, linenum, expr);
+  printf("%s:%d -> (%s) %s \n", filename, linenum, expr, msg ? msg : "");
   wait_until_the_end_of_your_life();  
 }

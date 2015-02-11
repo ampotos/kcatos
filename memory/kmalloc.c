@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Dec 25 19:50:05 2014 eax
-** Last update Mon Feb  9 21:56:41 2015 eax
+** Last update Wed Feb 11 02:14:53 2015 eax
 */
 
 #include <utils/print.h>
@@ -123,7 +123,7 @@ void	*kmalloc_all(u32 size, u32 align, u32 *phys)
   if (kheap)
     {
       ret = find_node(size, align);
-      assert(ret != NULL); // TODO: need a generic kpanic_str
+      assertm(ret != NULL, "No more memory in kernel heap");
       if (phys)
 	{
 	  t_page *page = get_page((u32)ret, 0, kernel_directory);
