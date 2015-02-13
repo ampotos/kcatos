@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sun Dec 28 13:38:10 2014 eax
-** Last update Mon Feb  9 21:51:08 2015 eax
+** Last update Fri Feb 13 22:38:10 2015 eax
 */
 
 #ifndef KMALLOC_H_
@@ -17,6 +17,9 @@
 #define KMALLOC_HEADER_SZ (sizeof (t_kmalloc_header))
 #define KHEAP_START (0xC0000000)
 #define KHEAP_INITIAL_SIZE (0x100000)
+#define UHEAP_START (0xF0000000)
+#define UHEAP_INITIAL_SIZE (0x100000)
+
 
 #define ALIGN_ON(x,n) (size_t)((~(n-1))&(((u64)x)+(n-1)))
 #define ALIGN_PTR(x) (u32)(ALIGN_ON((x), sizeof(u64)))

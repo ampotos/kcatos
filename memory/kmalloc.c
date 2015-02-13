@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Dec 25 19:50:05 2014 eax
-** Last update Wed Feb 11 02:14:53 2015 eax
+** Last update Fri Feb 13 23:05:15 2015 eax
 */
 
 #include <utils/print.h>
@@ -55,7 +55,7 @@ t_heap		*new_heap(u32 start, u32 end, u8 su_lvl, u8 ro)
   return (heap);
 }
 
-t_km_h		*split_node(t_km_h *p, u32 sz, u32 align)
+static t_km_h		*split_node(t_km_h *p, u32 sz, u32 align)
 {
   t_km_h	*new;
 
@@ -73,7 +73,7 @@ t_km_h		*split_node(t_km_h *p, u32 sz, u32 align)
   return (p->data);
 }
 
-void	join_node(t_km_h *p1, t_km_h *p2)
+static void	join_node(t_km_h *p1, t_km_h *p2)
 {
   p1->next = p2->next;
   if (p2->next)
@@ -83,7 +83,7 @@ void	join_node(t_km_h *p1, t_km_h *p2)
   p1->size += p2->size + KMALLOC_HEADER_SZ;
 }
 
-void	*find_node(u32 sz, u32 align)
+static void	*find_node(u32 sz, u32 align)
 {
   t_km_h	*p;
 

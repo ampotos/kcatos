@@ -5,14 +5,18 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Wed Feb 11 02:36:11 2015 eax
+** Last update Fri Feb 13 23:06:40 2015 eax
 */
 
 #include <utils/print.h>
 #include <syscall/syscall_handler.h>
 #include <utils/usefull_routine.h>
+#include <memory/kmalloc.h>
+#include <syscall/syscall.h>
 
 #define puts_screen puts
+
+u32	sbrk(u32);
 
 static void *syscalls[] =
   {
@@ -21,8 +25,14 @@ static void *syscalls[] =
     puts_screen,
     is_computer_on,
     is_computer_on_fire,
-    print_logo
+    print_logo,
+    sbrk
   };
+
+u32	sbrk(u32 incr)
+{
+  return (UHEAP_START);
+}
 
 void	syscall_handler(regs_t *regs)
 {
