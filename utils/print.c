@@ -123,7 +123,7 @@ void recurcive_print_int(const uint32_t i)
 {
   if (i >= 10)
     recurcive_print_int(i / 10);
-  terminal_putchar('0' + (i % 10));
+  putc('0' + (i % 10));
 }
 
 void recurcive_hex(uint32_t i)
@@ -132,7 +132,7 @@ void recurcive_hex(uint32_t i)
 
   if (i >= 16)
     recurcive_hex(i / 16);
-  terminal_putchar(base[i % 16]);  
+  putc(base[i % 16]);  
 }
 
 
@@ -172,7 +172,7 @@ void putd32(int32_t i)
 {
   if (i < 0)
     {
-      terminal_putchar('-');
+      putc('-');
       i *= -1;
     }
   recurcive_print_int(i);
@@ -384,6 +384,6 @@ size_t		write_screen(u8 *data, size_t sz)
 
   i = 0;
   while (i < sz)
-    putc(data[i++]);
+    terminal_putchar(data[i++]);
   return (i);
 }
