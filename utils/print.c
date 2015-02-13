@@ -143,7 +143,7 @@ void recurcive_hex(uint32_t i)
 // Print Char
 void putc(const char c)
 {
-  terminal_putchar(c);
+  syscall_write_screen(&c, 1);
 }
 
 // Print String
@@ -154,7 +154,7 @@ u32 puts_nolf(const char *data)
   if (data == NULL)
     return (0);
   while (data[i] != '\0')
-    terminal_putchar(data[i++]);
+    putc(data[i++]);
   return (i);
 }
 
@@ -163,7 +163,7 @@ u32 puts(const char *data)
   u32	ret;
   
   ret = puts_nolf(data);
-  terminal_putchar('\n');
+  putc('\n');
   return (ret + 1);
 }
 
@@ -384,6 +384,6 @@ size_t		write_screen(u8 *data, size_t sz)
 
   i = 0;
   while (i < sz)
-    terminal_putchar(data[i++]);
+    putc(data[i++]);
   return (i);
 }
