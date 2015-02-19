@@ -2,11 +2,14 @@
 
 typedef struct __programs_t{
   char *name;
-  int (*function)(const char **);
+  int (*function)(char **);
 } programs_t;
 
+void start_kksh();
+
 int main(){
-  return start_kksh();
+  start_kksh();
+  return (0);
 }
 
 void put_prompt(){
@@ -27,12 +30,17 @@ void execsh(char *command, const programs_t *prog){
   KFREE(command);
 }
 
-int morpion(const char **argv){
+//program test
+int morpion(char **argv){
   printf("Welcom in Tic Tac Toe\n");
   printf("Good bye!\n");
 }
-  
-int start_kksh(){
+
+void start_kksh(){
+
+  /*fisrt conponent is the command line programme
+    name and second parameter is the programme address
+  */
   const programs_t prog[] = {
     {"tictactoe", &morpion}, 
     {"", NULL}
