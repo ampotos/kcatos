@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Dec 24 14:23:34 2014 eax
-** Last update Fri Feb 20 22:35:06 2015 eax
+** Last update Fri Feb 20 23:23:25 2015 eax
 */
 
 #include <utils/types.h>
@@ -41,7 +41,7 @@ void	bzero(uint32_t dst, uint32_t size)
 }
 
 
-void		memcpy(u32 dst, u32 src, u32 size)
+void		memcpy(void *dst, void *src, u32 size)
 {
   u32	i;
   

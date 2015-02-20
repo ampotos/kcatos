@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Dec 25 19:50:05 2014 eax
-** Last update Fri Feb 13 23:05:15 2015 eax
+** Last update Fri Feb 20 23:12:18 2015 eax
 */
 
 #include <utils/print.h>
@@ -16,7 +16,8 @@
 
 t_heap	*kheap = NULL;
 extern u32 end_bss;
-u32 fake_heap_ptr = (u32)&end_bss;
+/* u32 fake_heap_ptr; = (u32)&end_bss; */
+u32 fake_heap_ptr;
 extern t_page_directory *kernel_directory;
 
 static u32	bootstrap_kmalloc(u32 size, u32 *phys, u32 aligned)

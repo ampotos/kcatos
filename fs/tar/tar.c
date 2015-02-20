@@ -5,13 +5,14 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 20:40:56 2015 eax
-** Last update Fri Feb 20 22:30:50 2015 eax
+** Last update Fri Feb 20 23:22:46 2015 eax
 */
 
 #include <utils/types.h>
+#include <utils/string.h>
 #include <fs/tar/tar.h>
 
-u32	stroct2int(char *s)
+static u32	stroct2int(char *s)
 {
   u32	res;
 

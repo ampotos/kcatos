@@ -7,6 +7,10 @@
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
 #include <process/process.h>
+#include <multiboot.h>
+#include <initrd/initrd.h>
+
+extern u32 fake_heap_ptr;
 
 void usermode_task_useless()
 {
@@ -25,22 +29,21 @@ void usermode_task_useless()
 
 void	usermode_task_usefull()
 {
-  int	*p;
-
   printf("tests %d\n", 42);
   syscall_wait_until_the_end_of_your_life();
 }
 
-void kernel_main()
+void kernel_main(t_multiboot *multiboot)
 {
   terminal_initialize();
   terminal_setpos(0, 0);
 
+  fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
+
   init_descriptor_tables();
   init_paging();
-
-
-  create_process(&usermode_task_usefull);
+  load_initrd(*(u32*)(multiboot->mods_addr));
+  /* create_process(&usermode_task_usefull); */
   /* assertm(0, "After create process. Should not happen."); */
   
   wait_until_the_end_of_your_life();

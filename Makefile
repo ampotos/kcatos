@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Fri Feb 20 22:30:21 2015 eax
+## Last update Fri Feb 20 23:35:10 2015 eax
 ##
 
 CC      =	gcc
@@ -32,7 +32,8 @@ SRCC	=	kernel.c \
 		syscall/syscall.c \
 		test/test_kmalloc.c \
 		utils/ascii_art.c \
-		fs/tar/tar.c
+		fs/tar/tar.c \
+		initrd/initrd.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
@@ -51,9 +52,13 @@ OBJA	=	$(SRCA:.s=.o)
 OBJ	=	$(OBJC) $(OBJA)
 
 NAME	=	KCat.Os
-ISONAME	=	$(NAME).iso
 
-all: $(NAME)
+ISONAME	=	$(NAME).iso
+BOOT_PATH =	iso/boot/
+INITRD_NAME =	initrd.tar
+INITRD_DATA =	initrd_content/
+
+all: $(NAME) $(INITRD_NAME)
 
 $(NAME): $(OBJ)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
@@ -62,7 +67,7 @@ $(NAME): $(OBJ)
 	$(ASM) $(ASMFLAGS) $< -o $@
 
 iso: $(NAME)
-	cp $(NAME) iso/boot/
+	cp $(NAME) $(BOOT_PATH)
 	grub-mkrescue  -d /usr/lib/grub/i386-pc  -o $(ISONAME) iso/
 
 clean:
@@ -70,9 +75,22 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) iso/boot/$(NAME)
+	$(RM) $(BOOT_PATH)/$(NAME)
 	$(RM) $(ISONAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re iso
+$(INITRD_NAME): $(BOOT_PATH)/$(INITRD_NAME)
+	tar -cf $(BOOT_PATH)/$(INITRD_NAME) $(INITRD_DATA)/*
+
+run:
+	qemu-system-i386 -kernel $(NAME) -initrd $(BOOT_PATH)/$(INITRD_NAME)
+
+run-debug:
+	qemu-system-i386 -S -s -kernel $(NAME) -initrd $(BOOT_PATH)/$(INITRD_NAME)
+
+run-iso:
+	qemu-system-i386 $(ISONAME)
+
+
+.PHONY: all clean fclean re iso run run-debug run-iso

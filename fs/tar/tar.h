@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 20:13:23 2015 eax
-** Last update Fri Feb 20 22:30:00 2015 eax
+** Last update Fri Feb 20 23:17:31 2015 eax
 */
 
 #ifndef TAR_H_
@@ -60,5 +60,6 @@ typedef struct
   char	*data;
 } t_tar_node;
 
+u32	get_next_tar_node(char *tardata, t_tar_node *out_node);
 
 #endif
