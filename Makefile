@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Feb 10 01:14:09 2015 eax
+## Last update Wed Feb 11 18:39:54 2015 
 ##
 
 CC      =	gcc
@@ -21,6 +21,7 @@ SRCC	=	kernel.c \
 		descriptor_tables/descriptor_tables.c \
 		descriptor_tables/idt_setup.c \
 		descriptor_tables/idt_handler.c \
+		descriptor_tables/pic/irq_handler.c \
 		utils/Print.c \
 		utils/panic_print.c \
 		utils/string.c \
@@ -37,6 +38,8 @@ SRCA	=	boot.s \
 		descriptor_tables/gdt_flush.s \
 		descriptor_tables/idt_load.s \
 		descriptor_tables/idt_gen.s \
+		descriptor_tables/pic/init.s \
+		descriptor_tables/pic/irq_gen.s \
 		utils/usefull_routine.s \
 		usermode.s \
 		descriptor_tables/tss_flush.s

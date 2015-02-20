@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 12:02:10 2014 
-** Last update Tue Feb 10 02:08:38 2015 eax
+// Last update Wed Feb 11 16:56:07 2015 
 */
 
 #ifndef IDT_H_
@@ -20,7 +20,7 @@
 #define IDT_SINGLE_STEP		1	// single stepexecution for debugger
 #define IDT_NMI			2	// non maskable interrupt
 #define IDT_BREAKPOINT		3	// breakpoint for debugger
-#define IDT_OVERFLOW		4	// overlfow in cpu operation
+#define IDT_OVERFLOW		4	// overflow in cpu operation
 #define IDT_BOUNDS_CHECK	5	// bounds check
 #define IDT_UNDEF_OPCODE	6	// undefined opcode
 #define IDT_NO_COPROCESSOR	7	// no coporecessor (like module but for cpu)
@@ -38,8 +38,19 @@
 
 /* ***************************************/
 /* Number 19 to 31 are intel reserved    */
-/* Number 32 to 255 can be defined by us */
 /*****************************************/
+
+/* *******************************/
+/* Number 32 to 39 master pic    */
+/*********************************/
+
+/* ******************************/
+/* Number 40 to 47 slave pic    */
+/********************************/
+
+#define IDT_SYSCALL		0x80    // syscall
+
+/* Number 47 to 255 can be defined by us */
 
 typedef struct regs
 {

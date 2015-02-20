@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 19:08:59 2014 
-** Last update Tue Feb 10 02:02:22 2015 eax
+** Last update Wed Feb 11 18:42:45 2015 
 */
 
 #include "idt.h"
@@ -21,6 +21,11 @@ void	interrupt_handler(regs_t regs)
     {
       syscall_handler(&regs);
       return;
+    }
+  else if (regs.int_no >= 32 && regs.int_no <= 47)
+    {
+      irq_handler(&regs);
+      return ;
     }
   panic_print(regs);
   wait_until_the_end_of_your_life();
