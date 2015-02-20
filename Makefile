@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Fri Feb 20 19:10:16 2015 eax
+## Last update Fri Feb 20 22:30:21 2015 eax
 ##
 
 CC      =	gcc
@@ -31,7 +31,8 @@ SRCC	=	kernel.c \
 		syscall/syscall_handler.c \
 		syscall/syscall.c \
 		test/test_kmalloc.c \
-		utils/ascii_art.c
+		utils/ascii_art.c \
+		fs/tar/tar.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
