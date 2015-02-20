@@ -33,18 +33,22 @@ void	usermode_task_usefull()
   syscall_wait_until_the_end_of_your_life();
 }
 
-void kernel_main(t_multiboot *multiboot)
+void kernel_main(u32 magic, t_multiboot *multiboot)
 {
   terminal_initialize();
   terminal_setpos(0, 0);
 
-  fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
-
   init_descriptor_tables();
+
+  assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run");
+  
+  fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
   init_paging();
+
+  assert(multiboot->mods_count != 0);
   load_initrd(*(u32*)(multiboot->mods_addr));
   /* create_process(&usermode_task_usefull); */
   /* assertm(0, "After create process. Should not happen."); */
-  
+
   wait_until_the_end_of_your_life();
 } 
