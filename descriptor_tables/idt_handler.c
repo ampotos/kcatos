@@ -5,11 +5,11 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 19:08:59 2014 
-** Last update Wed Feb 11 18:42:45 2015 
+** Last update Fri Feb 20 19:00:41 2015 
 */
 
-#include "idt.h"
-#include <utils/Print.h>
+#include <descriptor_tables/idt.h>
+#include <utils/print.h>
 #include <utils/usefull_routine.h>
 #include <syscall/syscall_handler.h>
 

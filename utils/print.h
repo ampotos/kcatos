@@ -69,6 +69,8 @@ void clean();
 
 
 void	panic_print(regs_t reg);
-void	panic_print_assert(char *filename, int linenum, char *expr);
+void	panic_print_assert(char *filename, int linenum, char *expr, char *msg);
 size_t		write_screen(u8 *data, size_t sz);
+u32	print_logo();
+
 #endif /* PRINT_H_ */

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:34:36 2015 eax
-** Last update Tue Feb 10 02:21:26 2015 eax
+** Last update Fri Feb 13 23:02:59 2015 eax
 */
 
 #ifndef SYSCALL_H_
@@ -24,8 +24,8 @@
 #define DEFN_SYSCALL1_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1))
 #define DEFN_SYSCALL2_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2))
 #define DEFN_SYSCALL3_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2), "d" ((int)p3))
-#define DEFN_SYSCALL4_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2), "d" ((int)p3), "e" ((int)p4))
-#define DEFN_SYSCALL5_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2), "d" ((int)p3), "e" ((int)p4), "f" ((int)p5))
+#define DEFN_SYSCALL4_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2), "d" ((int)p3), "S" ((int)p4))
+#define DEFN_SYSCALL5_ASM(num) asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2), "d" ((int)p3), "S" ((int)p4), "D" ((int)p5))
 
 #define DEFN_SYSCALL0_ARGS
 #define DEFN_SYSCALL1_ARGS(P1) P1 p1
@@ -53,13 +53,16 @@
 #define DEFN_SYSCALL4(fn, num, P1, P2, P3, P4)			\
   DEFN_SYSCALLx(DEFN_SYSCALL4_ASM(num), fn, DEFN_SYSCALL4_ARGS(P1, P2, P3, P4))
 #define DEFN_SYSCALL5(fn, num, P1, P2, P3, P4, P5)		\
-  DEFN_SYSCALLx(DEFN_SYSCALL5_ASM(num), fn, DEFN_SYSCALL0_ARGS(P1, P2, P3, P4, P5))
+  DEFN_SYSCALLx(DEFN_SYSCALL5_ASM(num), fn, DEFN_SYSCALL5_ARGS(P1, P2, P3, P4, P5))
 
 
 
 
-DECL_SYSCALL2(write_screen, const char*, u32);
 DECL_SYSCALL0(wait_until_the_end_of_your_life);
+DECL_SYSCALL2(write_screen, const char*, u32);
 DECL_SYSCALL1(puts_screen, const char*);
-
+DECL_SYSCALL0(is_computer_on);
+DECL_SYSCALL0(is_computer_on_fire);
+DECL_SYSCALL0(oh_crap);
+DECL_SYSCALL1(sbrk, u32);
 #endif

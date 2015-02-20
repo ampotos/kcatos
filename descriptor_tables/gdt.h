@@ -5,15 +5,13 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 21:13:49 2014 eax
-** Last update Mon Feb  9 06:32:43 2015 eax
+** Last update Tue Feb 10 13:42:05 2015 eax
 */
 
 #ifndef GDT_H_
 #define GDT_H_
 
-
-#include "../utils/types.h"
-
+#include <utils/types.h>
 
 #define RING(n) (n & 0x03)
 #define CODE_DATA (4)

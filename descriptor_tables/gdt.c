@@ -5,12 +5,12 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Dec  2 22:55:52 2014 eax
-** Last update Mon Feb  9 23:25:56 2015 eax
+** Last update Wed Feb 11 02:19:00 2015 eax
 */
 
-#include "gdt.h"
-#include "../utils/string.h"
-#include "../utils/assert.h"
+#include <descriptor_tables/gdt.h>
+#include <utils/string.h>
+#include <utils/assert.h>
 
 static t_tss_entry	tss_entry;
 static t_gdt_entry	gdt_entries[6];
@@ -18,7 +18,6 @@ static t_gdt_ptr	gdt_ptr;
 
 static void set_gdt_entrie(uint8_t idx,  uint32_t base, uint32_t limit, uint16_t flags)
 {
-  /* TODO: check/assert vulues */
   gdt_entries[idx].limit_low = limit & 0xFFFF;
   gdt_entries[idx].base_low = base & 0xFFFF;
   gdt_entries[idx].base_middle = (base >> 16) & 0xFFFF;
@@ -72,7 +71,7 @@ void init_gdt()
 
 
   u32 esp;
-  asm volatile("mov %%esp, %0": "=r"(esp));
+  asm volatile("mov %%esp, %0": "=r"(esp)); // TODO: This is a temporary hack.
   
   write_tss(5, 0x10, esp);
   gdt_flush((uint32_t)&gdt_ptr);

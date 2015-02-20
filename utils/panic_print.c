@@ -1,7 +1,7 @@
-#include <utils/Print.h>
+#include <utils/print.h>
 #include <descriptor_tables/idt.h>
 #include <stdint.h>
-#include "usefull_routine.h"
+#include <utils/usefull_routine.h>
 
 const char	*tab_exception[20] =
   {
@@ -52,9 +52,9 @@ void	handle_err_code(u32 num, u32 err)
 	puts_nolf("by read ");
 
       if (err & 0x4)
-	puts_nolf("in user-mode ");
+	puts_nolf("from user-mode ");
       else
-	puts_nolf("in kernel-mode ");
+	puts_nolf("from kernel-mode ");
       
       printf("at %x)", fault_addr);
     }
@@ -101,10 +101,10 @@ void		panic_print(regs_t reg)
   printf("\n");
 }
 
-void	panic_print_assert(char *filename, int linenum, char *expr)
+void	panic_print_assert(char *filename, int linenum, char *expr, char *msg)
 {
   printf("KCat Panic Attack !\n");
   printf("An assertion failed.\n");
-  printf("%s:%d -> (%s)\n", filename, linenum, expr);
+  printf("%s:%d -> (%s) %s \n", filename, linenum, expr, msg ? msg : "");
   wait_until_the_end_of_your_life();  
 }

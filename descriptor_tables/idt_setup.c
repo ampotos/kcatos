@@ -5,10 +5,10 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Wed Feb 11 18:34:43 2015 
+** Last update Fri Feb 20 19:00:26 2015 
 */
 
-#include "idt.h"
+#include <descriptor_tables/idt.h>
 #include <utils/string.h>
 #include <utils/assert.h>
 #include <syscall/syscall_handler.h>

@@ -1,4 +1,4 @@
-#include "Print.h"
+#include <utils/print.h>
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -123,7 +123,7 @@ void recurcive_print_int(const uint32_t i)
 {
   if (i >= 10)
     recurcive_print_int(i / 10);
-  terminal_putchar('0' + (i % 10));
+  putc('0' + (i % 10));
 }
 
 void recurcive_hex(uint32_t i)
@@ -132,7 +132,7 @@ void recurcive_hex(uint32_t i)
 
   if (i >= 16)
     recurcive_hex(i / 16);
-  terminal_putchar(base[i % 16]);  
+  putc(base[i % 16]);  
 }
 
 
@@ -143,7 +143,7 @@ void recurcive_hex(uint32_t i)
 // Print Char
 void putc(const char c)
 {
-  terminal_putchar(c);
+  syscall_write_screen(&c, 1);
 }
 
 // Print String
@@ -154,7 +154,7 @@ u32 puts_nolf(const char *data)
   if (data == NULL)
     return (0);
   while (data[i] != '\0')
-    terminal_putchar(data[i++]);
+    putc(data[i++]);
   return (i);
 }
 
@@ -163,7 +163,7 @@ u32 puts(const char *data)
   u32	ret;
   
   ret = puts_nolf(data);
-  terminal_putchar('\n');
+  putc('\n');
   return (ret + 1);
 }
 
@@ -172,7 +172,7 @@ void putd32(int32_t i)
 {
   if (i < 0)
     {
-      terminal_putchar('-');
+      putc('-');
       i *= -1;
     }
   recurcive_print_int(i);

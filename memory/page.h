@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Dec 27 11:12:49 2014 eax
-** Last update Mon Feb  9 20:46:03 2015 eax
+** Last update Tue Feb 10 18:01:23 2015 eax
 */
 
 #ifndef PAGE_H_
@@ -45,7 +45,7 @@ typedef struct s_page_directory
 
 void	init_paging();
 t_page	*get_page(u32 addr, int create, t_page_directory *dir);
-void	enable_paging(t_page_directory *dir);
+void	enable_paging(u32 dir);
 
 #endif
 

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Dec 29 00:47:35 2014 eax
-** Last update Mon Feb  9 21:50:10 2015 eax
+** Last update Wed Feb 11 02:16:23 2015 eax
 */
 
 #include <utils/types.h>
@@ -53,7 +53,7 @@ void	alloc_frame(t_page *page, int kernel_lvl, int writeable)
 
   assert(page->frame == 0);
   idx = get_available_frame();
-  assert(idx != -1); // TODO: cusom kpanic message. Here a "no more memory available" could be nice.
+  assertm(idx != -1, "no more memory available");
   set_frame(idx * PAGE_SIZE);
   page->p = 1;
   page->rw = writeable ? 1 : 0;
@@ -63,7 +63,7 @@ void	alloc_frame(t_page *page, int kernel_lvl, int writeable)
 
 void	free_frame(t_page *page)
 {
-  assert(page->frame != 0); // ERR: this page had not any associated frame
+  assertm(page->frame != 0, "This page had no any associated frame");
   clear_frame(page->frame);
   page->frame = 0;
 }
