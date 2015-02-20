@@ -7,7 +7,6 @@
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
 #include <process/process.h>
-#include <libk/malloc.h>
 
 void usermode_task_useless()
 {
@@ -28,9 +27,6 @@ void	usermode_task_usefull()
 {
   int	*p;
 
-  /* p = malloc(4); */
-  /* *p = 42; */
-  /* syscall_puts_screen("Nice, userland malloc"); */
   printf("tests %d\n", 42);
   syscall_wait_until_the_end_of_your_life();
 }
