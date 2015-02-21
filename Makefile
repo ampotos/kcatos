@@ -5,11 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-<<<<<<< HEAD
-## Last update Wed Feb 11 18:39:54 2015 
-=======
-## Last update Fri Feb 13 22:54:34 2015 eax
->>>>>>> 687cdf4005c76a60e7f762cdc885348ef076f169
+## Last update Sat Feb 21 15:30:09 2015 
 ##
 
 CC      =	gcc
@@ -25,12 +21,8 @@ SRCC	=	kernel.c \
 		descriptor_tables/descriptor_tables.c \
 		descriptor_tables/idt_setup.c \
 		descriptor_tables/idt_handler.c \
-<<<<<<< HEAD
 		descriptor_tables/pic/irq_handler.c \
-		utils/Print.c \
-=======
 		utils/print.c \
->>>>>>> 687cdf4005c76a60e7f762cdc885348ef076f169
 		utils/panic_print.c \
 		utils/string.c \
 		memory/page.c \
