@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Fri Feb 20 23:35:10 2015 eax
+## Last update Sat Feb 21 03:52:54 2015 eax
 ##
 
 CC      =	gcc
@@ -58,7 +58,7 @@ BOOT_PATH =	iso/boot/
 INITRD_NAME =	initrd.tar
 INITRD_DATA =	initrd_content/
 
-all: $(NAME) $(INITRD_NAME)
+all: $(NAME) $(BOOT_PATH)/$(INITRD_NAME)
 
 $(NAME): $(OBJ)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
@@ -80,7 +80,7 @@ fclean: clean
 
 re: fclean all
 
-$(INITRD_NAME): $(BOOT_PATH)/$(INITRD_NAME)
+$(BOOT_PATH)/$(INITRD_NAME): $(wildcard $(INITRD_DATA)/*)
 	tar -cf $(BOOT_PATH)/$(INITRD_NAME) $(INITRD_DATA)/*
 
 run:
