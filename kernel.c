@@ -7,7 +7,10 @@
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
 #include <process/process.h>
-#include <libk/malloc.h>
+#include <multiboot.h>
+#include <initrd/initrd.h>
+
+extern u32 fake_heap_ptr;
 
 void usermode_task_useless()
 {
@@ -26,26 +29,26 @@ void usermode_task_useless()
 
 void	usermode_task_usefull()
 {
-  int	*p;
-
-  /* p = malloc(4); */
-  /* *p = 42; */
-  /* syscall_puts_screen("Nice, userland malloc"); */
   printf("tests %d\n", 42);
   syscall_wait_until_the_end_of_your_life();
 }
 
-void kernel_main()
+void kernel_main(u32 magic, t_multiboot *multiboot)
 {
   terminal_initialize();
   terminal_setpos(0, 0);
 
   init_descriptor_tables();
+
+  assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run");
+  
+  fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
   init_paging();
 
-
-  create_process(&usermode_task_usefull);
+  assert(multiboot->mods_count != 0);
+  load_initrd(*(u32*)(multiboot->mods_addr));
+  /* create_process(&usermode_task_usefull); */
   /* assertm(0, "After create process. Should not happen."); */
-  
+
   wait_until_the_end_of_your_life();
 } 

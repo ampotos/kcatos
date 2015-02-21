@@ -5,11 +5,10 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Dec 24 14:23:34 2014 eax
-** Last update Wed Dec 24 15:54:41 2014 eax
+** Last update Fri Feb 20 23:23:25 2015 eax
 */
 
-#include <stdint.h>
-#include <stddef.h>
+#include <utils/types.h>
 #include <utils/string.h>
 
 int strncmp_p(char *s1, char *s2, uint32_t n)
@@ -39,4 +38,13 @@ void		memset(uint32_t dst, uint32_t val, uint32_t size)
 void	bzero(uint32_t dst, uint32_t size)
 {
   memset(dst, 0, size);
+}
+
+
+void		memcpy(void *dst, void *src, u32 size)
+{
+  u32	i;
+  
+  for (i = 0; i < size ; i++)
+    ((u8*)dst)[i] = ((u8*)src)[i];
 }

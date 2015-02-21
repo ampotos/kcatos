@@ -1,4 +1,9 @@
-
+	extern kernel_main
+	extern wait_until_the_end_of_your_life
+	extern code
+	extern bss
+	extern end_bss
+	
 	MBALIGN     equ  1<<0
 	MEMINFO     equ  1<<1
 	FLAGS       equ  MBALIGN | MEMINFO
@@ -7,9 +12,16 @@
 
 	section .multiboot
 	align 4
+	
+multiboot:	
 	dd MAGIC
 	dd FLAGS
 	dd CHECKSUM
+	dd multiboot
+	dd code
+	dd bss
+	dd end_bss
+	dd _start
 
 	section .bootstrap_stack
 	align 4
@@ -21,9 +33,8 @@ stack_top:
 	global _start
 _start:
 	mov esp, stack_top
-
-	extern kernel_main
-	extern wait_until_the_end_of_your_life
+	push ebx
+	push eax
 	call kernel_main
 
 	;; If the kernel_main return, we do a none-active wait.
