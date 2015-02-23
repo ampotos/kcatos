@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Mon Feb 23 06:42:00 2015 eax
+## Last update Mon Feb 23 07:16:51 2015 eax
 ##
 
 CC      =	gcc
@@ -34,7 +34,9 @@ SRCC	=	kernel.c \
 		utils/ascii_art.c \
 		fs/tar/tar.c \
 		initrd/initrd.c \
-		elf/elf.c
+		elf/elf.c \
+		utils/error.c \
+		kmodule/kmodule.c
 
 OBJC	= 	$(SRCC:.c=.o)
 

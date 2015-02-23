@@ -5,14 +5,14 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Mon Feb 23 06:11:00 2015 eax
-## Last update Mon Feb 23 06:37:38 2015 eax
+## Last update Mon Feb 23 07:23:24 2015 eax
 ##
 
 CC	=	gcc
 LD	=	ld
 
 CFLAGS	=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra
-LDFLAGS	=	-melf_i386 -fPIC -shared
+LDFLAGS	=	-melf_i386 -fPIC -shared -einit_module
 
 SRC	=	t2.c
 OBJ	=	$(SRC:.c=.o)
