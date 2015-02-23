@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Sat Feb 21 03:52:54 2015 eax
+## Last update Mon Feb 23 06:42:00 2015 eax
 ##
 
 CC      =	gcc
@@ -33,7 +33,8 @@ SRCC	=	kernel.c \
 		test/test_kmalloc.c \
 		utils/ascii_art.c \
 		fs/tar/tar.c \
-		initrd/initrd.c
+		initrd/initrd.c \
+		elf/elf.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
@@ -56,9 +57,10 @@ NAME	=	KCat.Os
 ISONAME	=	$(NAME).iso
 BOOT_PATH =	iso/boot/
 INITRD_NAME =	initrd.tar
+INITRD_FILE =	$(BOOT_PATH)$(INITRD_NAME)
 INITRD_DATA =	initrd_content/
 
-all: $(NAME) $(BOOT_PATH)/$(INITRD_NAME)
+all: $(NAME) modules $(INITRD_FILE)
 
 $(NAME): $(OBJ)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
@@ -70,18 +72,27 @@ iso: $(NAME)
 	cp $(NAME) $(BOOT_PATH)
 	grub-mkrescue  -d /usr/lib/grub/i386-pc  -o $(ISONAME) iso/
 
+$(INITRD_FILE): $(wildcard $(INITRD_DATA)/*)
+	tar --transform="s#$(INITRD_DATA)/##g" -cf $(INITRD_FILE) --add-file $(INITRD_DATA)/*
+
+modules: $(INITRD_DATA)
+	make -C modules/ load
+
+$(INITRD_DATA):
+	mkdir -p $(INITRD_DATA)
+
 clean:
 	$(RM) $(OBJ)
+	make -C modules/ clean
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(BOOT_PATH)/$(NAME)
 	$(RM) $(ISONAME)
+	$(RM) $(BOOT_PATH)/$(INITRD_NAME)
+	make -C modules/ fclean
 
 re: fclean all
-
-$(BOOT_PATH)/$(INITRD_NAME): $(wildcard $(INITRD_DATA)/*)
-	tar -cf $(BOOT_PATH)/$(INITRD_NAME) $(INITRD_DATA)/*
 
 run:
 	qemu-system-i386 -kernel $(NAME) -initrd $(BOOT_PATH)/$(INITRD_NAME)
@@ -93,4 +104,4 @@ run-iso:
 	qemu-system-i386 $(ISONAME)
 
 
-.PHONY: all clean fclean re iso run run-debug run-iso
+.PHONY: all clean fclean re iso run run-debug run-iso modules
