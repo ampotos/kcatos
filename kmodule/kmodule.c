@@ -5,14 +5,14 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Mon Feb 23 07:21:11 2015 eax
+** Last update Mon Feb 23 08:01:03 2015 eax
 */
 
 #include <elf/elf.h>
 #include <utils/error.h>
 #include <utils/print.h>
 #include <kmodule/kmodule.h>
-
+#include <initrd/initrd.h>
 
 int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep)
 {
@@ -73,14 +73,14 @@ void	kmodule_exec(t_elfparse *ep)
 }
 
 
-int	kmodule_load(char *p)
+int	kmodule_load(t_initrd_kmod *km)
 {
   t_elfparse	ep;
 
   
   memset((u32)&ep, 0, sizeof(ep));
   
-  if (kmodule_parse(p, &ep) == -1)
+  if (kmodule_parse(km->data, &ep) == -1)
     return (reter(1, "Fail when loading module"));
 
   printf("entry: %x\n", ep.entry);
@@ -90,7 +90,7 @@ int	kmodule_load(char *p)
   for (i = 0 ; i < ep.nb_symb ; i++)
     printf("[%s] [%x]\n",  ep.symb[i].name, ep.symb[i].addr);
 
-  puts("Time to exec the module code now!");
+  printf("Time to exec the module [%s] code now!\n", km->name);
   kmodule_exec(&ep);
   
   return (0);

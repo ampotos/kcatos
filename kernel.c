@@ -9,6 +9,7 @@
 #include <process/process.h>
 #include <multiboot.h>
 #include <initrd/initrd.h>
+#include <kmodule/kmodule.h>
 
 extern u32 fake_heap_ptr;
 
@@ -27,14 +28,10 @@ void usermode_task_useless()
   syscall_wait_until_the_end_of_your_life();
 }
 
-void	usermode_task_usefull()
-{
-  printf("tests %d\n", 42);
-  syscall_wait_until_the_end_of_your_life();
-}
-
 void kernel_main(u32 magic, t_multiboot *multiboot)
 {
+  t_initrd	*ird;
+  
   terminal_initialize();
   terminal_setpos(0, 0);
 
@@ -46,9 +43,8 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   init_paging();
 
   assert(multiboot->mods_count != 0);
-  load_initrd(*(u32*)(multiboot->mods_addr));
-  /* create_process(&usermode_task_usefull); */
-  /* assertm(0, "After create process. Should not happen."); */
+  ird = load_initrd(*(u32*)(multiboot->mods_addr));
+  kmodule_load(ird->kmods);
 
   wait_until_the_end_of_your_life();
 } 
