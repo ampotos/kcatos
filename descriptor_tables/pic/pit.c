@@ -5,11 +5,15 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Sat Feb 21 19:11:23 2015 
-** Last update Tue Feb 24 19:12:53 2015 
+** Last update Wed Feb 25 00:26:12 2015 
 */
 
 #include <utils/types.h>
+#include <utils/print.h>
+#include <utils/io.h>
+#include <descriptor_tables/pic/pic.h>
 
+t_ticks ticks;
 
 void setup_pit(u32 freq)
 {

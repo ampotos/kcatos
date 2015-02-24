@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Wed Feb 11 18:36:18 2015 
-** Last update Tue Feb 24 19:15:32 2015 
+** Last update Wed Feb 25 00:26:02 2015 
 */
 
 #include <descriptor_tables/idt.h>
@@ -14,7 +14,7 @@
 #include <utils/io.h>
 
 static void (*handlers[15])() =
-  {0, // pit
+  {incr_pit, // pit
    &keyboard_handler, // keyboard
    0};
 

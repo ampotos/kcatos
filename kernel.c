@@ -1,4 +1,5 @@
 #include <descriptor_tables/descriptor_tables.h>
+#include <descriptor_tables/pic/pic.h>
 #include <utils/usefull_routine.h>
 #include <utils/print.h>
 #include <utils/assert.h>
@@ -43,11 +44,9 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   init_paging();
 
   asm volatile ("sti");
-  setup_pit(20);
+  setup_pit(1000);
   
   assert(multiboot->mods_count != 0);
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
   kmodule_load(ird->kmods);
-
-  /* wait_until_the_end_of_your_life(); */
 } 
