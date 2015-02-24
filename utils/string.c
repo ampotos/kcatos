@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Dec 24 14:23:34 2014 eax
-** Last update Fri Feb 20 23:23:25 2015 eax
+** Last update Mon Feb 23 06:00:16 2015 eax
 */
 
 #include <utils/types.h>
@@ -47,4 +47,25 @@ void		memcpy(void *dst, void *src, u32 size)
   
   for (i = 0; i < size ; i++)
     ((u8*)dst)[i] = ((u8*)src)[i];
+}
+
+int	memcmp(void *s1, void *s2, u32 sz)
+{
+  while (*(char*)s1 == *(char*)s2 && sz > 0)
+    {
+      sz--;
+      s1++;
+      s2++;
+    }
+  return (sz != 0);
+}
+
+int	strcmp(char *s1, char *s2)
+{
+  while (*s1 == *s2 && *s1 && *s2)
+    {
+      s1++;
+      s2++;
+    }
+  return (*s1 - *s2);
 }

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 20:40:56 2015 eax
-** Last update Fri Feb 20 23:22:46 2015 eax
+** Last update Sat Feb 21 19:20:39 2015 eax
 */
 
 #include <utils/types.h>
@@ -19,7 +19,7 @@ static u32	stroct2int(char *s)
   res = 0;
   while (*s)
     {
-      res *= 7;
+      res *= 8;
       res += *s - '0';
       s++;
     }
