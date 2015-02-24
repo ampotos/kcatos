@@ -46,6 +46,8 @@ INTERRUPT_NOERRCODE 128
 	
 extern interrupt_handler
 
+global interrupt_gen
+	
 interrupt_gen:	
 	pusha		; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
 
@@ -68,7 +70,7 @@ interrupt_gen:
 
 	popa		; Pops edi,esi,ebp...
 	add esp, 12	; Cleans up pushed error code ; int number ; has_err
-	sti
+	sti		; renable interrupt
 	iret           	; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
 	

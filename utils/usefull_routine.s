@@ -1,6 +1,7 @@
 [GLOBAL wait_until_the_end_of_your_life]
 [GLOBAL is_computer_on]
 [GLOBAL is_computer_on_fire]
+[GLOBAL kpause]
 	
 wait_until_the_end_of_your_life:
 	cli
@@ -9,6 +10,12 @@ wait_until_the_end_of_your_life:
 	jmp .hang
 	ret
 
+kpause:	
+	.hang:
+	hlt
+	jmp .hang
+	ret
+	
 is_computer_on:
 	mov eax,0x1
 	ret

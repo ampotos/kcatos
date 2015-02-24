@@ -9,7 +9,7 @@
 #include <process/process.h>
 #include <multiboot.h>
 #include <initrd/initrd.h>
-
+1;3803;0c
 extern u32 fake_heap_ptr;
 
 void usermode_task_useless()
@@ -39,16 +39,19 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   terminal_setpos(0, 0);
 
   init_descriptor_tables();
-
+  
   assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run");
   
   fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
   init_paging();
 
+  asm volatile ("sti");
+  setup_pit(20);
+  
   assert(multiboot->mods_count != 0);
   load_initrd(*(u32*)(multiboot->mods_addr));
   /* create_process(&usermode_task_usefull); */
   /* assertm(0, "After create process. Should not happen."); */
 
-  wait_until_the_end_of_your_life();
+  /* wait_until_the_end_of_your_life(); */
 } 

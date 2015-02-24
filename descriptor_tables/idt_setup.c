@@ -1,11 +1,10 @@
 /*
 ** idt_setup.c for KCatos in /home/ampotos/kcatos/interrupt_table
-** 
 ** Made by 
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Fri Feb 20 19:00:26 2015 
+** Last update Tue Feb 24 18:32:55 2015 
 */
 
 #include <descriptor_tables/idt.h>
@@ -75,23 +74,23 @@ void	setup_idt()
   idt_set_entry(31, KERNELMODE, (uint32_t)interrupt31);
 
   // irq remapping
-  idt_set_entry(32, KERNELMODE, (uint32_t)irq0); 
-  idt_set_entry(33, KERNELMODE, (uint32_t)irq1); 
-  idt_set_entry(34, KERNELMODE, (uint32_t)irq2); 
-  idt_set_entry(35, KERNELMODE, (uint32_t)irq3); 
-  idt_set_entry(36, KERNELMODE, (uint32_t)irq4); 
-  idt_set_entry(37, KERNELMODE, (uint32_t)irq5); 
-  idt_set_entry(38, KERNELMODE, (uint32_t)irq6); 
-  idt_set_entry(39, KERNELMODE, (uint32_t)irq7); 
-  idt_set_entry(40, KERNELMODE, (uint32_t)irq8); 
-  idt_set_entry(41, KERNELMODE, (uint32_t)irq9); 
-  idt_set_entry(42, KERNELMODE, (uint32_t)irq10); 
-  idt_set_entry(43, KERNELMODE, (uint32_t)irq11); 
-  idt_set_entry(44, KERNELMODE, (uint32_t)irq12); 
-  idt_set_entry(45, KERNELMODE, (uint32_t)irq13); 
-  idt_set_entry(46, KERNELMODE, (uint32_t)irq14); 
-  idt_set_entry(47, KERNELMODE, (uint32_t)irq15); 
-
+  idt_set_entry(32, KERNELMODE, (uint32_t)irq0);
+  idt_set_entry(33, KERNELMODE, (uint32_t)irq1); // keyboard
+  idt_set_entry(34, KERNELMODE, (uint32_t)irq2);
+  idt_set_entry(35, KERNELMODE, (uint32_t)irq3);
+  idt_set_entry(36, KERNELMODE, (uint32_t)irq4);
+  idt_set_entry(37, KERNELMODE, (uint32_t)irq5);
+  idt_set_entry(38, KERNELMODE, (uint32_t)irq6);
+  idt_set_entry(39, KERNELMODE, (uint32_t)irq7);
+  idt_set_entry(40, KERNELMODE, (uint32_t)irq8);
+  idt_set_entry(41, KERNELMODE, (uint32_t)irq9);
+  idt_set_entry(42, KERNELMODE, (uint32_t)irq10);
+  idt_set_entry(43, KERNELMODE, (uint32_t)irq11);
+  idt_set_entry(44, KERNELMODE, (uint32_t)irq12);
+  idt_set_entry(45, KERNELMODE, (uint32_t)irq13);
+  idt_set_entry(46, KERNELMODE, (uint32_t)irq14);
+  idt_set_entry(47, KERNELMODE, (uint32_t)irq15);
+  
   idt_set_entry(0x80, USERMODE, (uint32_t)interrupt128);
 
   idt_load((uint32_t)&idt_ptr);

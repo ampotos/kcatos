@@ -1,9 +1,9 @@
 	extern kernel_main
-	extern wait_until_the_end_of_your_life
+	extern kpause
 	extern code
 	extern bss
 	extern end_bss
-	
+
 	MBALIGN     equ  1<<0
 	MEMINFO     equ  1<<1
 	FLAGS       equ  MBALIGN | MEMINFO
@@ -35,7 +35,10 @@ _start:
 	mov esp, stack_top
 	push ebx
 	push eax
+	cli
 	call kernel_main
 
 	;; If the kernel_main return, we do a none-active wait.
-	call wait_until_the_end_of_your_life
+	;; call wait_until_the_end_of_your_life
+
+	call kpause

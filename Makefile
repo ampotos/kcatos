@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Sat Feb 21 15:30:43 2015 
+## Last update Tue Feb 24 18:52:41 2015 
 ##
 
 CC      =	gcc
@@ -22,6 +22,8 @@ SRCC	=	kernel.c \
 		descriptor_tables/idt_setup.c \
 		descriptor_tables/idt_handler.c \
 		descriptor_tables/pic/irq_handler.c \
+		descriptor_tables/pic/pit.c \
+		descriptor_tables/pic/keyboard.c \
 		utils/print.c \
 		utils/panic_print.c \
 		utils/string.c \
@@ -45,6 +47,7 @@ SRCA	=	boot.s \
 		descriptor_tables/pic/init.s \
 		descriptor_tables/pic/irq_gen.s \
 		utils/usefull_routine.s \
+		utils/io.s \
 		usermode.s \
 		descriptor_tables/tss_flush.s \
 		memory/enable_paging.s \
@@ -61,7 +64,7 @@ BOOT_PATH =	iso/boot/
 INITRD_NAME =	initrd.tar
 INITRD_DATA =	initrd_content/
 
-all: $(NAME) $(INITRD_NAME)
+all: $(NAME) $(BOOT_PATH)/$(INITRD_NAME)
 
 $(NAME): $(OBJ)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
@@ -83,7 +86,7 @@ fclean: clean
 
 re: fclean all
 
-$(INITRD_NAME): $(BOOT_PATH)/$(INITRD_NAME)
+$(BOOT_PATH)/$(INITRD_NAME): $(wildcard $(INITRD_DATA)/*)
 	tar -cf $(BOOT_PATH)/$(INITRD_NAME) $(INITRD_DATA)/*
 
 run:
