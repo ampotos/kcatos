@@ -46,6 +46,9 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   while (keyboard_getchar() != 0xff);
 
-  kmodule_load_all(ird->kmods, &ep.symb);
-  launch_task(ird);
+  /* kmodule_load_all(ird->kmods, &ep.symb); */
+  kmodule_load_by_name("libk.kso", ird->kmods, &ep.symb);
+  kmodule_load_by_name("t2.kso", ird->kmods, &ep.symb);
+  kmodule_exec_by_name("t2.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  /* launch_task(ird); */
 } 

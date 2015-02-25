@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Wed Feb 25 05:48:35 2015 eax
+** Last update Wed Feb 25 08:28:54 2015 eax
 */
 
 #include <utils/types.h>
@@ -88,8 +88,6 @@ int	elf_parse_symb(Elf32_Ehdr *h, t_elfparse *ep)
   t_elfparse_symb	*new;
   secs = &ep->sections;
   sz = secs->symtab->sh_size / secs->symtab->sh_entsize - 1;
-  /* ep->nb_alloc_symb = sz; */
-  /* ep->symb = kmalloc(sizeof(*ep->symb) * ep->nb_alloc_symb); */
 
   for ( ; sz >= 0 ; --sz)
     {
@@ -121,7 +119,6 @@ int	elf_parse_symb_noh(t_elfparse *ep)
     
   secs = &ep->sections;
   sz = secs->symtab->sh_size / secs->symtab->sh_entsize - 1;
-  /* ep->nb_alloc_symb = sz; */
   
   for ( ; sz >= 0 ; --sz)
     {
@@ -156,6 +153,19 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
     {
       Elf32_Shdr *sec = sh + i;
       char *name = elf_lookup_string(h, sec->sh_name);
+      if(sec->sh_type == SHT_NOBITS)
+	{
+	  if(!sec->sh_size)
+	    continue;
+	  if(sec->sh_flags & SHF_ALLOC)
+	    {
+	      printf("new mem for %s\n", name);
+	      void *data = kmalloc(sec->sh_size);
+	      memset((u32)data, 0, sec->sh_size);
+	      sec->sh_offset = (int)data - (int)h;
+	    }
+	}
+
       if (sec->sh_type == SHT_SYMTAB && !strcmp(name, ".symtab"))
 	{
 	  ep->sections.symtab = sec;
@@ -192,7 +202,7 @@ int	elf_parse_sections_noh(Elf32_Shdr *sh, Elf32_Word shstrtab, u32 num, t_elfpa
     {
       Elf32_Shdr *sec = sh + i;
       char *name = ((char *)sh[i].sh_name) + shstrtab;
-
+	
       if (sec->sh_type == SHT_SYMTAB && !strcmp(name, ".symtab"))
 	ep->sections.symtab = sec;
       else if (sec->sh_type == SHT_DYNSYM && !strcmp(name, ".dynsym"))
