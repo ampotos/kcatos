@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Dec 24 14:23:34 2014 eax
-** Last update Mon Feb 23 06:00:16 2015 eax
+** Last update Mon Feb 23 18:26:22 2015 eax
 */
 
 #include <utils/types.h>
@@ -60,7 +60,7 @@ int	memcmp(void *s1, void *s2, u32 sz)
   return (sz != 0);
 }
 
-int	strcmp(char *s1, char *s2)
+int	strcmp(const char *s1, const char *s2)
 {
   while (*s1 == *s2 && *s1 && *s2)
     {

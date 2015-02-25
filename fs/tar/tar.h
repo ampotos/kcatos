@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 20:13:23 2015 eax
-** Last update Fri Feb 20 23:17:31 2015 eax
+** Last update Wed Feb 25 05:52:34 2015 eax
 */
 
 #ifndef TAR_H_
@@ -36,6 +36,7 @@ typedef struct s_tar_ustar_header
 typedef struct s_tar_human_header
 {
   char name[100];
+  char *nameptr;
   u32 mode;
   u32 uid;
   u32 gid;

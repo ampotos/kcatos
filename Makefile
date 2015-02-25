@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Tue Feb 24 23:09:47 2015 
+## Last update Wed Feb 25 06:14:47 2015 eax
 ##
 
 CC      =	gcc
@@ -39,7 +39,8 @@ SRCC	=	kernel.c \
 		initrd/initrd.c \
 		elf/elf.c \
 		utils/error.c \
-		kmodule/kmodule.c
+		kmodule/kmodule.c \
+		elf/kern_parse.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
@@ -49,7 +50,6 @@ SRCA	=	boot.s \
 		descriptor_tables/idt_gen.s \
 		descriptor_tables/pic/init.s \
 		descriptor_tables/pic/irq_gen.s \
-		descriptor_tables/pic/pit_inc.s \
 		utils/usefull_routine.s \
 		utils/io.s \
 		usermode.s \
@@ -59,7 +59,7 @@ SRCA	=	boot.s \
 
 OBJA	=	$(SRCA:.s=.o)
 
-OBJ	=	$(OBJC) $(OBJA)
+OBJ	=	$(OBJA) $(OBJC)
 
 NAME	=	KCat.Os
 
@@ -111,6 +111,9 @@ run-debug:
 
 run-iso:
 	qemu-system-i386 $(ISONAME)
+
+run-iso-debug:
+	qemu-system-i386 -S -s $(ISONAME)
 
 
 .PHONY: all clean fclean re iso run run-debug run-iso modules

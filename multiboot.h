@@ -5,11 +5,13 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 22:56:36 2015 eax
-** Last update Fri Feb 20 22:58:06 2015 eax
+** Last update Mon Feb 23 17:48:44 2015 eax
 */
 
 #ifndef MULTIBOOT_H_
 #define MULTIBOOT_H_
+
+#include <utils/types.h>
 
 /* http://www.gnu.org/software/grub/manual/multiboot/multiboot.html */
 

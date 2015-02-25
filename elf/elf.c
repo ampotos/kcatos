@@ -5,15 +5,33 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Mon Feb 23 07:23:50 2015 eax
+** Last update Wed Feb 25 08:28:54 2015 eax
 */
 
 #include <utils/types.h>
 #include <utils/error.h>
 #include <utils/string.h>
+#include <utils/print.h>
 #include <memory/kmalloc.h>
 #include <elf/elf.h>
 #include <elf/elf_internal.h>
+#include <utils/assert.h>
+
+t_elfparse_symb	*add_symb(t_elfparse_symb **symb, char *name, u32 addr)
+{
+  t_elfparse_symb *new;
+
+  new = kmalloc(sizeof(*new));
+  if (!new)
+    return (NULL);
+
+  new->name = name;
+  new->addr = addr;
+  new->next = *symb;
+  *symb = new;
+  return (new);
+}
+
 
 Elf32_Shdr	*elf_sheader(Elf32_Ehdr *h)
 {
@@ -67,12 +85,10 @@ int	elf_parse_symb(Elf32_Ehdr *h, t_elfparse *ep)
 {
   int sz;
   t_elfparse_sections *secs;
-
+  t_elfparse_symb	*new;
   secs = &ep->sections;
-  sz = secs->symtab->sh_size / secs->symtab->sh_entsize;
-  ep->nb_alloc_symb = sz;
-  ep->symb = kmalloc(sizeof(*ep->symb) * ep->nb_alloc_symb);
-	  
+  sz = secs->symtab->sh_size / secs->symtab->sh_entsize - 1;
+
   for ( ; sz >= 0 ; --sz)
     {
       Elf32_Sym *sym = (Elf32_Sym *)((int)h + secs->symtab->sh_offset) + sz;
@@ -85,16 +101,47 @@ int	elf_parse_symb(Elf32_Ehdr *h, t_elfparse *ep)
 	  || (ELF32_ST_TYPE(sym->st_info) == STT_NOTYPE
 	      && sym->st_shndx == SHN_UNDEF))
 	{
-	  ep->symb[ep->nb_symb].name = name;
+	  new = add_symb(&ep->symb, name, 0);
 	  if (sym->st_value == SHN_UNDEF)
-	    ep->symb[ep->nb_symb].addr = 0;
+	    new->addr = 0;
 	  else
-	    ep->symb[ep->nb_symb].addr = (int)h + sym->st_value;
-	  ep->nb_symb++;
+	    new->addr = (int)h + sym->st_value;
 	}
     }
   return (0);
 }
+
+int	elf_parse_symb_noh(t_elfparse *ep)
+{
+  int sz;
+  t_elfparse_sections *secs;
+  t_elfparse_symb	*new;
+    
+  secs = &ep->sections;
+  sz = secs->symtab->sh_size / secs->symtab->sh_entsize - 1;
+  
+  for ( ; sz >= 0 ; --sz)
+    {
+      Elf32_Sym *sym = (Elf32_Sym *)(secs->symtab->sh_addr) + sz;
+      char	*name = (char*)secs->strtab->sh_addr + sym->st_name;
+
+      if (ELF32_ST_BIND(sym->st_info) != STB_GLOBAL)
+	continue;
+	      
+      if (ELF32_ST_TYPE(sym->st_info) == STT_FUNC
+	  || (ELF32_ST_TYPE(sym->st_info) == STT_NOTYPE
+	      && sym->st_shndx == SHN_UNDEF))
+	{
+	  new = add_symb(&ep->symb, name, 0);;
+	  if (sym->st_value == SHN_UNDEF)
+	    new->addr = 0;
+	  else
+	    new->addr =  sym->st_value;
+	}
+    }
+  return (0);
+}
+
 
 int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 {
@@ -106,6 +153,19 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
     {
       Elf32_Shdr *sec = sh + i;
       char *name = elf_lookup_string(h, sec->sh_name);
+      if(sec->sh_type == SHT_NOBITS)
+	{
+	  if(!sec->sh_size)
+	    continue;
+	  if(sec->sh_flags & SHF_ALLOC)
+	    {
+	      printf("new mem for %s\n", name);
+	      void *data = kmalloc(sec->sh_size);
+	      memset((u32)data, 0, sec->sh_size);
+	      sec->sh_offset = (int)data - (int)h;
+	    }
+	}
+
       if (sec->sh_type == SHT_SYMTAB && !strcmp(name, ".symtab"))
 	{
 	  ep->sections.symtab = sec;
@@ -117,6 +177,10 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 	ep->sections.gotplt = sec;
       else if (sec->sh_type == SHT_PROGBITS && !strcmp(name, ".plt"))
 	ep->sections.plt = sec;
+      else if (sec->sh_type == SHT_STRTAB && !strcmp(name, ".dynstr"))
+	ep->sections.dynstr = sec;
+      else if (sec->sh_type == SHT_DYNSYM && !strcmp(name, ".dynsym"))
+	ep->sections.dynsym = sec;
     }
   if (!ep->sections.symtab)
     return (reter(-1, "No .symtab found"));
@@ -126,5 +190,35 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
     return (reter(-1, "No .got.plt found"));
   if (!ep->sections.plt)
     return (reter(-1, "No .plt found"));
+  return (0);
+}
+
+
+int	elf_parse_sections_noh(Elf32_Shdr *sh, Elf32_Word shstrtab, u32 num, t_elfparse *ep)
+{
+  unsigned i;
+  
+  for (i = 0 ; i < num ; i++)
+    {
+      Elf32_Shdr *sec = sh + i;
+      char *name = ((char *)sh[i].sh_name) + shstrtab;
+	
+      if (sec->sh_type == SHT_SYMTAB && !strcmp(name, ".symtab"))
+	ep->sections.symtab = sec;
+      else if (sec->sh_type == SHT_DYNSYM && !strcmp(name, ".dynsym"))
+	ep->sections.dynsym = sec;
+      else if (sec->sh_type == SHT_REL && !strcmp(name, ".rel.plt"))
+	ep->sections.relplt = sec;
+      else if (sec->sh_type == SHT_PROGBITS && !strcmp(name, ".got.plt"))
+	ep->sections.gotplt = sec;
+      else if (sec->sh_type == SHT_PROGBITS && !strcmp(name, ".plt"))
+	ep->sections.plt = sec;
+      else if (sec->sh_type == SHT_STRTAB && !strcmp(name, ".strtab"))
+	ep->sections.strtab = sec;
+    }
+  if (!ep->sections.symtab)
+    return (reter(-1, "No .symtab found"));
+  if (!ep->sections.strtab)
+    return (reter(-1, "No .strtab found"));
   return (0);
 }

@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Mon Feb 23 06:11:00 2015 eax
-## Last update Mon Feb 23 19:17:26 2015 eax
+## Last update Wed Feb 25 08:00:57 2015 eax
 ##
 
 CC	=	gcc
@@ -14,10 +14,10 @@ LD	=	ld
 CFLAGS	=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra -fno-builtin
 LDFLAGS	=	-melf_i386 -fPIC -shared -einit_module
 
-SRC	=	t2.c
+SRC	=	libk.c malloc.c
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	t2.kso
+NAME	=	libk.kso
 
 DESTDIR	=       ../../initrd_content/
 DESTFILE=	$(DESTDIR)$(NAME)

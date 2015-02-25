@@ -5,13 +5,13 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Mon Feb 23 06:09:39 2015 eax
-## Last update Mon Feb 23 07:22:31 2015 eax
+## Last update Mon Feb 23 19:17:31 2015 eax
 ##
 
 CC	=	gcc
 LD	=	ld
 
-CFLAGS	=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra
+CFLAGS	=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra -fno-builtin
 LDFLAGS	=	-melf_i386 -fPIC -shared -einit_module
 
 SRC	=	t1.c

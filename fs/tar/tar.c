@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 20:40:56 2015 eax
-** Last update Sat Feb 21 19:20:39 2015 eax
+** Last update Wed Feb 25 06:02:26 2015 eax
 */
 
 #include <utils/types.h>
@@ -27,9 +27,12 @@ static u32	stroct2int(char *s)
 }
 
 static void	ustar_to_human(t_tar_ustar_header *us,
-			       t_tar_human_header *hu)
+			       t_tar_human_header *hu,
+			       char *data)
 {
   memcpy(hu->name, us->name, 100);
+  hu->nameptr = (data - 512) +
+    offsetof(t_tar_ustar_header, name);
   hu->mode = stroct2int(us->mode);
   hu->uid = stroct2int(us->uid);
   hu->gid = stroct2int(us->gid);
@@ -58,8 +61,8 @@ u32	get_next_tar_node(char *tardata, t_tar_node *out_node)
     return (0);
 
   out_node->raw_header = *(t_tar_ustar_header*)saved_tardata;
-  ustar_to_human(&out_node->raw_header, &out_node->header);
   out_node->data = saved_tardata + 512;
+  ustar_to_human(&out_node->raw_header, &out_node->header, out_node->data);
   
   saved_tardata += (512 + out_node->header.size + 512) & ~(512-1);
   

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Fri Feb 13 23:06:40 2015 eax
+** Last update Wed Feb 25 07:04:39 2015 eax
 */
 
 #include <utils/print.h>
@@ -13,6 +13,7 @@
 #include <utils/usefull_routine.h>
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
+#include <descriptor_tables/pic/keyboard.h>
 
 #define puts_screen puts
 
@@ -26,7 +27,10 @@ static void *syscalls[] =
     is_computer_on,
     is_computer_on_fire,
     print_logo,
-    sbrk
+    sbrk,
+    kpause,
+    keyboard_char_to_read,
+    keyboard_getchar
   };
 
 u32	sbrk(u32 incr)

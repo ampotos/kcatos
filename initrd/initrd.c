@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 23:15:22 2015 eax
-** Last update Mon Feb 23 07:57:17 2015 eax
+** Last update Wed Feb 25 06:03:09 2015 eax
 */
 
 #include <fs/tar/tar.h>
@@ -42,12 +42,7 @@ t_initrd	*load_initrd(u32 addr)
   while (get_next_tar_node(NULL, &n))
     {
       printf("filename: [%s]\n", n.raw_header.name);
-      add_kmod(&ret->kmods, n.raw_header.name, n.header.size, n.data);
-      
-      break; /* FIXME: Just need to implement the 
-		reloc of UNDEF symb in elf and then
-		we can remove this break.
-	     */
+      add_kmod(&ret->kmods, n.header.nameptr, n.header.size, n.data);
     }
   return (ret);
 }
