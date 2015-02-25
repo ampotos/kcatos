@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 12:02:10 2014 
-** Last update Wed Feb 11 16:53:12 2015 eax
+// Last update Fri Feb 20 19:00:52 2015 
 */
 
 #ifndef IDT_H_
@@ -38,8 +38,19 @@
 
 /* ***************************************/
 /* Number 19 to 31 are intel reserved    */
-/* Number 32 to 255 can be defined by us */
 /*****************************************/
+
+/* *******************************/
+/* Number 32 to 39 master pic    */
+/*********************************/
+
+/* ******************************/
+/* Number 40 to 47 slave pic    */
+/********************************/
+
+#define IDT_SYSCALL		0x80    // syscall
+
+/* Number 47 to 255 can be defined by us */
 
 typedef struct regs
 {
