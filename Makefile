@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Wed Feb 25 06:08:05 2015 eax
+## Last update Wed Feb 25 06:14:47 2015 eax
 ##
 
 CC      =	gcc
@@ -50,7 +50,6 @@ SRCA	=	boot.s \
 		descriptor_tables/idt_gen.s \
 		descriptor_tables/pic/init.s \
 		descriptor_tables/pic/irq_gen.s \
-		descriptor_tables/pic/pit_inc.s \
 		utils/usefull_routine.s \
 		utils/io.s \
 		usermode.s \

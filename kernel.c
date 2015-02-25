@@ -12,7 +12,7 @@
 #include <initrd/initrd.h>
 #include <kmodule/kmodule.h>
 #include <elf/elf_internal.h>
-
+#include <descriptor_tables/pic/keyboard.h>
 extern u32 fake_heap_ptr;
 
 void usermode_task_useless()
@@ -28,6 +28,17 @@ void usermode_task_useless()
   syscall_puts_screen("Hi. This is KCatOs. Deal with it.");
   syscall_oh_crap();
   syscall_wait_until_the_end_of_your_life();
+}
+
+void	do_stuff()
+{
+  while (1)
+    {
+      while (keyboard_char_to_read())
+	{
+	  printf("bla: [%8h]\n", keyboard_getchar());
+	}
+    }
 }
 
 void kernel_main(u32 magic, t_multiboot *multiboot)
@@ -56,4 +67,5 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   asm volatile ("sti");
   setup_pit(1000);
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
+  do_stuff();
 } 

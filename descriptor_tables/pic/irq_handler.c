@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Wed Feb 11 18:36:18 2015 
-** Last update Wed Feb 25 00:26:02 2015 
+** Last update Wed Feb 25 06:36:51 2015 eax
 */
 
 #include <descriptor_tables/idt.h>
@@ -13,8 +13,14 @@
 #include <utils/print.h>
 #include <utils/io.h>
 
+void	fake_incr_pit()
+{
+
+}
+
 static void (*handlers[15])() =
-  {incr_pit, // pit
+  /* {incr_pit, // pit */
+{fake_incr_pit, // pit
    &keyboard_handler, // keyboard
    0};
 
