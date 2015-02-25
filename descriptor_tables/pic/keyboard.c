@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Tue Feb 24 18:25:34 2015 
-** Last update Wed Feb 25 06:43:51 2015 eax
+** Last update Wed Feb 25 07:04:13 2015 eax
 */
 
 #include <utils/io.h>
@@ -35,7 +35,7 @@ int	keyboard_char_to_read()
   return (0);
 }
 
-char	keyboard_getchar()
+int	keyboard_getchar()
 {
   char	c;
   asm volatile("cli");

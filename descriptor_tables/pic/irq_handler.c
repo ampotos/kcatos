@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Wed Feb 11 18:36:18 2015 
-** Last update Wed Feb 25 06:36:51 2015 eax
+** Last update Wed Feb 25 07:07:43 2015 eax
 */
 
 #include <descriptor_tables/idt.h>
@@ -13,9 +13,11 @@
 #include <utils/print.h>
 #include <utils/io.h>
 
+static u32 bla;
 void	fake_incr_pit()
 {
-
+  bla++;
+  /* printf("[%d]\n", bla); */
 }
 
 static void (*handlers[15])() =

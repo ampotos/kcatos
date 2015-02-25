@@ -15,30 +15,9 @@
 #include <descriptor_tables/pic/keyboard.h>
 extern u32 fake_heap_ptr;
 
-void usermode_task_useless()
+void	launch_task(t_initrd *ird)
 {
-  if (!syscall_is_computer_on())
-    if (syscall_is_computer_on_fire())
-      {
-        syscall_puts_screen("Oh sheat! Fire! Fire! Fire!");
-	syscall_puts_screen("Lets get out of there!");
-	*((u32*)usermode_task_useless) /= ((u32)usermode_task_useless)&0;
-      }
-
-  syscall_puts_screen("Hi. This is KCatOs. Deal with it.");
-  syscall_oh_crap();
-  syscall_wait_until_the_end_of_your_life();
-}
-
-void	do_stuff()
-{
-  while (1)
-    {
-      while (keyboard_char_to_read())
-	{
-	  printf("bla: [%8h]\n", keyboard_getchar());
-	}
-    }
+  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
 }
 
 void kernel_main(u32 magic, t_multiboot *multiboot)
@@ -61,11 +40,12 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   ret = kern_parse(multiboot, &ep);
   assertm(ret != -1, "Fail loading elf kernel");
     
-  ird = load_initrd(*(u32*)(multiboot->mods_addr));
-  kmodule_load(ird->kmods, &ep.symb);
-
   asm volatile ("sti");
   setup_pit(1000);
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
-  do_stuff();
+
+  while (keyboard_getchar() != 0xff);
+
+  kmodule_load_all(ird->kmods, &ep.symb);
+  launch_task(ird);
 } 

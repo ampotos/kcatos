@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Wed Feb 25 05:37:00 2015 eax
+** Last update Wed Feb 25 07:44:13 2015 eax
 */
 
 #include <elf/elf.h>
@@ -14,6 +14,8 @@
 #include <kmodule/kmodule.h>
 #include <initrd/initrd.h>
 #include <utils/assert.h>
+#include <utils/string.h>
+#include <process/process.h>
 
 u32	kresolve_symb(char *name, t_elfparse_symb *sym)
 {
@@ -79,40 +81,70 @@ int	kmodule_parse(char *data, t_elfparse *ep, t_elfparse_symb **ksym)
   return (0);
 }
 
-void	kmodule_exec(t_elfparse *ep)
+void	kmodule_exec(t_elfparse *ep, enum e_kmod_exec mode)
 {
   int	(*the_init_func)(void*);
   char	c;
 
   c = 0;
   the_init_func = (void*)ep->entry;
-  printf("ret: %d\n", the_init_func(&c));
+  if (mode == KMODULE_EXEC_KERNELLAND)
+    printf("ret: %d\n", the_init_func(&c));
+  else
+    create_process(the_init_func);
 }
 
 
 int	kmodule_load(t_initrd_kmod *km, t_elfparse_symb **ksym)
 {
-  t_elfparse	ep;
-  
+  memset((u32)&km->ep, 0, sizeof(km->ep));
 
+  printf("Loading %s\n", km->name);
+  if (kmodule_parse(km->data, &km->ep, ksym) == -1)
+    return (reter(1, "Fail when loading module"));
+
+  t_elfparse_symb	*s = km->ep.symb;
+  while (s)
+    {
+      if (s->addr && !kresolve_symb(s->name, *ksym))
+	add_symb(ksym, s->name, s->addr);
+      s = s->next;
+    }
+  return (0);
+}
+
+
+int	kmodule_load_all(t_initrd_kmod *km, t_elfparse_symb **ksym)
+{
   while (km)
     {
-      memset((u32)&ep, 0, sizeof(ep));
+      if (kmodule_load(km, ksym) == -1)
+	return (-1);
+      km = km->next;
+    }
+  return (0);
+}
 
-      printf("Loading %s\n", km->name);
-      if (kmodule_parse(km->data, &ep, ksym) == -1)
-	return (reter(1, "Fail when loading module"));
+int	kmodule_load_by_name(char *name,
+			     t_initrd_kmod *km,
+			     t_elfparse_symb **ksym)
+{
+  while (km)
+    {
+      if (!strcmp(km->name, name))
+	kmodule_load(km, ksym);
+      km = km->next;
+    }
+  return (0);
+}
 
-      t_elfparse_symb	*s = ep.symb;
-      while (s)
-	{
-	  if (s->addr)
-	    add_symb(ksym, s->name, s->addr);
-	  s = s->next;
-	}
-
-      printf("Time to exec the module [%s] code now!\n", km->name);
-      kmodule_exec(&ep);
+int	kmodule_exec_by_name(char *name,
+			     t_initrd_kmod *km, enum e_kmod_exec mode)
+{
+  while (km)
+    {
+      if (!strcmp(km->name, name))
+	kmodule_exec(&km->ep, mode);
       km = km->next;
     }
   return (0);

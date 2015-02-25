@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Feb 25 06:22:30 2015 eax
-** Last update Wed Feb 25 06:40:23 2015 eax
+** Last update Wed Feb 25 07:04:21 2015 eax
 */
 
 #ifndef KEYBOARD_H_
@@ -19,6 +19,6 @@ typedef struct
 } t_keyboard;
 
 int	keyboard_char_to_read();
-char	keyboard_getchar();
+int	keyboard_getchar();
 
 #endif

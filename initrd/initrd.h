@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 23:20:18 2015 eax
-** Last update Wed Feb 25 04:38:22 2015 eax
+** Last update Wed Feb 25 07:29:57 2015 eax
 */
 
 #ifndef INITRD_H_
@@ -19,6 +19,7 @@ typedef struct s_initrd_kmod
   char	*name;
   u32	size;
   char	*data;
+  t_elfparse ep;
   struct s_initrd_kmod	*next;
 } t_initrd_kmod;
 

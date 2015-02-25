@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 01:09:20 2015 eax
-** Last update Fri Feb 13 23:06:16 2015 eax
+** Last update Wed Feb 25 07:05:34 2015 eax
 */
 
 #include <syscall/syscall.h>
@@ -18,3 +18,6 @@ DEFN_SYSCALL0(is_computer_on, 3);
 DEFN_SYSCALL0(is_computer_on_fire, 4);
 DEFN_SYSCALL0(oh_crap, 5);
 DEFN_SYSCALL1(sbrk, 6, u32);
+DEFN_SYSCALL0(kpause, 7);
+DEFN_SYSCALL0(keyboard_char_to_read, 8);
+DEFN_SYSCALL0(keyboard_getchar, 9);

@@ -11,8 +11,8 @@
 switch_to_user_mode:
 	
 	cli
-	mov ecx, [esp + 8]	; new esp
-	mov edx, [esp + 4]	; new eip
+	mov	ecx, [esp + 8]	; new esp
+	mov	edx, [esp + 4]	; new eip
 	
 	mov	eax, 0x20	; 0x20 -> user ds
 	or	eax, 0x3	; 0x3 for privilege level 3 (usermode)
@@ -21,9 +21,13 @@ switch_to_user_mode:
 	mov	fs, eax
 	mov	gs, eax
 
-	push eax		; (5)
-	push ecx		; (4)
+	push	eax		; (5)
+	push	ecx		; (4)
 	pushf			; (3)
+
+	pop	eax		
+	or	eax, 0x200	; hack to re-enable interupt
+	push	eax
 	
 	mov	eax, 0x18	; 0x18 -> user cs
 	or	eax, 0x3	; priv lvl 3
@@ -31,5 +35,4 @@ switch_to_user_mode:
 	push eax		; (2)
 	push edx		; (1)
 	
-	sti
 	iret
