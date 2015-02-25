@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Dec 27 11:13:44 2014 eax
-** Last update Sun Feb  8 22:27:59 2015 eax
+** Last update Wed Feb 25 05:59:44 2015 eax
 */
 
 #ifndef TYPES_H_
@@ -14,7 +14,8 @@
 #include <stdint.h>
 
 #define NULL ((void*)0)
-
+#define offsetof(type, member) ((u32) &((type *)0)->member)
+				
 typedef uint64_t	u64;
 typedef int64_t		s64;
 typedef uint32_t	u32;

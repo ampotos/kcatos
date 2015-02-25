@@ -10,6 +10,7 @@
 #include <multiboot.h>
 #include <initrd/initrd.h>
 #include <kmodule/kmodule.h>
+#include <elf/elf_internal.h>
 
 extern u32 fake_heap_ptr;
 
@@ -37,14 +38,22 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   init_descriptor_tables();
 
+  int	i;
   assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run");
+  assertm(multiboot->num != 0, "You didn't run the grub version. So the elf wasn't present. Bye");
   
   fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
   init_paging();
 
+  t_elfparse ep;
+
+
+  assertm(kern_parse(multiboot, &ep) != -1, "Fail loading elf kernel");
+
   assert(multiboot->mods_count != 0);
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
-  kmodule_load(ird->kmods);
+
+  kmodule_load(ird->kmods, &ep.symb);
 
   wait_until_the_end_of_your_life();
 } 

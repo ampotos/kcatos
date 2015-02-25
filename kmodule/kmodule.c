@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Mon Feb 23 08:01:03 2015 eax
+** Last update Wed Feb 25 05:37:00 2015 eax
 */
 
 #include <elf/elf.h>
@@ -13,28 +13,45 @@
 #include <utils/print.h>
 #include <kmodule/kmodule.h>
 #include <initrd/initrd.h>
+#include <utils/assert.h>
 
-int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep)
+u32	kresolve_symb(char *name, t_elfparse_symb *sym)
+{
+  while (sym)
+    {
+      if (!strcmp(name, sym->name))
+	return (sym->addr);
+      sym = sym->next;
+    }
+  return (0);
+}
+
+int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
 {
   int sz;
   t_elfparse_sections *secs;
-  
+
   secs = &ep->sections;
-  sz = secs->relplt->sh_size / secs->relplt->sh_entsize;
-  
+  sz = secs->relplt->sh_size / secs->relplt->sh_entsize - 1;
+
   for ( ; sz >= 0 ; --sz)
     {
+      
       Elf32_Rel *rel = (Elf32_Rel *)((int)h + secs->relplt->sh_offset) + sz;
-
       if (ELF32_R_SYM(rel->r_info) == SHN_UNDEF)
-	continue;
+	{
+	  printf("Skipping undef symb\n");
+	  continue;
+	}
       
       Elf32_Shdr *tab = elf_section(h, secs->relplt->sh_link);
       Elf32_Sym *newsymbol = ((Elf32_Sym *)((int)h + tab->sh_offset)) + ELF32_R_SYM(rel->r_info);
       if (newsymbol->st_shndx == SHN_UNDEF)
 	{
-	  printf("Need to do the undef thing\n");
-	  /* todo handle undef */
+	  Elf32_Sym *newrealsymbol = ((Elf32_Sym *)((int)h + secs->dynsym->sh_offset)) + ELF32_R_SYM(rel->r_info);
+	  char	*name = (char *)h + secs->dynstr->sh_addr + newrealsymbol->st_name;
+
+	  *(unsigned*)((int)h + rel->r_offset) = kresolve_symb(name, ksym);
 	}
       else
 	*(unsigned*)((int)h + rel->r_offset) = newsymbol->st_value + (int)h;
@@ -42,7 +59,7 @@ int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep)
   return (0);
 }
 
-int	kmodule_parse(char *data, t_elfparse *ep)
+int	kmodule_parse(char *data, t_elfparse *ep, t_elfparse_symb **ksym)
 {
   Elf32_Ehdr *h;
   
@@ -56,7 +73,7 @@ int	kmodule_parse(char *data, t_elfparse *ep)
   if (elf_parse_symb(h, ep) < 0)
     return (-1);
 
-  if (kmodule_bind_got(h, ep) < 0)
+  if (kmodule_bind_got(h, ep, *ksym) < 0)
     return (-1);
 
   return (0);
@@ -73,25 +90,30 @@ void	kmodule_exec(t_elfparse *ep)
 }
 
 
-int	kmodule_load(t_initrd_kmod *km)
+int	kmodule_load(t_initrd_kmod *km, t_elfparse_symb **ksym)
 {
   t_elfparse	ep;
-
   
-  memset((u32)&ep, 0, sizeof(ep));
-  
-  if (kmodule_parse(km->data, &ep) == -1)
-    return (reter(1, "Fail when loading module"));
 
-  printf("entry: %x\n", ep.entry);
+  while (km)
+    {
+      memset((u32)&ep, 0, sizeof(ep));
 
-  printf("nb_symb: %d\n", ep.nb_symb);
-  unsigned	i;
-  for (i = 0 ; i < ep.nb_symb ; i++)
-    printf("[%s] [%x]\n",  ep.symb[i].name, ep.symb[i].addr);
+      printf("Loading %s\n", km->name);
+      if (kmodule_parse(km->data, &ep, ksym) == -1)
+	return (reter(1, "Fail when loading module"));
 
-  printf("Time to exec the module [%s] code now!\n", km->name);
-  kmodule_exec(&ep);
-  
+      t_elfparse_symb	*s = ep.symb;
+      while (s)
+	{
+	  if (s->addr)
+	    add_symb(ksym, s->name, s->addr);
+	  s = s->next;
+	}
+
+      printf("Time to exec the module [%s] code now!\n", km->name);
+      kmodule_exec(&ep);
+      km = km->next;
+    }
   return (0);
 }

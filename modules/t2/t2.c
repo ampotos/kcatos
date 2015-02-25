@@ -5,10 +5,11 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sun Feb 22 15:49:15 2015 eax
-** Last update Sun Feb 22 18:48:01 2015 eax
+** Last update Wed Feb 25 05:31:33 2015 eax
 */
 
-int	get_ret_val();
+
+int	puts(char *);
 
 void	do_something(void *d)
 {
@@ -20,6 +21,6 @@ int	init_module(void *d)
   volatile int	r;
 
   do_something(d);
-  r = get_ret_val();
+  syscall_puts_screen("This string was printed from a module \\o/");
   return (r);
 }
