@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Wed Feb 25 21:48:58 2015 eax
+** Last update Thu Feb 26 15:13:01 2015 eax
 */
 
 #include <utils/print.h>
@@ -29,6 +29,7 @@ int	exit()
 		   : "=r"(bla) /* output */
 		   : "0"(process_old_esp) /* input */
 		   );
+  return (0);
 }
 
 static void *syscalls[] =
@@ -48,6 +49,7 @@ static void *syscalls[] =
 
 u32	sbrk(u32 incr)
 {
+  (void) incr;
   return (UHEAP_START);
 }
 

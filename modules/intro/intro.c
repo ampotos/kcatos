@@ -5,13 +5,18 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sun Feb 22 15:49:15 2015 eax
-** Last update Wed Feb 25 08:42:57 2015 eax
+** Last update Thu Feb 26 15:05:54 2015 eax
 */
+
+#include <syscall/syscall.h>
+
+void	my_shell();
 
 int	init_module(void *d)
 {
   int	stop;
-  
+
+  (void) d;
   if (!syscall_is_computer_on())
     if (syscall_is_computer_on_fire())
       {

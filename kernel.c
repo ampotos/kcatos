@@ -26,12 +26,13 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   t_initrd	*ird;
   t_elfparse	ep;
   int		ret;
-  
+
   terminal_initialize();
   terminal_setpos(0, 0);
 
   init_descriptor_tables();
 
+  assertm(magic == 0x2badb002, "The multiboot magic isn't correct.");
   assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run-iso");
   assertm(multiboot->num != 0, "You didn't run the grub version. Therefore we can't load the modules. Try: make run-iso");
   
