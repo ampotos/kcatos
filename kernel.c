@@ -39,6 +39,7 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   init_paging();
 
   ret = kern_parse(multiboot, &ep);
+  assertm(0, "Debug");
   assertm(ret != -1, "Fail loading elf kernel");
     
   asm volatile ("sti");
