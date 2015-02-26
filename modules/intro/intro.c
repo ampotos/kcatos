@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sun Feb 22 15:49:15 2015 eax
-** Last update Wed Feb 25 07:25:40 2015 eax
+** Last update Wed Feb 25 08:42:57 2015 eax
 */
 
 int	init_module(void *d)
@@ -33,6 +33,6 @@ int	init_module(void *d)
 	}
     }
   syscall_puts_screen("cool");
-  syscall_wait_until_the_end_of_your_life();
+  my_shell();
   return (0);
 }

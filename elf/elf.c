@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Wed Feb 25 08:28:54 2015 eax
+** Last update Wed Feb 25 09:17:36 2015 eax
 */
 
 #include <utils/types.h>
@@ -161,6 +161,7 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 	    {
 	      printf("new mem for %s\n", name);
 	      void *data = kmalloc(sec->sh_size);
+	      /* void *data = 0xdffff000; */
 	      memset((u32)data, 0, sec->sh_size);
 	      sec->sh_offset = (int)data - (int)h;
 	    }

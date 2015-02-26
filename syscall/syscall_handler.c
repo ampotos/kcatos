@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Wed Feb 25 07:04:39 2015 eax
+** Last update Wed Feb 25 21:48:58 2015 eax
 */
 
 #include <utils/print.h>
@@ -17,7 +17,19 @@
 
 #define puts_screen puts
 
+extern u32 process_old_esp;
+
 u32	sbrk(u32);
+
+int	exit()
+{
+  u32	bla;
+
+  asm __volatile__("xchg %%esp, %0\n\t"
+		   : "=r"(bla) /* output */
+		   : "0"(process_old_esp) /* input */
+		   );
+}
 
 static void *syscalls[] =
   {
@@ -30,7 +42,8 @@ static void *syscalls[] =
     sbrk,
     kpause,
     keyboard_char_to_read,
-    keyboard_getchar
+    keyboard_getchar,
+    exit
   };
 
 u32	sbrk(u32 incr)

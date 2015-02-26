@@ -11,8 +11,15 @@
 switch_to_user_mode:
 	
 	cli
-	mov	ecx, [esp + 8]	; new esp
-	mov	edx, [esp + 4]	; new eip
+	mov	ebp, esp
+	push	ebp
+	
+	mov	eax, [esp + 16]	; old_esp save
+	;; mov	ecx, [esp]	; current ret eip
+
+	
+	mov	ecx, [esp + 12]	; new esp
+	mov	edx, [esp + 8]	; new eip
 	
 	mov	eax, 0x20	; 0x20 -> user ds
 	or	eax, 0x3	; 0x3 for privilege level 3 (usermode)

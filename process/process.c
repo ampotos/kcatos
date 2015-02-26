@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb  9 20:34:08 2015 eax
-** Last update Wed Feb 11 00:52:56 2015 eax
+** Last update Wed Feb 25 21:37:52 2015 eax
 */
 
 #include <memory/page.h>
@@ -19,7 +19,10 @@
 
 extern t_page_directory *kernel_directory;
 
-void switch_to_user_mode(u32 addr, u32 new_esp);
+/* u32 process_old_ebp = 0; */
+u32 process_old_esp = 0;
+
+void switch_to_user_mode(u32 addr, u32 new_esp, u32 *);
 
 /* void	new_stack(u32 start, u32 sz) */
 /* { */
@@ -41,6 +44,8 @@ void	create_process(void *new_eip)
 {
   /* new_stack(PROCESS_STACK_START, PROCESS_STACK_SIZE); */
 
-
-  switch_to_user_mode((u32)new_eip, PROCESS_STACK_START);
+  printf("create [%x]\n", create_process);
+  switch_to_user_mode((u32)new_eip, PROCESS_STACK_START, &process_old_esp);
+  /* process_old_ebp = 0; */
+  process_old_esp = 0;
 }

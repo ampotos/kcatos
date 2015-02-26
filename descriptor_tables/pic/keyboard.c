@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Tue Feb 24 18:25:34 2015 
-** Last update Wed Feb 25 07:04:13 2015 eax
+** Last update Wed Feb 25 08:51:16 2015 eax
 */
 
 #include <utils/io.h>
@@ -23,6 +23,7 @@ void	keyboard_handler()
   ctrl = io_in(0x61);
   if (in & 0x80 && g_keyboard.available < 1024) // key release
     g_keyboard.buff[g_keyboard.available++] = in ^ 0x80; // TODO convertion to ascii
+  /* printf("%x\n", g_keyboard.buff[g_keyboard.available - 1]); */
   io_out(0x61, ctrl | 0x80);
   io_out(0x61, ctrl);
 
