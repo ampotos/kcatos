@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Wed Feb 25 06:14:47 2015 eax
+## Last update Thu Feb 26 14:48:19 2015 eax
 ##
 
 CC      =	gcc
@@ -69,15 +69,17 @@ INITRD_NAME =	initrd.tar
 INITRD_FILE =	$(BOOT_PATH)$(INITRD_NAME)
 INITRD_DATA =	initrd_content/
 
-all: $(NAME) modules $(INITRD_FILE)
+all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) modules $(INITRD_FILE)
 	$(LD) $(LDFLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.s
 	$(ASM) $(ASMFLAGS) $< -o $@
 
-iso: $(NAME)
+iso: $(ISONAME)
+
+$(ISONAME): $(NAME)
 	cp $(NAME) $(BOOT_PATH)
 	grub-mkrescue  -d /usr/lib/grub/i386-pc  -o $(ISONAME) iso/
 
@@ -103,17 +105,11 @@ fclean: clean
 
 re: fclean all
 
-run:
-	qemu-system-i386 -kernel $(NAME) -initrd $(BOOT_PATH)/$(INITRD_NAME)
-
-run-debug:
-	qemu-system-i386 -S -s -kernel $(NAME) -initrd $(BOOT_PATH)/$(INITRD_NAME)
-
-run-iso:
+run: $(ISONAME)
 	qemu-system-i386 $(ISONAME)
 
-run-iso-debug:
+run-debug: $(ISONAME)
 	qemu-system-i386 -S -s $(ISONAME)
 
 
-.PHONY: all clean fclean re iso run run-debug run-iso modules
+.PHONY: all clean fclean re iso run modules

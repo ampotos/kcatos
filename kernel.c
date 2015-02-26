@@ -32,14 +32,13 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   init_descriptor_tables();
 
-  assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run");
-  assertm(multiboot->num != 0, "You didn't run the grub version. So the elf wasn't present. Bye");
+  assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run-iso");
+  assertm(multiboot->num != 0, "You didn't run the grub version. Therefore we can't load the modules. Try: make run-iso");
   
   fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
   init_paging();
 
   ret = kern_parse(multiboot, &ep);
-  assertm(0, "Debug");
   assertm(ret != -1, "Fail loading elf kernel");
     
   asm volatile ("sti");
@@ -49,12 +48,6 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   while (keyboard_getchar() != 0xff);
 
   kmodule_load_all(ird->kmods, &ep.symb);
-  /* kmodule_load_by_name("libk.kso", ird->kmods, &ep.symb); */
-  /* kmodule_load_by_name("t2.kso", ird->kmods, &ep.symb); */
-  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
-  /* kmodule_load_by_name("intro.kso", ird->kmods, &ep.symb); */
-  /* kmodule_load_by_name("shell.kso", ird->kmods, &ep.symb); */
-  /* kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
-  /* kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
+
   launch_task(ird);
 } 
