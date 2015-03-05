@@ -5,17 +5,21 @@
 // Login   <ampotos@epitech.net>
 // 
 // Started on  Wed Feb 11 17:52:02 2015 
-// Last update Wed Feb 25 00:25:27 2015 
+// Last update Wed Mar  4 23:38:29 2015 
 //
 
 #include <descriptor_tables/idt.h>
 #include <utils/types.h>
+
+#ifndef PIC_H
+#define PIC_H
 
 void	init_irq();
 
 void	irq_handler(regs_t *regs);
 
 void	keyboard_handler();
+
 void	incr_pit();
 
 void	setup_pit(u32 freq);
@@ -46,3 +50,5 @@ typedef struct s_ticks
 extern char *buff;
 extern t_ticks ticks;
 extern u32 ct_read;
+
+#endif

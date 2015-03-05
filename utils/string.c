@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Wed Dec 24 14:23:34 2014 eax
-** Last update Mon Feb 23 18:26:22 2015 eax
+** Last update Wed Mar  4 16:26:03 2015 
 */
 
 #include <utils/types.h>
@@ -68,4 +68,22 @@ int	strcmp(const char *s1, const char *s2)
       s2++;
     }
   return (*s1 - *s2);
+}
+
+u32	strlen(const char *s)
+{
+  u32	ct = -1;
+
+  while (s[++ct]);
+  return (ct);
+}
+
+u32	is_num_c(u8 c)
+{
+  return ((c >= '0' && c <= '9'));
+}
+
+u32	is_alpha_c(u8 c)
+{
+  return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
 }

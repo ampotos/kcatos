@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Wed Feb 25 06:14:47 2015 eax
+## Last update Tue Mar  3 16:20:52 2015 
 ##
 
 CC      =	gcc
@@ -24,6 +24,7 @@ SRCC	=	kernel.c \
 		descriptor_tables/pic/irq_handler.c \
 		descriptor_tables/pic/pit.c \
 		descriptor_tables/pic/keyboard.c \
+		descriptor_tables/pic/keyboard_conv.c \
 		utils/print.c \
 		utils/panic_print.c \
 		utils/string.c \
@@ -33,6 +34,7 @@ SRCC	=	kernel.c \
 		process/process.c \
 		syscall/syscall_handler.c \
 		syscall/syscall.c \
+		syscall/read.c \
 		test/test_kmalloc.c \
 		utils/ascii_art.c \
 		fs/tar/tar.c \
@@ -50,6 +52,8 @@ SRCA	=	boot.s \
 		descriptor_tables/idt_gen.s \
 		descriptor_tables/pic/init.s \
 		descriptor_tables/pic/irq_gen.s \
+		descriptor_tables/pic/pit_inc.s \
+		utils/routines.s \
 		utils/usefull_routine.s \
 		utils/io.s \
 		usermode.s \

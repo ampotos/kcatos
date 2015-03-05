@@ -9,12 +9,6 @@ wait_until_the_end_of_your_life:
 	hlt
 	jmp .hang
 	ret
-
-kpause:	
-	.hang:
-	hlt
-	jmp .hang
-	ret
 	
 is_computer_on:
 	mov eax,0x1

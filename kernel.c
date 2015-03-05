@@ -44,11 +44,14 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   setup_pit(1000);
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
 
-  while (keyboard_getchar() != 0xff);
-
+  /* while (keyboard_getchar() != 0xff); */
+  keyboard_clear_buff(1024); // size of read buff  == 1024
+  
   /* kmodule_load_all(ird->kmods, &ep.symb); */
   kmodule_load_by_name("libk.kso", ird->kmods, &ep.symb);
   kmodule_load_by_name("t2.kso", ird->kmods, &ep.symb);
-  kmodule_exec_by_name("t2.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  kmodule_load_by_name("intro.kso", ird->kmods, &ep.symb);
+  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_KERNELLAND);
+  /* kmodule_exec_by_name("t2.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
   /* launch_task(ird); */
 } 

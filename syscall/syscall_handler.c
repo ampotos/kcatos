@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:03:33 2015 eax
-** Last update Wed Feb 25 07:04:39 2015 eax
+** Last update Tue Mar  3 15:40:10 2015 
 */
 
 #include <utils/print.h>
@@ -14,6 +14,7 @@
 #include <memory/kmalloc.h>
 #include <syscall/syscall.h>
 #include <descriptor_tables/pic/keyboard.h>
+#include <syscall/read.h>
 
 #define puts_screen puts
 
@@ -29,8 +30,8 @@ static void *syscalls[] =
     print_logo,
     sbrk,
     kpause,
-    keyboard_char_to_read,
-    keyboard_getchar
+    read,
+    read_non_block
   };
 
 u32	sbrk(u32 incr)
