@@ -40,7 +40,7 @@ uint8_t make_color(enum vga_color fg, enum vga_color bg);
 int terminal_setpos(size_t x, size_t y);
 
 // Print Char
-void putc(const char c);
+void putc(char c);
 
 // Print String
 u32 puts(const char *data);
@@ -70,7 +70,7 @@ void clean();
 
 void	panic_print(regs_t reg);
 void	panic_print_assert(char *filename, int linenum, char *expr, char *msg);
-size_t		write_screen(u8 *data, size_t sz);
+size_t	write_screen(char *data, size_t sz);
 u32	print_logo();
 
 #endif /* PRINT_H_ */

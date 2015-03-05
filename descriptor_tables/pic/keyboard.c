@@ -5,7 +5,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Tue Feb 24 18:25:34 2015 
-** Last update Wed Mar  4 18:32:10 2015 
+** Last update Thu Mar  5 11:33:13 2015 
 */
 
 #include <utils/io.h>
@@ -30,8 +30,7 @@ void	keyboard_handler()
   ctrl = io_in(0x61);
 
   if ((in & 0x80) && g_keyboard.available < 1024)
-    if ((in ^ 0x80) != 96 || !g_keyboard.available || g_keyboard.buff[g_keyboard.available - 1] != 96) // stock only one 96 scancode before an other scancode
-      g_keyboard.buff[g_keyboard.available++] = in ^ 0x80;
+    if ((in ^ 0x80) != 96 || !g_keyboard.available || g_keyboard.buff[g_keyboard.available - 1] != 96)       g_keyboard.buff[g_keyboard.available++] = in ^ 0x80;
   if (!(in & 0x80) && is_special_k(in) && g_keyboard.available < 1024)
     g_keyboard.buff[g_keyboard.available++] = in | 0x80;
   io_out(0x61, ctrl | 0x80);

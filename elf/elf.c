@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Wed Feb 25 08:28:54 2015 eax
+** Last update Thu Feb 26 14:25:40 2015 eax
 */
 
 #include <utils/types.h>
@@ -127,8 +127,10 @@ int	elf_parse_symb_noh(t_elfparse *ep)
 
       if (ELF32_ST_BIND(sym->st_info) != STB_GLOBAL)
 	continue;
-	      
-      if (ELF32_ST_TYPE(sym->st_info) == STT_FUNC
+
+
+      if ((ELF32_ST_TYPE(sym->st_info) == STT_FUNC
+	   || ELF32_ST_TYPE(sym->st_info) == STT_OBJECT)
 	  || (ELF32_ST_TYPE(sym->st_info) == STT_NOTYPE
 	      && sym->st_shndx == SHN_UNDEF))
 	{
@@ -138,6 +140,8 @@ int	elf_parse_symb_noh(t_elfparse *ep)
 	  else
 	    new->addr =  sym->st_value;
 	}
+
+
     }
   return (0);
 }
@@ -161,6 +165,7 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 	    {
 	      printf("new mem for %s\n", name);
 	      void *data = kmalloc(sec->sh_size);
+	      /* void *data = 0xdffff000; */
 	      memset((u32)data, 0, sec->sh_size);
 	      sec->sh_offset = (int)data - (int)h;
 	    }

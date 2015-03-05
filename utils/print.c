@@ -143,10 +143,10 @@ void recurcive_hex(uint32_t i)
 /* ----------------------------------- */
 
 // Print Char
-void putc(const char c)
+void putc(char c)
 {
   /* syscall_write_screen(&c, 1); */
-  write_screen((const char *)&c, 1);
+  write_screen(&c, 1);
 }
 
 // Print String
@@ -381,7 +381,7 @@ void clean()
     }
 }
 
-size_t		write_screen(u8 *data, size_t sz)
+size_t		write_screen(char *data, size_t sz)
 {
   size_t	i;
 

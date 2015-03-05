@@ -5,6 +5,8 @@ kcatos is an operating system from scratch.
 ## Requirements
 * gcc
 * multilib for gcc -m 32
+* grub-mkrescue
+* xorriso
 
 ## Build
 ```
@@ -12,7 +14,7 @@ make
 ```
 ## Launch
 ```
-qemu-system-i386 -kernel KCat.Os
+make run
 ```
 
 ## Iso
