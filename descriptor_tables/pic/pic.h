@@ -5,7 +5,7 @@
 // Login   <ampotos@epitech.net>
 // 
 // Started on  Wed Feb 11 17:52:02 2015 
-// Last update Wed Mar  4 23:38:29 2015 
+// Last update Sun Mar  8 18:53:25 2015 
 //
 
 #include <descriptor_tables/idt.h>
@@ -20,7 +20,9 @@ void	irq_handler(regs_t *regs);
 
 void	keyboard_handler();
 
+void	pit_handler();
 void	incr_pit();
+void	sleep(u32 time);
 
 void	setup_pit(u32 freq);
 

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:34:36 2015 eax
-// Last update Thu Mar  5 11:29:40 2015 
+// Last update Sun Mar  8 18:48:42 2015 
 */
 
 #ifndef SYSCALL_H_
@@ -69,5 +69,6 @@ DECL_SYSCALL0(kpause);
 DECL_SYSCALL2(read, char *, u32);
 DECL_SYSCALL2(read_non_block, char *, u32);
 DECL_SYSCALL0(exit);
+DECL_SYSCALL1(sleep, u32);
 
 #endif

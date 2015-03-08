@@ -17,7 +17,8 @@ extern u32 fake_heap_ptr;
 
 void	launch_task(t_initrd *ird)
 {
-  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_KERNELLAND);
+  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  /* kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
   /* kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
 }
 
@@ -43,7 +44,7 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   assertm(ret != -1, "Fail loading elf kernel");
     
   asm volatile ("sti");
-  setup_pit(1000);
+  setup_pit(1000); // 1Kh
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
 
   keyboard_clear_buff(1024); // size of read buff  == 1024

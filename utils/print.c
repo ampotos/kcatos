@@ -145,8 +145,8 @@ void recurcive_hex(uint32_t i)
 // Print Char
 void putc(char c)
 {
-  /* syscall_write_screen(&c, 1); */
-  write_screen(&c, 1);
+  syscall_write_screen(&c, 1);
+  /* write_screen(&c, 1); */
 }
 
 // Print String
