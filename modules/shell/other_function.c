@@ -2,7 +2,8 @@
 
 //get the command line from user
 char *get_input_line(){
-  char *line = KMALLOC(BLOC_SIZE);
+  char *line = malloc(BLOC_SIZE);
+    syscall_puts_screen("Prout !3");
   int i = 0;
   int maxAlloc = BLOC_SIZE;
   char c;

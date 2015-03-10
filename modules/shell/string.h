@@ -10,13 +10,13 @@
 #define NULL 0x0
 #endif
 
-#define KMALLOC malloc
-#define KFREE free
-#define KREALLOC mrealloc
+#define KMALLOC(n) malloc(n)
+#define KFREE(n) free(n)
+#define KREALLOC(n, s) mrealloc(n, s)
 #define BLOC_SIZE 1024
 
 void	*malloc(unsigned);
-void	*realloc(void *, unsigned);
+void	*mrealloc(void *, unsigned);
 void	free(void *);
 
 char * kstrchr(const char *s, int c);

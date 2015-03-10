@@ -12,7 +12,7 @@ void  *mrealloc(void *src, unsigned i) {
   unsigned  cnt = 0;
 
   while (cnt <= i) {
-    tmp[cnt] = src[tmp];
+    ((char *)tmp)[cnt] = ((char *)src)[cnt];
     cnt++;
   }
 
@@ -27,7 +27,7 @@ void  *mrealloc(void *src, unsigned i) {
 }*/
 
 void put_prompt(){
-  write_screen("> ", 2);
+  syscall_puts_screen("> ");
 }
 
 void execsh(char *command, const programs_t *prog){  
@@ -63,6 +63,7 @@ void start_kksh() {
   for(;;){
     put_prompt();
     char *command = get_input_line();
+    syscall_puts_screen("Prout !2");
     if (command != NULL)
       execsh(command, prog);
   }

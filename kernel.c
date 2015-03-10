@@ -17,9 +17,10 @@ extern u32 fake_heap_ptr;
 
 void	launch_task(t_initrd *ird)
 {
-  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
-  /* kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
-  /* kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
+  //kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  //kmodule_exec_by_name("libk.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  //kmodule_exec_by_name("t2.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND);
 }
 
 void kernel_main(u32 magic, t_multiboot *multiboot)
