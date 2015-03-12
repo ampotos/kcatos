@@ -17,7 +17,7 @@ extern u32 fake_heap_ptr;
 
 void	launch_task(t_initrd *ird)
 {
-  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_KERNELLAND);
+  kmodule_exec_by_name("slides.kso", ird->kmods, KMODULE_EXEC_KERNELLAND);
   /* kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
   /* kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
 }
