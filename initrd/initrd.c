@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Feb 20 23:15:22 2015 eax
-** Last update Wed Feb 25 06:03:09 2015 eax
+** Last update Thu Mar 12 11:39:40 2015 eax
 */
 
 #include <fs/tar/tar.h>
@@ -40,9 +40,6 @@ t_initrd	*load_initrd(u32 addr)
   ret->kmods = NULL;
   get_next_tar_node((char *)addr, NULL);
   while (get_next_tar_node(NULL, &n))
-    {
-      printf("filename: [%s]\n", n.raw_header.name);
-      add_kmod(&ret->kmods, n.header.nameptr, n.header.size, n.data);
-    }
+    add_kmod(&ret->kmods, n.header.nameptr, n.header.size, n.data);
   return (ret);
 }

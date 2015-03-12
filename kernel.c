@@ -17,8 +17,9 @@ extern u32 fake_heap_ptr;
 
 void	launch_task(t_initrd *ird)
 {
-  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND);
-  kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND);
+  kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_KERNELLAND);
+  /* kmodule_exec_by_name("intro.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
+  /* kmodule_exec_by_name("shell.kso", ird->kmods, KMODULE_EXEC_USERLAND); */
 }
 
 void kernel_main(u32 magic, t_multiboot *multiboot)
@@ -38,28 +39,28 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   assertm(multiboot->num != 0, "You didn't run the grub version. Therefore we can't load the modules. Try: make run-iso");
   
   fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
-  printf("[-] Initalization of terminal:");
+  printf("[-] Initalization of paging:");
   init_paging();
   puts(" Ok");
   
   ret = kern_parse(multiboot, &ep);
   assertm(ret != -1, "Fail loading elf kernel");
 
-  printf("[-] Initalization of terminal:");
+  printf("[-] Initalization of pit:");
   asm volatile ("sti");
-  setup_pit(1000);
+  setup_pit(1000); // 1Kh
   puts(" Ok");
+
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
 
-  unsigned i;
-  i = 0;
-  while (i < 429496529)
-    i++;
-  
-  while (keyboard_getchar() != 0xff);
+  keyboard_clear_buff(1024); // size of read buff  == 1024
 
-  printf("[-] Loading of modules:");
+  puts("[-] Loading of modules...");
   kmodule_load_all(ird->kmods, &ep.symb);
-  puts(" Ok");
+  puts("[-] Loading of modules: Ok");
+
+  puts("[-] Launching programs now...");
+
   launch_task(ird);
+
 } 

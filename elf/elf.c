@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Thu Feb 26 14:25:40 2015 eax
+** Last update Thu Mar 12 11:38:46 2015 eax
 */
 
 #include <utils/types.h>
@@ -163,7 +163,6 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 	    continue;
 	  if(sec->sh_flags & SHF_ALLOC)
 	    {
-	      printf("new mem for %s\n", name);
 	      void *data = kmalloc(sec->sh_size);
 	      /* void *data = 0xdffff000; */
 	      memset((u32)data, 0, sec->sh_size);

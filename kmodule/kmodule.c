@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Wed Feb 25 08:12:37 2015 eax
+** Last update Thu Mar 12 11:42:37 2015 eax
 */
 
 #include <elf/elf.h>
@@ -54,7 +54,6 @@ int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
 	  char	*name = (char *)h + secs->dynstr->sh_addr + newrealsymbol->st_name;
 
 	  *(unsigned*)((int)h + rel->r_offset) = kresolve_symb(name, ksym);
-	  printf("truc: %s (%x)\n", name, *(unsigned*)((int)h + rel->r_offset));
 	}
       else
 	*(unsigned*)((int)h + rel->r_offset) = newsymbol->st_value + (int)h;
@@ -88,10 +87,9 @@ void	kmodule_exec(t_elfparse *ep, enum e_kmod_exec mode)
   char	c;
 
   c = 0;
-  printf("Entry: %x\n", ep->entry);
   the_init_func = (void*)ep->entry;
   if (mode == KMODULE_EXEC_KERNELLAND)
-    printf("ret: %d\n", the_init_func(&c));
+    the_init_func(&c);
   else
     create_process(the_init_func);
 }
@@ -109,8 +107,6 @@ int	kmodule_load(t_initrd_kmod *km, t_elfparse_symb **ksym)
   while (s)
     {
 
-      if (!strcmp(s->name, "malloc"))
-	printf("bla [%s] (%x) from [%s]\n", s->name, s->addr, km->name);
       if (s->addr && !kresolve_symb(s->name, *ksym))
 	{
 	  /* printf("adding [%s] (%x) from [%s]\n", s->name, s->addr, km->name); */

@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Tue Feb 10 00:34:36 2015 eax
-** Last update Wed Feb 25 21:27:06 2015 eax
+// Last update Sun Mar  8 18:48:42 2015 
 */
 
 #ifndef SYSCALL_H_
@@ -66,8 +66,9 @@ DECL_SYSCALL0(is_computer_on_fire);
 DECL_SYSCALL0(oh_crap);
 DECL_SYSCALL1(sbrk, u32);
 DECL_SYSCALL0(kpause);
-DECL_SYSCALL0(keyboard_char_to_read);
-DECL_SYSCALL0(keyboard_getchar);
+DECL_SYSCALL2(read, char *, u32);
+DECL_SYSCALL2(read_non_block, char *, u32);
 DECL_SYSCALL0(exit);
+DECL_SYSCALL1(sleep, u32);
 
 #endif

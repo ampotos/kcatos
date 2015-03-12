@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:59:43 2015 eax
-** Last update Thu Feb 26 14:20:42 2015 eax
+** Last update Thu Mar 12 11:36:28 2015 eax
 */
 
 #include <multiboot.h>
@@ -27,14 +27,6 @@ int	kern_parse(t_multiboot *multiboot, t_elfparse *ep)
 
   if (elf_parse_symb_noh(ep) < 0)
     return (-1);
-
-  t_elfparse_symb	*s = ep->symb;
-  while (s)
-    {
-      if (!strcmp(s->name, "ticks"))
-	printf("[%s] [%x]\n",  s->name, s->addr);
-      s = s->next;
-    }
 
   return (0);
 }
