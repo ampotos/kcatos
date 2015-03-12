@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Fri Dec  5 21:31:02 2014 eax
-** Last update Tue Feb 10 13:42:56 2015 eax
+** Last update Tue Mar 10 11:19:23 2015 eax
 */
 
 #include <descriptor_tables/gdt.h>
@@ -14,6 +14,8 @@
 
 void	init_descriptor_tables()
 {
+  printf("[-] Initalization of gdt:");
   init_gdt();
+  puts(" Ok");
   setup_idt();
 }

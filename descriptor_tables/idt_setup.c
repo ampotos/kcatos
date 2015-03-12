@@ -4,7 +4,7 @@
 ** Login   <ampotos@epitech.net>
 ** 
 ** Started on  Mon Dec  8 17:29:52 2014 
-** Last update Tue Feb 24 18:32:55 2015 
+** Last update Tue Mar 10 11:19:47 2015 eax
 */
 
 #include <descriptor_tables/idt.h>
@@ -37,9 +37,10 @@ void	setup_idt()
   idt_ptr.base = (uint32_t)(&idt);
 
   bzero((uint32_t)idt, sizeof(t_idt_entry) * 255);
-
+  printf("[-] Initalization of irq:");
   init_irq();
-  
+  puts(" Ok");
+  printf("[-] Initalization of idt:");
   idt_set_entry(0, USERMODE, (uint32_t)interrupt0);
   idt_set_entry(1, USERMODE, (uint32_t)interrupt1);
   idt_set_entry(2, USERMODE, (uint32_t)interrupt2);
@@ -94,4 +95,5 @@ void	setup_idt()
   idt_set_entry(0x80, USERMODE, (uint32_t)interrupt128);
 
   idt_load((uint32_t)&idt_ptr);
+  puts(" Ok");
 }

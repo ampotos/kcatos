@@ -29,26 +29,37 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   terminal_initialize();
   terminal_setpos(0, 0);
+  puts("[-] Initalization of terminal: Ok");
 
-  init_descriptor_tables();
+  init_descriptor_tables();  
 
   assertm(magic == 0x2badb002, "The multiboot magic isn't correct.");
   assertm(multiboot->mods_count != 0, "You didn't launch the kernel with the initrd. try: make run-iso");
   assertm(multiboot->num != 0, "You didn't run the grub version. Therefore we can't load the modules. Try: make run-iso");
   
   fake_heap_ptr = *(u32*)(multiboot->mods_addr + 4);
+  printf("[-] Initalization of terminal:");
   init_paging();
-
+  puts(" Ok");
+  
   ret = kern_parse(multiboot, &ep);
   assertm(ret != -1, "Fail loading elf kernel");
-    
+
+  printf("[-] Initalization of terminal:");
   asm volatile ("sti");
   setup_pit(1000);
+  puts(" Ok");
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
 
+  unsigned i;
+  i = 0;
+  while (i < 429496529)
+    i++;
+  
   while (keyboard_getchar() != 0xff);
 
+  printf("[-] Loading of modules:");
   kmodule_load_all(ird->kmods, &ep.symb);
-
+  puts(" Ok");
   launch_task(ird);
 } 
