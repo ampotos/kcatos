@@ -20,6 +20,20 @@ int	jouable(int x)
     return 0;
 }
 
+int	my_getnbr(char *str)
+{
+  int	nbr;
+
+  if (*str == '-')
+    return (-my_getnbr(str + 1));
+  if (*str == '+')
+    return (my_getnbr(str + 1));
+  nbr = 0;
+  while (*str >= '0' && *str <= '9')
+    nbr = nbr * 10 + (*(str++) - '0');
+  return (nbr);
+}
+
 int	saisircoup()
 {
   int	z;
@@ -170,7 +184,7 @@ int partieEstGagneeOuPas(int c,int l)
     return 0;
 }
 
-main ()
+int connectFour(char **args)
 {
   int win = 1;
   int i;
@@ -180,6 +194,7 @@ main ()
   int ligne;
   int compt1 = 0;
 
+  args = args;
   afficherGrille();
   for (i = 0;i < 6; i++)
     for (j = 0;j < 7; j++)

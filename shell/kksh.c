@@ -30,22 +30,17 @@ void execsh(char *command, const programs_t *prog){
   KFREE(command);
 }
 
-//program test
-int morpion(char **argv){
-  printf("Welcom in Tic Tac Toe\n");
-  printf("Good bye!\n");
-}
-
 void start_kksh(){
 
   /*fisrt conponent is the command line programme
     name and second parameter is the programme address
   */
   const programs_t prog[] = {
-    {"tictactoe", &morpion}, 
+    {"tictactoe", &morpion},
+    {"connectFour", &puissance4},
     {"", NULL}
   };
-  
+
   for(;;){
     put_prompt();
     char *command = get_input_line();

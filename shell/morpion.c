@@ -34,6 +34,20 @@ void afficherGrille()
   printf("\n\n\n");
 }
 
+int	my_getnbr(char *str)
+{
+  int	nbr;
+
+  if (*str == '-')
+    return (-my_getnbr(str + 1));
+  if (*str == '+')
+    return (my_getnbr(str + 1));
+  nbr = 0;
+  while (*str >= '0' && *str <= '9')
+    nbr = nbr * 10 + (*(str++) - '0');
+  return (nbr);
+}
+
 void		metUnPionSurLaGrille()
 {
   int		ligne;
@@ -46,6 +60,7 @@ void		metUnPionSurLaGrille()
     {
       /* ##### A enlever le scanf et faire par la suite un read ##### */
       scanf("%d %d", &ligne, &col);
+
       printf("\n");
 
       if ((ligne > 0) && (ligne <= NB_LIG) && (col > 0) && (col <= NB_COL))
@@ -130,8 +145,9 @@ Boolean		testeFinJeu()
   return TRUE;
 }
 
-int	main()
+int	tictactoe(char **args)
 {
+  args = args;
   initialiseGrille();
   do
     {
