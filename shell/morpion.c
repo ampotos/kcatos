@@ -1,11 +1,7 @@
 #include <stdio.h>
-
-#define NB_LIG 3
-#define NB_COL 3
-
-typedef enum {FALSE, TRUE} Boolean;
-static char	grille[NB_LIG][NB_COL];
-static char	prochainJoueur = 'O';
+#include "morpion.h"
+#include "string.h"
+#include "puissance4.h"
 
 void		initialiseGrille()
 {
@@ -16,36 +12,22 @@ void		initialiseGrille()
     {
       for (j = 0; j < NB_COL; j++)
 	{
-	  grille[i][j] = ' ';
+	  grille1[i][j] = ' ';
 	}
     }
 }
 
-void afficherGrille()
+void afficherGrille1()
 {
   printf("\n\n\n");
   printf("+-----+\n");
-  printf("|%c|%c|%c|\n", grille[0][0], grille[0][1], grille[0][2]);
+  printf("|%c|%c|%c|\n", grille1[0][0], grille1[0][1], grille1[0][2]);
   printf("+-----+\n");
-  printf("|%c|%c|%c|\n", grille[1][0], grille[1][1], grille[1][2]);
+  printf("|%c|%c|%c|\n", grille1[1][0], grille1[1][1], grille1[1][2]);
   printf("+-----+\n");
-  printf("|%c|%c|%c|\n", grille[2][0], grille[2][1], grille[2][2]);
+  printf("|%c|%c|%c|\n", grille1[2][0], grille1[2][1], grille1[2][2]);
   printf("+-----+\n");
   printf("\n\n\n");
-}
-
-int	my_getnbr(char *str)
-{
-  int	nbr;
-
-  if (*str == '-')
-    return (-my_getnbr(str + 1));
-  if (*str == '+')
-    return (my_getnbr(str + 1));
-  nbr = 0;
-  while (*str >= '0' && *str <= '9')
-    nbr = nbr * 10 + (*(str++) - '0');
-  return (nbr);
 }
 
 void		metUnPionSurLaGrille()
@@ -54,25 +36,26 @@ void		metUnPionSurLaGrille()
   int		col;
   Boolean	saisieCorrecte = FALSE;
 
-  printf("Numeros de ligne et de colonne: ");
-
   do
     {
-      /* ##### A enlever le scanf et faire par la suite un read ##### */
-      scanf("%d %d", &ligne, &col);
-
+      printf("Numeros de ligne: \n");
+      get_input_line();
+      ligne = my_getnbr(line);
+      printf("Numeros de colonne: \n");
+      get_input_line();
+      col = my_getnbr(line);
       printf("\n");
 
       if ((ligne > 0) && (ligne <= NB_LIG) && (col > 0) && (col <= NB_COL))
 	{
 	  ligne--;
 	  col--;
-	  if (grille[ligne][col] != ' ')
+	  if (grille1[ligne][col] != ' ')
 	    printf("Cette case a deja ete remplie. Veuillez recommencer: \n");
 	  else
 	    {
 	      saisieCorrecte = TRUE;
-	      grille[ligne][col] = prochainJoueur;
+	      grille1[ligne][col] = prochainJoueur;
 	      if (prochainJoueur == 'O')
 		prochainJoueur = 'X';
 	      else
@@ -91,34 +74,34 @@ Boolean		testeFinJeu()
   int		joueurGagnant;
   Boolean	estFini = FALSE;
 
-  if (grille[1][1] != ' ')
+  if (grille1[1][1] != ' ')
     {
-      if (((grille[0][1] == grille[1][1]) && (grille[1][1] == grille[2][1])) ||
-	  ((grille[1][0] == grille[1][1]) && (grille[1][1] == grille[1][2])) ||
-	  ((grille[0][0] == grille[1][1]) && (grille[1][1] == grille[2][2])) ||
-	  ((grille[0][2] == grille[1][1]) && (grille[1][1] == grille[2][0])))
+      if (((grille1[0][1] == grille1[1][1]) && (grille1[1][1] == grille1[2][1])) ||
+	  ((grille1[1][0] == grille1[1][1]) && (grille1[1][1] == grille1[1][2])) ||
+	  ((grille1[0][0] == grille1[1][1]) && (grille1[1][1] == grille1[2][2])) ||
+	  ((grille1[0][2] == grille1[1][1]) && (grille1[1][1] == grille1[2][0])))
 	{
-	  joueurGagnant = grille[1][1];
+	  joueurGagnant = grille1[1][1];
 	  estFini = TRUE;
 	}
     }
 
-  if ((!estFini) && (grille[0][0] != ' '))
+  if ((!estFini) && (grille1[0][0] != ' '))
     {
-      if (((grille[0][0] == grille[0][1]) && (grille[0][1] == grille[0][2])) ||
-	  ((grille[0][0] == grille[1][0]) && (grille[1][0] == grille[2][0])))
+      if (((grille1[0][0] == grille1[0][1]) && (grille1[0][1] == grille1[0][2])) ||
+	  ((grille1[0][0] == grille1[1][0]) && (grille1[1][0] == grille1[2][0])))
 	{
-	  joueurGagnant = grille[0][0];
+	  joueurGagnant = grille1[0][0];
 	  estFini = TRUE;
 	}
     }
 
-  if ((!estFini) && (grille[2][2] != ' '))
+  if ((!estFini) && (grille1[2][2] != ' '))
     {
-      if (((grille[2][0] == grille[2][1]) && (grille[2][1] == grille[2][2])) ||
-	  ((grille[0][2] == grille[1][2]) && (grille[1][2] == grille[2][2])))
+      if (((grille1[2][0] == grille1[2][1]) && (grille1[2][1] == grille1[2][2])) ||
+	  ((grille1[0][2] == grille1[1][2]) && (grille1[1][2] == grille1[2][2])))
 	{
-	  joueurGagnant = grille[2][2];
+	  joueurGagnant = grille1[2][2];
 	  estFini = TRUE;
 	}
     }
@@ -138,7 +121,7 @@ Boolean		testeFinJeu()
     {
       for (j = 0; j < NB_COL; j++)
 	{
-	  if (grille[i][j] == ' ')
+	  if (grille1[i][j] == ' ')
 	    return FALSE;
 	}
     }
@@ -152,7 +135,7 @@ int	tictactoe(char **args)
   do
     {
       metUnPionSurLaGrille();
-      afficherGrille();
+      afficherGrille1();
     }
   while (!testeFinJeu());
   return (0);

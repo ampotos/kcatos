@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-char	grille[6][7];
-int	remplissage[7];
+#include "puissance4.h"
+#include "string.h"
 
 int	dansGrille(int x,int y)
 {
@@ -41,7 +38,8 @@ int	saisircoup()
   do
     {
       printf("\t      rentrez une colonne entre <0-6>:\n\t essaies une autre si celle-ci est remplie!\n");
-      scanf("%d", &z);
+      get_input_line();
+      z = my_getnbr(line);
       if (jouable(z) == 1)
 	return z;
     }
