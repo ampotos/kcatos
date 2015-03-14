@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:56:58 2015 eax
-** Last update Thu Mar 12 12:42:31 2015 eax
+** Last update Fri Mar 13 16:30:38 2015 eax
 */
 
 #ifndef SLIDES_H_
@@ -23,6 +23,7 @@ typedef struct
 {
   int	animations[NB_LINE];
   char	*lines[NB_LINE];
+  void (*f_after_line)(int n);
 } t_slide;
 
 #endif

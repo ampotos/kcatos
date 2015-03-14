@@ -56,7 +56,8 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   keyboard_clear_buff(1024); // size of read buff  == 1024
 
   puts("[-] Loading of modules...");
-  kmodule_load_all(ird->kmods, &ep.symb);
+  kmodule_load_by_name("slides.kso", ird->kmods, &ep.symb);
+  /* assert(0); */
   puts("[-] Loading of modules: Ok");
 
   puts("[-] Launching programs now...");

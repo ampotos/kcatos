@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 05:47:19 2015 eax
-** Last update Wed Feb 25 05:36:48 2015 eax
+** Last update Thu Mar 12 16:38:26 2015 eax
 */
 
 #ifndef ELF_H_
@@ -26,6 +26,7 @@ typedef struct
   Elf32_Shdr *symtab;
   Elf32_Shdr *gotplt;
   Elf32_Shdr *relplt;
+  Elf32_Shdr *reldyn;
   Elf32_Shdr *plt;
   Elf32_Shdr *strtab;
   Elf32_Shdr *dynstr;

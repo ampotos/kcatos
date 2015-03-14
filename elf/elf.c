@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Sat Feb 21 20:57:11 2015 eax
-** Last update Thu Mar 12 11:38:46 2015 eax
+** Last update Thu Mar 12 21:19:18 2015 eax
 */
 
 #include <utils/types.h>
@@ -177,6 +177,8 @@ int	elf_parse_sections(Elf32_Ehdr *h, t_elfparse *ep)
 	}
       else if (sec->sh_type == SHT_REL && !strcmp(name, ".rel.plt"))
 	ep->sections.relplt = sec;
+      else if (sec->sh_type == SHT_REL && !strcmp(name, ".rel.dyn"))
+	ep->sections.reldyn = sec;
       else if (sec->sh_type == SHT_PROGBITS && !strcmp(name, ".got.plt"))
 	ep->sections.gotplt = sec;
       else if (sec->sh_type == SHT_PROGBITS && !strcmp(name, ".plt"))

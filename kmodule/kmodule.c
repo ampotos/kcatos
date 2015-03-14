@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Thu Mar 12 11:42:37 2015 eax
+** Last update Thu Mar 12 21:25:00 2015 eax
 */
 
 #include <elf/elf.h>
@@ -28,7 +28,7 @@ u32	kresolve_symb(char *name, t_elfparse_symb *sym)
   return (0);
 }
 
-int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
+int	kmodule_bind_got_relplt(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
 {
   int sz;
   t_elfparse_sections *secs;
@@ -59,6 +59,47 @@ int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
 	*(unsigned*)((int)h + rel->r_offset) = newsymbol->st_value + (int)h;
     }
   return (0);
+}
+
+
+int	kmodule_bind_got_reldyn(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
+{
+  int sz;
+  t_elfparse_sections *secs;
+
+  secs = &ep->sections;
+  sz = secs->reldyn->sh_size / secs->reldyn->sh_entsize - 1;
+
+  for ( ; sz >= 0 ; --sz)
+    {
+      
+      Elf32_Rel *rel = (Elf32_Rel *)((int)h + secs->reldyn->sh_offset) + sz;
+      
+      Elf32_Shdr *tab = elf_section(h, secs->reldyn->sh_link);
+      Elf32_Sym *newsymbol = ((Elf32_Sym *)((int)h + tab->sh_offset)) + ELF32_R_SYM(rel->r_info);
+      /* printf("%x %x %x\n", rel, tab, newsymbol); */
+      if (ELF32_R_TYPE(rel->r_info) != R_386_GLOB_DAT)
+	continue;
+      if (newsymbol->st_shndx == SHN_UNDEF)
+      	{
+      	  Elf32_Sym *newrealsymbol = ((Elf32_Sym *)((int)h + secs->dynsym->sh_offset)) + ELF32_R_SYM(rel->r_info);
+      	  char	*name = (char *)h + secs->dynstr->sh_addr + newrealsymbol->st_name;
+
+      	  *(unsigned*)((int)h + rel->r_offset) = kresolve_symb(name, ksym);
+      	}
+      else
+	*(unsigned*)((int)h + rel->r_offset) = newsymbol->st_value + (int)h;
+    }
+  return (0);
+}
+
+
+int	kmodule_bind_got(Elf32_Ehdr *h, t_elfparse *ep, t_elfparse_symb *ksym)
+{
+  if (ep->sections.relplt)
+    kmodule_bind_got_relplt(h, ep, ksym);
+  if (ep->sections.reldyn)
+    kmodule_bind_got_reldyn(h, ep, ksym);
 }
 
 int	kmodule_parse(char *data, t_elfparse *ep, t_elfparse_symb **ksym)
