@@ -1,63 +1,81 @@
 #include "string.h"
 
 //get the command line from user
-char *get_input_line(){
-  char *line = malloc(BLOC_SIZE);
-    syscall_puts_screen("Prout !3");
-  int i = 0;
-  int maxAlloc = BLOC_SIZE;
-  char c;
-  int ret;
-  
-  if (line == NULL)
-    {
-      syscall_puts_screen("ERROR: Memory allocation error!");
-      return NULL;
-    }
-  while ((ret = read(0, &c, 1)) > 0 && c != '\n'){
-    if (i >= maxAlloc){
-      if ((line = KREALLOC(line, i + BLOC_SIZE)) == NULL)
-	{
-	  syscall_puts_screen("ERROR: Memory allocation error!");
-	  return NULL;
-	}
-    }
-    line[i++] = c;
-  }
-  line[i] = 0;
-  if (ret < 1)
-    syscall_puts_screen("ERROR: read!");
-  return line;
+int		get_input_line(char *line, u32 size) {
+	u32		ret, offset = 0;
+
+	if (size < 5)
+		return -1;
+	do {
+    	//syscall_puts_screen("ROLL");
+		if (((int)size - (int)offset) < 0 || (ret = syscall_read(line + offset, size - offset)) == size)
+			return -1;
+		syscall_write_screen(line + offset, ret);
+		offset += ret;
+		line[offset] = '\0';
+		//syscall_write_screen("Gain : ", 7);
+		//syscall_puts_screen(line);
+	} while (line[offset-1] != '\n');
+
+	line[offset-1] = '\0';
+
+	return offset - 1;
 }
 
 //return the number of strings delimited by the bytes contained in tok
-int countok(char *s, char *tok){
-  int ctr = 0;
+int		countok(char *s, char *tok) {
+ 	int		ctr = 0;
   
-  while (*s){
-    if (!kstrspn(s, tok)){
-      if (s[1] == 0 || kstrspn(&s[1], tok))
-	++ctr;
-    }
-    *s++;
-  }
-  return ctr;
+	while (*s) {
+		if (!kstrspn(s, tok)) {
+			if (s[1] == 0 || kstrspn(&s[1], tok))
+				++ctr;
+		}
+
+    	*s++;
+	}
+
+	return --ctr;
 }
 
-char **str_to_word_tab(register char *s){
-  char **ret = NULL;
-  int i = 1;
-  int len = countok(s, " \t");
+int		count_arg(char *s) {
+	return countok(s, " \t");
+}
+
+int		get_arg(char *buff, int buff_size, register char *s, int num) {
+	int		i = 0;
+	int		len = countok(s, " \t");
+	char	*ret;
+	char	*end;
   
-  if (len == 0)
-    return NULL;
-  if ((ret = KMALLOC((len + 1) * sizeof(char *))) == NULL)
-    return NULL;
+  	*buff = '\0';
+	if (len == 0 || len < num)
+		return -1;
 
-  ret[0] = kstrtok(s, " \t");
-  ret[len] = NULL;
+	ret = s;
+	while (*ret && (*ret == ' ' || *ret == '\t'))
+		ret++;
 
-  while (i < len)
-    ret[i++] = kstrtok(NULL, " \t");
-  return ret;
+	while (++i <= num && ret != NULL)
+	{
+		ret = kstrpbrk(ret, " \t");
+		while (ret != NULL && *ret && (*ret == ' ' || *ret == '\t'))
+			ret++;
+	}
+
+	if (ret == NULL)
+		return -1;
+
+	end = kstrpbrk(ret, " \t");
+	i = 0;
+	buff_size--;
+
+	while (i < buff_size && ((end == NULL && *ret != '\0') || (end != ret)))
+		buff[i++] = *(ret++);
+	if (end != ret && end != NULL)
+		return -1;
+	if (buff[i - 1] == '\n')
+		buff[i - 1] = '\0';
+	buff[i] = '\0';
+	return 0;
 }

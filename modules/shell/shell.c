@@ -27,7 +27,6 @@ int	init_module(void *d)
 {
   (void) d;
   //my_shell();
-  syscall_puts_screen("Prout !");
   start_kksh();
   return (0);
 }
