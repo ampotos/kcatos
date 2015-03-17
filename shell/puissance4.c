@@ -9,7 +9,7 @@ int	dansGrille(int x,int y)
     return 0;
 }
 
-int	jouable(int x)
+int	jouable(int remplissage[7], int x)
 {
   if (x >=0 && (x < 7) && remplissage[x] >= 0 && remplissage[x] < 6)
     return 1;
@@ -31,22 +31,22 @@ int	my_getnbr(char *str)
   return (nbr);
 }
 
-int	saisircoup()
+int	saisircoup(int remplissage[7], char *line)
 {
   int	z;
 
   do
     {
       printf("\t      rentrez une colonne entre <0-6>:\n\t essaies une autre si celle-ci est remplie!\n");
-      get_input_line();
+      line = get_input_line(line);
       z = my_getnbr(line);
-      if (jouable(z) == 1)
-	return z;
+      if (jouable(remplissage, z) == 1)
+	       return z;
     }
-  while (jouable(z) != 1);
+  while (jouable(remplissage, z) != 1);
 }
 
-void	afficherGrille()
+void	afficherGrille(char grille[6][7])
 {
   int	i;
   int	j;
@@ -71,21 +71,7 @@ void	afficherGrille()
   printf("\n\n\t\t");
 }
 
-int	estRemplieOuNon()
-{
-  int	x;
-  int	comp=0;
-
-  for (x = 0; x <= 6; x++)
-    if (jouable(x))
-      comp = comp + 1;
-  if (comp == 0)
-    return 1;
-  else
-    return 0;
-}
-
-int	adjacent(int c, int l,int dirV, int dirH)
+int	adjacent(char grille[6][7],int c, int l,int dirV, int dirH)
 {
   int	n = 0;
 
@@ -170,19 +156,19 @@ int	adjacent(int c, int l,int dirV, int dirH)
 
 }
 
-int partieEstGagneeOuPas(int c,int l)
+int partieEstGagneeOuPas(char grille[6][7], int c,int l)
 {
 
-  if ((adjacent(c,l,0,1)+adjacent(c,l,0,-1))>=3 ||
-      (adjacent(c,l,1,0)+adjacent(c,l,-1,0))>=3 ||
-      (adjacent(c,l,1,1)+adjacent(c,l,-1,-1))>=3 ||
-      (adjacent(c,l,1,-1) + adjacent(c,l,-1,1)>=3))
+  if ((adjacent(grille, c,l,0,1)+adjacent(grille, c,l,0,-1))>=3 ||
+      (adjacent(grille, c,l,1,0)+adjacent(grille, c,l,-1,0))>=3 ||
+      (adjacent(grille, c,l,1,1)+adjacent(grille, c,l,-1,-1))>=3 ||
+      (adjacent(grille, c,l,1,-1) + adjacent(grille, c,l,-1,1)>=3))
     return 1;
   else
     return 0;
 }
 
-int connectFour(char **args)
+int connectFour(char **args, char *line)
 {
   int win = 1;
   int i;
@@ -191,26 +177,28 @@ int connectFour(char **args)
   int colonne;
   int ligne;
   int compt1 = 0;
+  char  grille[6][7];
+  int remplissage[7];
 
   args = args;
-  afficherGrille();
   for (i = 0;i < 6; i++)
     for (j = 0;j < 7; j++)
       grille[i][j] = ' ';
   for(j = 0;j < 7; j++)
     remplissage[j] = 0;
+  afficherGrille(grille);
   while (win)
     {
       if (joueur % 2 == 0)
 	{
 	  printf("posez votre pion joueur 1\n");
-	  colonne=saisircoup();
+	  colonne=saisircoup(remplissage, line);
 	  ligne=remplissage[colonne];
 	  grille[ligne][colonne] = 'O';
 	  remplissage[colonne] = remplissage[colonne] + 1;
 	  compt1++;
-	  afficherGrille();
-	  if (partieEstGagneeOuPas(colonne, ligne) == 1)
+	  afficherGrille(grille);
+	  if (partieEstGagneeOuPas(grille, colonne, ligne) == 1)
 	    {
 	      printf("joueur 1 gagne au %deme coup\n", compt1 / 2 + 1);
 	      win = 0;
@@ -219,13 +207,13 @@ int connectFour(char **args)
       if(joueur % 2 != 0)
 	{
 	  printf("posez votre pion joueur 2\n");
-	  colonne = saisircoup();
+	  colonne = saisircoup(remplissage, line);
 	  ligne = remplissage[colonne];
 	  grille[ligne][colonne] = 'X';
 	  remplissage[colonne] = remplissage[colonne] + 1;
 	  compt1++;
-	  afficherGrille();
-	  if (partieEstGagneeOuPas(colonne, ligne) == 1)
+	  afficherGrille(grille);
+	  if (partieEstGagneeOuPas(grille, colonne, ligne) == 1)
 	    {
 	      printf("joueur 2 gagne au %deme coup\n", compt1 / 2);
 	      win = 0;

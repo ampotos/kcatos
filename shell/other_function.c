@@ -1,7 +1,7 @@
 #include "string.h"
 
 //get the command line from user
-void get_input_line(){
+char *get_input_line(char *line){
   char c;
   int ret;
 
@@ -10,6 +10,7 @@ void get_input_line(){
     line[i++] = c;
   }
   line[i] = 0;
+  return line;
 }
 
 //return the number of strings delimited by the bytes contained in tok

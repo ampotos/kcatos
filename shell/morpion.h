@@ -5,20 +5,9 @@
 #define NB_COL 3
 
 typedef enum {FALSE, TRUE} Boolean;
-static char	grille1[NB_LIG][NB_COL];
-static char	prochainJoueur = 'O';
 
-
-
-
-void		initialiseGrille();
-void afficherGrille1();
-int	my_getnbr(char *str);
-void		metUnPionSurLaGrille();
-Boolean		testeFinJeu();
-int	tictactoe(char **args);
-
-
+int			my_getnbr(char *str);
+int			tictactoe(char **args, char *);
 
 #endif /* _MORPION_H_ */
 

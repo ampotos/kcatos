@@ -3,7 +3,7 @@
 #include "string.h"
 #include "puissance4.h"
 
-void		initialiseGrille()
+void		initialiseGrille(char grille1[3][3])
 {
   int		i;
   int		j;
@@ -17,7 +17,7 @@ void		initialiseGrille()
     }
 }
 
-void afficherGrille1()
+void afficherGrille1(char grille1[3][3])
 {
   printf("\n\n\n");
   printf("+-----+\n");
@@ -30,7 +30,7 @@ void afficherGrille1()
   printf("\n\n\n");
 }
 
-void		metUnPionSurLaGrille()
+void		metUnPionSurLaGrille(char grille1[3][3], char *line, char *prochainJoueur)
 {
   int		ligne;
   int		col;
@@ -39,10 +39,10 @@ void		metUnPionSurLaGrille()
   do
     {
       printf("Numeros de ligne: \n");
-      get_input_line();
+      line = get_input_line(line);
       ligne = my_getnbr(line);
       printf("Numeros de colonne: \n");
-      get_input_line();
+      line = get_input_line(line);
       col = my_getnbr(line);
       printf("\n");
 
@@ -55,11 +55,11 @@ void		metUnPionSurLaGrille()
 	  else
 	    {
 	      saisieCorrecte = TRUE;
-	      grille1[ligne][col] = prochainJoueur;
-	      if (prochainJoueur == 'O')
-		prochainJoueur = 'X';
+	      grille1[ligne][col] = *prochainJoueur;
+	      if (*prochainJoueur == 'O')
+		*prochainJoueur = 'X';
 	      else
-		prochainJoueur = 'O';
+	*prochainJoueur = 'O';
 	    }
 	}
       else
@@ -67,7 +67,7 @@ void		metUnPionSurLaGrille()
     } while (!saisieCorrecte);
 }
 
-Boolean		testeFinJeu()
+Boolean		testeFinJeu(char grille1[3][3])
 {
   int		i;
   int		j;
@@ -128,16 +128,19 @@ Boolean		testeFinJeu()
   return TRUE;
 }
 
-int	tictactoe(char **args)
+int	tictactoe(char **args, char *line)
 {
+  char grille1[NB_LIG][NB_COL];
+  char prochainJoueur = 'O';
+
   args = args;
-  initialiseGrille();
+  initialiseGrille(grille1);
   do
     {
-      metUnPionSurLaGrille();
-      afficherGrille1();
+      metUnPionSurLaGrille(grille1, line, &prochainJoueur);
+      afficherGrille1(grille1);
     }
-  while (!testeFinJeu());
+  while (!testeFinJeu(grille1));
   return (0);
 }
 
