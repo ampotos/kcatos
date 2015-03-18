@@ -25,7 +25,7 @@ int		get_input_line(char *line, u32 size) {
 //return the number of strings delimited by the bytes contained in tok
 int		countok(char *s, char *tok) {
  	int		ctr = 0;
-  
+
 	while (*s) {
 		if (!kstrspn(s, tok)) {
 			if (s[1] == 0 || kstrspn(&s[1], tok))

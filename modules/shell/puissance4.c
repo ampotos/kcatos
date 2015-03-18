@@ -45,6 +45,7 @@ int	saisircoup()
 	return z;
     }
   while (jouable(z) != 1);
+  return 0;
 }
 
 void	afficherGrille()
@@ -234,4 +235,5 @@ int connectFour(char *args)
 	}
       joueur = joueur + 1;
     }
+  return 0;
 }

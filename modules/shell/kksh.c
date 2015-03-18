@@ -16,6 +16,7 @@ int cleanWrap(char *arg)
   clean();
   terminal_setpos(0, 0);
   terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
+  return (0);
 }
 
 void put_prompt(){
