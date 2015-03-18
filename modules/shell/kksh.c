@@ -1,5 +1,6 @@
 #include "string.h"
 
+
 typedef struct __programs_t{
   char *name;
   int (*function)(char *);
@@ -7,7 +8,15 @@ typedef struct __programs_t{
 
 int connectFour(char *args);
 int tictactoe(char *args);
+int swascii(char *arg);
 
+int cleanWrap(char *arg)
+{
+  (void)arg;
+  clean();
+  terminal_setpos(0, 0);
+  terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
+}
 
 void put_prompt(){
   syscall_write_screen("> ", 2);
@@ -32,6 +41,8 @@ void start_kksh() {
   const programs_t prog[] = {
     {"tictactoe", &tictactoe}, 
     {"connectFour", &connectFour}, 
+    {"sw", &swascii}, 
+    {"clear", &cleanWrap},
     {"", NULL}
   };
   

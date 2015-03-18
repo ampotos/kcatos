@@ -1,4 +1,5 @@
 #include <syscall/syscall.h>
+#include <utils/print.h>
 
 //#include <stdlib.h>
 //#include <stdio.h>
@@ -23,5 +24,3 @@ int countok(char *s, char *tok);
 int		get_arg(char *buff, int buff_size, register char *s, int num);
 int		get_input_line(char *line, u32 size);
 int		count_arg(char *s);
-
-int		printf(char *, ...);
