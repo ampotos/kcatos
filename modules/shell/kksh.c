@@ -8,7 +8,7 @@ typedef struct __programs_t{
 
 int connectFour(char *args);
 int tictactoe(char *args);
-int swascii(char *arg);
+//int swascii(char *arg);
 
 int cleanWrap(char *arg)
 {
@@ -41,7 +41,7 @@ void start_kksh() {
   const programs_t prog[] = {
     {"tictactoe", &tictactoe}, 
     {"connectFour", &connectFour}, 
-    {"sw", &swascii}, 
+//    {"sw", &swascii}, 
     {"clear", &cleanWrap},
     {"", NULL}
   };
