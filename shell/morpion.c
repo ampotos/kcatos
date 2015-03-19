@@ -38,10 +38,10 @@ void		metUnPionSurLaGrille(char grille1[3][3], char *line, char *prochainJoueur)
 
   do
     {
-      printf("Numeros de ligne: \n");
+      printf("Numeros de ligne: \n"); // VERT
       line = get_input_line(line);
       ligne = my_getnbr(line);
-      printf("Numeros de colonne: \n");
+      printf("Numeros de colonne: \n"); // VERT
       line = get_input_line(line);
       col = my_getnbr(line);
       printf("\n");
@@ -51,7 +51,7 @@ void		metUnPionSurLaGrille(char grille1[3][3], char *line, char *prochainJoueur)
 	  ligne--;
 	  col--;
 	  if (grille1[ligne][col] != ' ')
-	    printf("Cette case a deja ete remplie. Veuillez recommencer: \n");
+	    printf("Cette case a deja ete remplie. Veuillez recommencer: \n"); // ROUGE
 	  else
 	    {
 	      saisieCorrecte = TRUE;
@@ -63,7 +63,7 @@ void		metUnPionSurLaGrille(char grille1[3][3], char *line, char *prochainJoueur)
 	    }
 	}
       else
-	printf("Indice de ligne ou de colonne incorrect. Veuillez recommencer:\n");
+	printf("Indice de ligne ou de colonne incorrect. Veuillez recommencer:\n"); // ROUGE
     } while (!saisieCorrecte);
 }
 
@@ -108,12 +108,12 @@ Boolean		testeFinJeu(char grille1[3][3])
 
   if (estFini)
     {
-      printf("Felicitations au joueur ayant les ");
+      printf("Felicitations au joueur ayant les "); // VERT
       if (joueurGagnant == 'O')
-	printf("ronds ");
+	printf("ronds "); // VERT
       else
-	printf("croix ");
-      printf("qui a gagne.\n");
+	printf("croix "); // VERT
+      printf("qui a gagne.\n"); // VERT
       return TRUE;
     }
 

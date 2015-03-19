@@ -37,7 +37,7 @@ int	saisircoup(int remplissage[7], char *line)
 
   do
     {
-      printf("\t      rentrez une colonne entre <0-6>:\n\t essaies une autre si celle-ci est remplie!\n");
+      printf("\t      rentrez une colonne entre <0-6>:\n\t essaies une autre si celle-ci est remplie!\n"); // VERT
       line = get_input_line(line);
       z = my_getnbr(line);
       if (jouable(remplissage, z) == 1)
@@ -191,7 +191,7 @@ int connectFour(char **args, char *line)
     {
       if (joueur % 2 == 0)
 	{
-	  printf("posez votre pion joueur 1\n");
+	  printf("posez votre pion joueur 1\n"); // VERT
 	  colonne=saisircoup(remplissage, line);
 	  ligne=remplissage[colonne];
 	  grille[ligne][colonne] = 'O';
@@ -200,13 +200,13 @@ int connectFour(char **args, char *line)
 	  afficherGrille(grille);
 	  if (partieEstGagneeOuPas(grille, colonne, ligne) == 1)
 	    {
-	      printf("joueur 1 gagne au %deme coup\n", compt1 / 2 + 1);
+	      printf("joueur 1 gagne au %deme coup\n", compt1 / 2 + 1); // VERT
 	      win = 0;
 	    }
 	}
       if(joueur % 2 != 0)
 	{
-	  printf("posez votre pion joueur 2\n");
+	  printf("posez votre pion joueur 2\n"); // VERT
 	  colonne = saisircoup(remplissage, line);
 	  ligne = remplissage[colonne];
 	  grille[ligne][colonne] = 'X';
@@ -215,10 +215,15 @@ int connectFour(char **args, char *line)
 	  afficherGrille(grille);
 	  if (partieEstGagneeOuPas(grille, colonne, ligne) == 1)
 	    {
-	      printf("joueur 2 gagne au %deme coup\n", compt1 / 2);
+	      printf("joueur 2 gagne au %deme coup\n", compt1 / 2); // VERT
 	      win = 0;
 	    }
 	}
       joueur = joueur + 1;
+      if (remplissage[0] == 6 && remplissage[1] == 6 && remplissage[2] == 6 && remplissage[3] == 6 && remplissage[4] == 6 && remplissage[5] == 6 && remplissage[6] == 6)
+	{
+	  printf("égalité\n"); //ROUGE
+	  win = 0;
+	}
     }
 }
