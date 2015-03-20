@@ -38,7 +38,9 @@ uint8_t make_color(enum vga_color fg, enum vga_color bg);
 
 // set pos return -1 on error else retrun 0
 int terminal_setpos(size_t x, size_t y);
-
+void terminal_getpos(size_t *x, size_t *y);
+uint16_t get_cur_entry();
+ 
 // Print Char
 void putc(char c);
 

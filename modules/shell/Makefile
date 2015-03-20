@@ -14,7 +14,7 @@ LD	=	ld
 CFLAGS	=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra -fno-builtin -I../../
 LDFLAGS	=	-melf_i386 -fPIC -shared -einit_module
 
-SRC	=	shell.c
+SRC	=	shell.c  kksh.c  other_function.c  strchr.c  strcmp.c  strpbrk.c  strspn.c  strtok.c morpion.c puissance4.c strlen.c ## sw.c
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	shell.kso

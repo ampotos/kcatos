@@ -38,6 +38,11 @@ void terminal_setcolor(uint8_t color)
   screen_color = color;
 }
 
+uint8_t terminal_getcolor()
+{
+  return screen_color;
+}
+
 int terminal_setpos(size_t x, size_t y)
 {
   if (x >= VGA_WIDTH || y > VGA_HEIGHT)
@@ -47,6 +52,18 @@ int terminal_setpos(size_t x, size_t y)
   screen_col = x;
 
   return 0;
+}
+
+
+void terminal_getpos(size_t *x, size_t *y)
+{
+  *y = screen_row;
+  *x = screen_col;
+}
+
+uint16_t get_cur_entry()
+{
+  return screen_buff[screen_row * VGA_WIDTH + screen_col];
 }
 
   /* ----------------------------------- */

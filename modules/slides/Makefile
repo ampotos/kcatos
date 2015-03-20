@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Mon Feb 23 06:11:00 2015 eax
-## Last update Thu Mar 12 12:16:04 2015 eax
+## Last update Fri Mar 20 17:57:24 2015 
 ##
 
 CC	=	gcc
@@ -14,7 +14,7 @@ LD	=	ld
 CFLAGS	+=	-g -m32 -nostdlib -fPIC -shared -W -Wall -Wextra -fno-builtin -I../../ -std=c99
 LDFLAGS	+=	-melf_i386 -fPIC -shared -einit_module
 
-SRC	=	slides.c main.c
+SRC	=	slides.c main.c slide_future.c
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	slides.kso
