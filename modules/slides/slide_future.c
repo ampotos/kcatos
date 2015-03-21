@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:52:01 2015 eax
-** Last update Fri Mar 20 18:11:05 2015 
+** Last update Sun Mar 22 21:36:44 2015 
 */
 
 #include <utils/types.h>
@@ -136,7 +136,7 @@ void	launch_future(int from)
 	  "                                       v                                       ",
 	  "                             +-------------------+                             ",
 	  "                             |                   |                             ",
-	  "                             | CPU initalisation |                             ",
+	  "                             | initalisation CPU |                             ",
 	  "                             |                   |                             ",
 	  "                             +-------------------+                             ",
 	  "                                                                               ",
@@ -168,7 +168,7 @@ void	launch_future(int from)
 	  "                             v                           v                     ",
 	  "               +-------------------+               +----------+                ",
 	  "               |                   |               |          |                ",
-	  "               | CPU initalisation |               | Hardware |                ",
+	  "               | initalisation CPU |               | Hardware |                ",
 	  "               |                   |               |          |                ",
 	  "               +-------------------+               +----------+                ",
 	  "                                                                               ",
@@ -264,14 +264,46 @@ void	launch_future(int from)
 	  "                            ***********************                            ",
 	  "                                                                               ",
 	  "                                                                               ",
-	  "                                ****************                               ",
-	  "                                * File Systeme *                               ",
-	  "                                ****************                               ",
+	  "                                ***************                                ",
+	  "                                * File System *                                ",
+	  "                                ***************                                ",
 	  "                                                                               ",
 	  "                                                                               "
 	}
       },
       
+      {
+	.f_after_line = NULL,
+	.animations = {},
+	.lines = {
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                ____                 _           _                             ", 
+          "               / ___|___  _ __   ___| |_   _ ___(_) ___  _ __  ___             ",
+          "              | |   / _ \\| '_ \\ / __| | | | / __| |/ _ \\| '_ \\/ __|            ",
+          "              | |__| (_) | | | | (__| | |_| \\__ \\ | (_) | | | \\__ \\            ",
+          "               \\____\\___/|_| |_|\\___|_|\\__,_|___/_|\\___/|_| |_|___/            ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               ",
+	  "                                                                               "
+	}
+      },
+
       {
 	.f_after_line = NULL,
 	.animations = {},
@@ -315,5 +347,7 @@ void	launch_future(int from)
     {
       print_slide(&g_slides[i]);
       syscall_read(&r, 1);
+      if (r == 'p' && i > 0)
+	i -= 2;
     }
 }

@@ -428,6 +428,7 @@ void clean()
 	  screen_buff[index] = make_vgaentry(' ',  0);
 	}
     }
+  terminal_setpos(0, 0);
 }
 
 size_t		write_screen(char *data, size_t sz)
