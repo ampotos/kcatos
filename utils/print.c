@@ -8,6 +8,7 @@ static const size_t VGA_HEIGHT = 25;
 static size_t screen_row = 0;
 static size_t screen_col = 0;
 static uint8_t screen_color = 0;
+//static uint8_t screen_color_save = 0;
 static uint16_t *screen_buff = (uint16_t*) 0xB8000;
 
 
@@ -36,11 +37,32 @@ uint16_t make_vgaentry(char c, uint8_t color)
 void terminal_setcolor(uint8_t color)
 {
   screen_color = color;
+//  screen_color_save = color;
+}
+
+void terminal_fg_setcolor(enum vga_color fg)
+{
+  terminal_setcolor((screen_color & 240) | fg);
+}
+
+void terminal_bg_setcolor(enum vga_color bg)
+{
+  terminal_setcolor((screen_color & 15) | (bg << 4));
 }
 
 uint8_t terminal_getcolor()
 {
   return screen_color;
+}
+
+enum vga_color terminal_fg_getcolor()
+{
+  return screen_color & 15;
+}
+
+enum vga_color terminal_bg_getcolor()
+{
+  return (screen_color >> 4) & 15;
 }
 
 int terminal_setpos(size_t x, size_t y)
@@ -72,7 +94,7 @@ uint16_t get_cur_entry()
 
 void terminal_initialize()
 {
-  screen_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
+  terminal_setcolor(make_color(COLOR_LIGHT_GREY, COLOR_BLACK));
   clean();
 }
 
@@ -361,15 +383,25 @@ void printf(char *format, ...)
 	      i += 1;
 	    }
 
-	  else if (strncmp_p(format + i, "x", 1))
-	    {
-	      puth32(va_arg(params, int32_t));
-	      i += 1;
-	    }
+    else if (strncmp_p(format + i, "x", 1))
+      {
+        puth32(va_arg(params, int32_t));
+        i += 1;
+      }
+
+    //else if (strncmp_p(format + i, "k", 1))
+    //  {
+    //    screen_color_save = screen_color;
+    //    screen_color = va_arg(params, int);
+    //    i += 1;
+    //  }
 
 
 	  else
 	    puts_nolf("???");
+
+    //if (screen_color_save != screen_color)
+    //  terminal_setcolor(screen_color_save);
 	}
       else
 	{
@@ -406,4 +438,64 @@ size_t		write_screen(char *data, size_t sz)
   while (i < sz)
     terminal_putchar(data[i++]);
   return (i);
+}
+
+int    draw_window(char *title, size_t pos_x, size_t pos_y, size_t width, size_t height, enum vga_color fg, enum vga_color bg)
+{
+  int  len = -1;
+  int  cnt, line;
+  uint8_t  saveColor;
+
+  if (width == 0)
+    width = VGA_WIDTH;
+  if (height == 0)
+    height = VGA_HEIGHT;
+
+  while (title[++len] != '\0');
+  len += 6;
+
+  if (len > width || height < 2 || (width + pos_x) > VGA_WIDTH || (height + pos_y) > VGA_HEIGHT)
+    return -1;
+  saveColor = terminal_getcolor();
+  terminal_setcolor(make_color(fg, bg));
+
+  // Head
+  terminal_setpos(pos_x, pos_y);
+  //putc('┌');
+  putc('+');
+  for (cnt = (width - len) / 2; cnt > 0; cnt--)
+    //putc('─');
+    putc('-');
+  printf("| %s |", title);
+  for (cnt = ((width - len) / 2) + ((width - len) % 2); cnt > 0; cnt--)
+    //putc('─');
+    putc('-');
+  //putc('┐');
+  putc('+');
+
+  // Corps
+  for (line = height - 2; line > 0; --line)
+  {
+    terminal_setpos(pos_x, (pos_y + line));
+    //putc('│');
+    putc('|');
+    for (cnt = width - 2; cnt > 0; --cnt)
+      //putc(' ');
+      putc(' ');
+    //putc('│');
+    putc('|');
+  }
+
+  // Foot
+  terminal_setpos(pos_x, (pos_y + height - 1));
+  //putc('└');
+  putc('+');
+  for (cnt = width - 2; cnt > 0; --cnt)
+    //putc('─');
+    putc('-');
+  //putc('┘');
+  putc('+');
+
+  terminal_setcolor(saveColor);
+  return 0;
 }

@@ -34,12 +34,16 @@ uint16_t make_vgaentry(char c, uint8_t color);
 
 // color
 void terminal_setcolor(uint8_t color);
+void terminal_fg_setcolor(enum vga_color fg);
+void terminal_bg_setcolor(enum vga_color bg);
 uint8_t make_color(enum vga_color fg, enum vga_color bg);
 
 // set pos return -1 on error else retrun 0
 int terminal_setpos(size_t x, size_t y);
 void terminal_getpos(size_t *x, size_t *y);
 uint16_t get_cur_entry();
+enum vga_color terminal_fg_getcolor();
+enum vga_color terminal_bg_getcolor();
  
 // Print Char
 void putc(char c);
@@ -74,5 +78,7 @@ void	panic_print(regs_t reg);
 void	panic_print_assert(char *filename, int linenum, char *expr, char *msg);
 size_t	write_screen(char *data, size_t sz);
 u32	print_logo();
+
+int    draw_window(char *title, size_t pos_x, size_t pos_y, size_t width, size_t height, enum vga_color fg, enum vga_color bg);
 
 #endif /* PRINT_H_ */

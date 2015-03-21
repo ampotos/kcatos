@@ -46,6 +46,8 @@ void start_kksh() {
     {"clear", &cleanWrap},
     {"", NULL}
   };
+
+  cleanWrap(NULL);
   
   for(;;){
     put_prompt();
