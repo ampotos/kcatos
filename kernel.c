@@ -49,7 +49,7 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   printf("[-] Initalization of pit:");
   asm volatile ("sti");
-  setup_pit(1000); // 1Kh
+  setup_pit(1000); // freq : 1 kh
   puts(" Ok");
 
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
@@ -64,6 +64,7 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
 
   puts("[-] Launching programs now...");
 
+  sleep(1000);
   launch_task(ird);
 
 } 
