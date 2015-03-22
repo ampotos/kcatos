@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:48:37 2015 eax
-** Last update Sun Mar 22 18:52:10 2015 
+** Last update Sun Mar 22 19:47:22 2015 eax
 */
 
 #ifdef TEST_LINUX
@@ -427,6 +427,8 @@ void	launch_slides(int from)
     {
       print_slide(&g_slides[i]);
       syscall_read(&r, 1);
+      if (r == 'p' && i > 0)
+	i -= 2;
     }
 }
 
