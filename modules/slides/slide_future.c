@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:52:01 2015 eax
-** Last update Sun Mar 22 15:54:24 2015 
+** Last update Sun Mar 22 21:36:44 2015 
 */
 
 #include <utils/types.h>
@@ -347,5 +347,7 @@ void	launch_future(int from)
     {
       print_slide(&g_slides[i]);
       syscall_read(&r, 1);
+      if (r == 'p' && i > 0)
+	i -= 2;
     }
 }
