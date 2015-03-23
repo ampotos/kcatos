@@ -56,6 +56,8 @@ void start_kksh() {
       syscall_puts_screen("READ ERROR");
       continue;
     }
+    if (!kstrcmp(command, "exit"))
+      return ;
     //syscall_puts_screen("Prout !2");
     execsh(command, prog);
   }

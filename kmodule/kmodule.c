@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Mon Feb 23 07:01:30 2015 eax
-** Last update Thu Mar 12 21:25:00 2015 eax
+** Last update Mon Mar 23 12:35:01 2015 
 */
 
 #include <elf/elf.h>
@@ -140,10 +140,10 @@ int	kmodule_load(t_initrd_kmod *km, t_elfparse_symb **ksym)
 {
   memset((u32)&km->ep, 0, sizeof(km->ep));
 
-  printf("Loading %s\n", km->name);
+  printf("Loading %s", km->name);
   if (kmodule_parse(km->data, &km->ep, ksym) == -1)
     return (reter(1, "Fail when loading module"));
-
+  printf(" to %x\n", km->ep.entry);
   t_elfparse_symb	*s = km->ep.symb;
   while (s)
     {

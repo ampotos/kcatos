@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:48:37 2015 eax
-** Last update Sun Mar 22 19:47:22 2015 eax
+** Last update Mon Mar 23 11:59:20 2015 
 */
 
 #ifdef TEST_LINUX
@@ -20,6 +20,7 @@
 #endif
 
 #include "slides.h"
+#include <kmodule/kmodule.h>
 
 void	ani_logo(int n)
 {
@@ -266,7 +267,7 @@ void	launch_slides(int from)
         "                    / _ \\| |__ (_) ___  ___| |_(_)/ _|___                     ",
         "                   | | | | '_ \\| |/ _ \\/ __| __| | |_/ __|                   ",
         "                   | |_| | |_) | |  __/ (__| |_| |  _\\__ \\                   ",
-        "                    \\___/|_.__// |\\___|\___|\\__|_|_| |___/                  ",
+        "                    \\___/|_.__// |\\___|\\___|\\__|_|_| |___/                  ",
         "                              |__/                                             ",
 	"                                                                               ",
 	"                                                                               ",
@@ -440,6 +441,7 @@ int	init_module(void *d)
   n = 0;
   clean();
   launch_slides(n);
+  start_kksh();
   launch_future(n);
   syscall_puts_screen("Slides finish");
   return (0);
