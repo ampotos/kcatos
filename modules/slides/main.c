@@ -5,7 +5,7 @@
 ** Login   <soules_k@epitech.net>
 ** 
 ** Started on  Thu Mar 12 11:48:37 2015 eax
-** Last update Mon Mar 23 14:16:05 2015 
+** Last update Mon Mar 23 15:03:13 2015 eax
 */
 
 #ifdef TEST_LINUX
@@ -22,6 +22,119 @@
 #include "slides.h"
 #include <kmodule/kmodule.h>
 
+#define myabs(x) ((x) > 0 ? (x) : -(x))
+
+
+int	dist_from_center(int x, int y)
+{
+  int cx = 40;
+  int cy = 13;
+
+  double a = 1;
+  double b;
+  double x2 =  (x - cx)*(x - cx) + (y - cy)*(y - cy);
+
+  double res = 0;
+  
+  b = x2;
+  if (x2 < 0)
+    res =  0;
+  while (myabs(a-b) > 1)
+    {
+      a = (a + b) / 2.;
+      b = x2 / a;
+    }
+  res =  a;
+  return res;
+}
+
+
+/* void	ani_logo(int n) */
+/* { */
+/*   size_t oldx; */
+/*   size_t oldy; */
+/*   uint8_t old_color; */
+/*   char c; */
+
+/*   if (n == NB_LINE - 1) */
+/*     { */
+/*       syscall_sleep(500); */
+/*       terminal_getpos(&oldx, &oldy); */
+/*       old_color = terminal_getcolor(); */
+/*       for (int i = 0 ; i < 50 ; i++) */
+/* 	{ */
+/* 	  for (int y = 0 ; y < 25 ; y++) */
+/* 	    { */
+/* 	      for (int x = 0 ; x < 80 ; x++) */
+/* 		{ */
+/* 		  terminal_setpos(x, y); */
+/* 		  if ((c = get_cur_entry() & 0xff) != ' ') */
+/* 		    { */
+/* 		     terminal_setpos(x, y); */
+/* 		     int r; */
+/* 		     r = ((i + x + y) * (x*2 + y*3 + i*4)); */
+/* 		     r |= i << 5; */
+/* 		     r ^= i * x; */
+/* 		     terminal_setcolor(1 + r % 14); */
+/* 		     /\* syscall_write_screen("KCat.Os." + ((x+i) % 8), 1); *\/ */
+/* 		     syscall_write_screen(&c, 1); */
+		     
+/* 		    } */
+/* 		} */
+/* 	    } */
+/* 	  syscall_sleep(10); */
+/* 	} */
+
+/*       for (int i = 0 ; i < 80 ; i++) */
+/* 	{ */
+/* 	  for (int y = 0 ; y < 25 ; y++) */
+/* 	    { */
+/* 	      if (i <= 2) */
+/* 		{ */
+/* 		  terminal_setpos(41, y); */
+/* 		  syscall_write_screen("  ", 2); */
+/* 		} */
+/* 	      for (int x = 1 ; x <= 41 - (i / 2) ; x++) */
+/* 		{ */
+/* 		  int r; */
+/* 		  r = ((i + x + y) * (x*2 + y*3 + i*4)); */
+/* 		  r |= i << 5; */
+/* 		  r ^= i * x; */
+/* 		  terminal_setpos(x, y); */
+/* 		  terminal_setcolor(1 + r % 14); */
+/* 		  c = get_cur_entry() & 0xff; */
+/* 		  terminal_setpos(x - 1, y); */
+/* 		  syscall_write_screen(&c, 1); */
+/* 		} */
+/* 	      for (int x = 78 ; x > 40 + (i / 2) ; x--) */
+/* 		{ */
+/* 		  int r; */
+/* 		  r = ((i + x + y) * (x*2 + y*3 + i*4)); */
+/* 		  r |= i << 5; */
+/* 		  r ^= i * x; */
+/* 		  terminal_setpos(x - 1, y); */
+/* 		  terminal_setcolor(1 + r % 14); */
+/* 		  c = get_cur_entry() & 0xff; */
+/* 		  terminal_setpos(x, y); */
+/* 		  syscall_write_screen(&c, 1); */
+/* 		} */
+
+/* 	      syscall_sleep(1); */
+/* 	    } */
+/* 	  if (i == 9) */
+/* 	    { */
+/* 	      terminal_setcolor(15); */
+/* 	      terminal_setpos(41-4, 12); */
+/* 	      syscall_write_screen("KCat.Os", 7); */
+/* 	    } */
+/* 	} */
+       
+      
+/*       terminal_setpos(oldx, oldy); */
+/*       terminal_setcolor(old_color); */
+/*     } */
+/* } */
+
 void	ani_logo(int n)
 {
   size_t oldx;
@@ -29,9 +142,11 @@ void	ani_logo(int n)
   uint8_t old_color;
   char c;
 
+  /* assert(0); */
+  
   if (n == NB_LINE - 1)
     {
-      syscall_sleep(500);
+      syscall_sleep(100);
       terminal_getpos(&oldx, &oldy);
       old_color = terminal_getcolor();
       for (int i = 0 ; i < 50 ; i++)
@@ -44,18 +159,13 @@ void	ani_logo(int n)
 		  if ((c = get_cur_entry() & 0xff) != ' ')
 		    {
 		     terminal_setpos(x, y);
-		     int r;
-		     r = ((i + x + y) * (x*2 + y*3 + i*4));
-		     r |= i << 5;
-		     r ^= i * x;
-		     terminal_setcolor(1 + r % 14);
-		     /* syscall_write_screen("KCat.Os." + ((x+i) % 8), 1); */
+		     terminal_setcolor(1 + myabs(dist_from_center(x, y) - i) % 14);
 		     syscall_write_screen(&c, 1);
 		     
 		    }
 		}
 	    }
-	  syscall_sleep(10);
+	  syscall_sleep((i % 10) * 5);
 	}
 
       for (int i = 0 ; i < 80 ; i++)
@@ -106,7 +216,9 @@ void	ani_logo(int n)
       terminal_setpos(oldx, oldy);
       terminal_setcolor(old_color);
     }
+  /* ani_logo_end(); */
 }
+
 
 void	print_slide(t_slide *slide)
 {

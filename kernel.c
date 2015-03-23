@@ -52,6 +52,8 @@ void kernel_main(u32 magic, t_multiboot *multiboot)
   setup_pit(1000); // freq : 1 kh
   puts(" Ok");
 
+  init_fpu();
+  
   ird = load_initrd(*(u32*)(multiboot->mods_addr));
 
   keyboard_clear_buff(1024); // size of read buff  == 1024

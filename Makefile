@@ -5,7 +5,7 @@
 ## Login   <soules_k@epitech.net>
 ## 
 ## Started on  Wed Nov 26 09:19:58 2014 eax
-## Last update Thu Mar  5 11:32:46 2015 
+## Last update Mon Mar 23 14:59:31 2015 eax
 ##
 
 CC      =	gcc
@@ -42,7 +42,8 @@ SRCC	=	kernel.c \
 		elf/elf.c \
 		utils/error.c \
 		kmodule/kmodule.c \
-		elf/kern_parse.c
+		elf/kern_parse.c \
+		fpu/init_fpu.c
 
 OBJC	= 	$(SRCC:.c=.o)
 
@@ -59,7 +60,8 @@ SRCA	=	boot.s \
 		usermode.s \
 		descriptor_tables/tss_flush.s \
 		memory/enable_paging.s \
-		syscall/syscall_do_call.s
+		syscall/syscall_do_call.s \
+		fpu/init_sse.s
 
 OBJA	=	$(SRCA:.s=.o)
 
