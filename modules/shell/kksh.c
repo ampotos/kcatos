@@ -32,8 +32,20 @@ void execsh(char *command, const programs_t *prog) {
 
   for (i = 0; prog[i].function != NULL; ++i) {
     if (kstrcmp(prog[i].name, buff) == 0)
+    {
         (*(prog[i].function))(command);
-  } 
+        break;
+    }
+  }
+
+  if (prog[i].function == NULL)
+  {
+    syscall_puts_screen("Unvalible command. List of avalible command :");
+    for (i = 0; prog[i].function != NULL; ++i) {
+      printf("  -  %s\n", prog[i].name);
+    }
+    printf("  -  exit\n");
+  }
 }
 
 void start_kksh() {

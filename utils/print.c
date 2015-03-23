@@ -137,7 +137,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 
 void terminal_putchar(const char c)
 {
-  if (c == '\n')
+  if (c == '\n' || screen_col == VGA_WIDTH)
     {
       jump_line();
       return;
@@ -149,10 +149,7 @@ void terminal_putchar(const char c)
 	return;
     }
 
-  terminal_putentryat(c, screen_color, screen_col, screen_row);
-
-  if ( ++screen_col == VGA_WIDTH )
-    jump_line();
+  terminal_putentryat(c, screen_color, screen_col++, screen_row);
 }
 
 

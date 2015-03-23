@@ -192,6 +192,13 @@ Boolean		testeFinJeu(char grille1[3][3])
 			if (grille1[i][j] == ' ')
 				return FALSE;
 
+	clean();
+	terminal_setcolor(make_color(COLOR_BLACK, (joueurGagnant == 'X' ? COLOR_RED : COLOR_GREEN)));
+	draw_window("Player Zone", 0, 11, 0, 5, COLOR_BLACK, (joueurGagnant == 'X' ? COLOR_RED : COLOR_GREEN));
+	terminal_setpos(2, 13);
+	printf("Egalite !");
+	terminal_setcolor(saveColor);
+
 	return TRUE;
 }
 
